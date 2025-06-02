@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmm7dvgkio3h7"]
+
+[ext_resource type="Script" uid="uid://d2fk6wgnjnjer" path="res://scripts/start_screen.gd" id="1_pswtb"]
+[ext_resource type="Texture2D" uid="uid://4ip83f6rjh7x" path="res://assets/images/ui/start-screen.png" id="2_a0vbq"]
+[ext_resource type="Texture2D" uid="uid://dr7xmt5tpuihb" path="res://assets/images/ui/start-button.png" id="3_nj7f0"]
+
+[sub_resource type="GDScript" id="GDScript_pswtb"]
+script/source = "extends CanvasLayer
+
+signal cutscene_finished
+
+func _ready():
+	await get_tree().create_timer(0.5).timeout
+	set_process_input(true)
+
+func _input(event):
+	if event.is_action_pressed(\"ui_accept\"):
+		queue_free()
+		emit_signal(\"cutscene_finished\")
+"
+
+[sub_resource type="Animation" id="Animation_a0vbq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.00392157)]
+}
+
+[sub_resource type="Animation" id="Animation_pswtb"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nj7f0"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0.133333, 0.333333, 0.333333, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj7f0"]
+_data = {
+&"RESET": SubResource("Animation_a0vbq"),
+&"fade_in": SubResource("Animation_pswtb"),
+&"fade_out": SubResource("Animation_nj7f0")
+}
+
+[node name="StartScreen_tscn" type="Node2D"]
+script = ExtResource("1_pswtb")
+
+[node name="BackgroundWrapper" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
+position = Vector2(525, 298)
+scale = Vector2(0.827148, 0.577148)
+texture = ExtResource("2_a0vbq")
+
+[node name="BeginSprint" type="Button" parent="."]
+offset_left = 410.0
+offset_top = 488.0
+offset_right = 656.0
+offset_bottom = 590.0
+icon = ExtResource("3_nj7f0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = SubResource("GDScript_pswtb")
+
+[node name="FadeRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 0.00392157)
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nj7f0")
+}
+autoplay = "fade_in"
+
+[connection signal="pressed" from="BeginSprint" to="." method="_on_begin_sprint_pressed"]

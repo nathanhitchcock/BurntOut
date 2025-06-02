@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0xruxc3wj45j"]
+
+[ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scenes/ui/global_ui.gd" id="1_472px"]
+
+[node name="GlobalUi" type="Control"]
+visibility_layer = 524288
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("1_472px")
+
+[node name="PauseBackground" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.00392157)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.5
+offset_top = -50.5
+offset_right = 37.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "RESUME"
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "RESTART"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "QUIT"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResumeButton" to="CanvasLayer" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/RestartButton" to="CanvasLayer" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/QuitButton" to="CanvasLayer" method="_on_quit_pressed"]

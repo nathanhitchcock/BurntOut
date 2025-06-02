@@ -1,0 +1,11 @@
+# Godot 4+ specific ignores
+.godot/
+.import/
+.export/
+*.import
+*.tmp
+*.log
+
+# System files
+.DS_Store
+Thumbs.db

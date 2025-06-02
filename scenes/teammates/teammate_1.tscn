@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://27c7iwa8pixh"]
+
+[ext_resource type="Texture2D" uid="uid://d26l4uda6a4xa" path="res://assets/images/sprites/teammate_1.png" id="1_b1xel"]
+[ext_resource type="Script" uid="uid://cm8i2bpd5ruxt" path="res://scripts/teammate.gd" id="2_ibt1x"]
+[ext_resource type="Texture2D" uid="uid://bdvkbbs625en5" path="res://assets/images/ui/ai-graphic-click-to-revive.png" id="3_jeuph"]
+[ext_resource type="Texture2D" uid="uid://vn4vxvagd6rs" path="res://assets/images/ui/toggle_button/ToggleButton-CSTM.png" id="4_frl4u"]
+[ext_resource type="Texture2D" uid="uid://dcp86lhne827a" path="res://assets/images/ui/toggle_button/ToggleButton-EXEC_pressed.png" id="5_t216s"]
+
+[sub_resource type="FontVariation" id="FontVariation_b1xel"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ibt1x"]
+color = Color(0, 0.721569, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jeuph"]
+bg_color = Color(0.360784, 0.682353, 0.435294, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_frl4u"]
+radius = 1841.45
+height = 5486.47
+
+[node name="Teammate1" type="Node2D" groups=["teammates"]]
+script = ExtResource("2_ibt1x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(105, 326.25)
+scale = Vector2(0.754839, 0.590543)
+texture = ExtResource("1_b1xel")
+metadata/_edit_lock_ = true
+
+[node name="MoraleBar" type="ProgressBar" parent="Sprite2D"]
+anchors_preset = -1
+anchor_left = -0.000612222
+anchor_top = -0.132463
+anchor_right = 1.13165
+anchor_bottom = -0.132463
+offset_left = -136.263
+offset_top = 282.201
+offset_right = 863.737
+offset_bottom = 622.201
+scale = Vector2(0.2, 0.2)
+theme_override_fonts/font = SubResource("FontVariation_b1xel")
+theme_override_font_sizes/font_size = 200
+theme_override_styles/background = SubResource("StyleBoxLine_ibt1x")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jeuph")
+value = 100.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ClickArea" type="Area2D" parent="Sprite2D"]
+position = Vector2(0.00040201, 169.726)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ClickArea"]
+position = Vector2(3.97396, -183.696)
+scale = Vector2(0.1, 0.1)
+shape = SubResource("CapsuleShape2D_frl4u")
+metadata/_edit_lock_ = true
+
+[node name="ToggleWorkButton" type="TextureButton" parent="Sprite2D"]
+visible = false
+offset_left = 51.6666
+offset_top = 43.6039
+offset_right = 1075.67
+offset_bottom = 1067.6
+scale = Vector2(0.25, 0.25)
+tooltip_text = "Click to switch priority"
+toggle_mode = true
+texture_normal = ExtResource("4_frl4u")
+texture_pressed = ExtResource("5_t216s")
+
+[node name="TargetPoint" type="Marker2D" parent="Sprite2D"]
+rotation = -0.261799
+
+[node name="ReviveButton" type="TextureButton" parent="Sprite2D"]
+visible = false
+offset_left = -119.231
+offset_top = -450.856
+offset_right = 904.769
+offset_bottom = 573.144
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("3_jeuph")
+
+[connection signal="toggled" from="Sprite2D/ToggleWorkButton" to="." method="_on_ToggleWorkButton_toggled"]
+[connection signal="pressed" from="Sprite2D/ReviveButton" to="." method="revive"]
