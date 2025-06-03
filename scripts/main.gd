@@ -2,7 +2,7 @@
 extends Node2D
 
 # --- CONSTANTS ---
-const DEFENSE_COFFEE_MACHINE: String = "CoffeeMachine"
+const DEFENSE_COFFEE: String = "Coffee"
 const DEFENSE_STANDING_DESK: String = "StandingDesk"
 const EXECUTIVE_PROGRESS_MAX: int = 100
 const PROJECT_PROGRESS_PER_WAVE: int = 1
@@ -23,7 +23,7 @@ var hired_teammate_2: bool = false
 
 # --- DEFENSE VARIABLES ---
 var defense_types: Dictionary = {
-	DEFENSE_COFFEE_MACHINE: {
+	DEFENSE_COFFEE: {
 		"scene": "res://scenes/defenses/CoffeeMachine.tscn",
 		"cost": 1,
 		"heal": 20
@@ -35,8 +35,8 @@ var defense_types: Dictionary = {
 	}
 }
 var selected_button: TextureButton = null
-var current_defense_type: String = DEFENSE_COFFEE_MACHINE
-@export var defense_type: String = DEFENSE_COFFEE_MACHINE
+var current_defense_type: String = DEFENSE_COFFEE
+@export var defense_type: String = DEFENSE_COFFEE
 
 # --- SFX SOUNDS (grouped) ---
 var sfx: Dictionary = {}
@@ -50,6 +50,7 @@ var sfx_victory
 var sfx_hire_sound
 var bgm
 var sfx_evil_laugh
+var sfx_negative  # NEW: negative/error sound
 
 ### -- New Features, Debugs, & Cheats --
 var ceo_trigger_ready = false
@@ -99,6 +100,7 @@ func _ready() -> void:
 	sfx["hire_sound"] = $Audio/HirePoofSound
 	sfx["bgm"] = $Audio/BackgroundMusic
 	sfx["evil_laugh"] = $Audio/EvilLaughSound
+	sfx["negative"] = $Audio/NegativeSound if has_node("Audio/NegativeSound") else null  # NEW: negative/error sound
 	$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/HireButton.pressed.connect(_on_HireButton_pressed)
 	
 	# - lock toggles at the start of the game -
@@ -327,13 +329,13 @@ func place_defense(position: Vector2):
 	# 🧱 Set its type for later reference in damage calculation
 	defense.defense_type = current_defense_type
 	
-	# ☕️ Heal teammates if this is a CoffeeMachine
-	if current_defense_type == "CoffeeMachine":
+	# ☕️ Heal teammates if this is a Coffee
+	if current_defense_type == DEFENSE_COFFEE:
 		play_coffee_sound()
 		var teammates = get_tree().get_nodes_in_group("teammates")
 		for t in teammates:
 			if t.get_target_position().distance_to(position) < COFFEE_HEAL_RADIUS:
-				t.restore_morale(defense_types["CoffeeMachine"].get("heal", 0))
+				t.restore_morale(defense_types[DEFENSE_COFFEE].get("heal", 0))
 				show_heal_effect(t.get_target_position())
 		# ☕️ Coffee is a one-time use — remove after healing
 		await get_tree().create_timer(0.5).timeout  # slight delay before fade
@@ -444,6 +446,7 @@ func update_defense_hud():
 			btn.scale = Vector2(1, 1)
 
 func show_insufficient_points_warning():
+	play_negative_sound()
 	var label = $CanvasLayer/InsufficientPointsLabel
 	label.visible = true
 
@@ -512,6 +515,11 @@ func play_evil_laugh_sound() -> void:
 	"""Plays the evil laugh sound effect."""
 	if sfx.has("evil_laugh") and sfx["evil_laugh"]:
 		sfx["evil_laugh"].play()
+
+func play_negative_sound() -> void:
+	"""Plays the negative sound effect when an action fails (e.g., not enough points)."""
+	if sfx.has("negative") and sfx["negative"]:
+		sfx["negative"].play()
 
 ## -- END GAME  --
 func check_game_over():
