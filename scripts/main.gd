@@ -1,32 +1,45 @@
 ## -- INIT --
 extends Node2D
 
+# --- CONSTANTS ---
+const DEFENSE_COFFEE_MACHINE: String = "CoffeeMachine"
+const DEFENSE_STANDING_DESK: String = "StandingDesk"
+const EXECUTIVE_PROGRESS_MAX: int = 100
+const PROJECT_PROGRESS_PER_WAVE: int = 1
+const HIRE_COST: int = 10
+const REVIVE_COST_DEFAULT: int = 2
+const COFFEE_HEAL_RADIUS: float = 100.0
+
 ## -- VARIABLES & CONFIGURATIONS --
 ### -- inital variables ---
-var leadership_points = 30
-var current_wave = 1
-var total_projects = 3
-var current_project_progress = 0
-var progress_per_wave = 1
-var teammates := []
-@onready var TeammateScene = preload("res://scenes/teammates/teammate_1.tscn")
-var hired_teammate_2 = false
+var leadership_points: int = 30
+var current_wave: int = 1
+var total_projects: int = 3
+var current_project_progress: int = 0
+var progress_per_wave: int = PROJECT_PROGRESS_PER_WAVE
+var teammates: Array = []
+@onready var TeammateScene: PackedScene = preload("res://scenes/teammates/teammate_1.tscn")
+var hired_teammate_2: bool = false
 
-### -- defense variables
-var defense_types = {
-	"CoffeeMachine": {
+# --- DEFENSE VARIABLES ---
+var defense_types: Dictionary = {
+	DEFENSE_COFFEE_MACHINE: {
 		"scene": "res://scenes/defenses/CoffeeMachine.tscn",
 		"cost": 1,
 		"heal": 20
 	},
-	"StandingDesk": {
+	DEFENSE_STANDING_DESK: {
 		"scene": "res://scenes/defenses/StandingDesk.tscn",
 		"cost": 5,
 		"reduction": 14
-	}}
+	}
+}
 var selected_button: TextureButton = null
-var current_defense_type = "CoffeeMachine" # Can be "CoffeeMachine" or "StandingDesk"
-@export var defense_type: String = "CoffeeMachine"
+var current_defense_type: String = DEFENSE_COFFEE_MACHINE
+@export var defense_type: String = DEFENSE_COFFEE_MACHINE
+
+# --- SFX SOUNDS (grouped) ---
+var sfx: Dictionary = {}
 
 ### -- sfx sounds --
 var sfx_ui_button
@@ -43,7 +56,8 @@ var ceo_trigger_ready = false
 var ceo_cutscene_played = false
 var boss_wave_trigger = 25
 var executive_progress = 0
-var toggles_locked = true
+var toggles_locked: bool = true
+var toggles_initialized: bool = false # NEW: track if toggles have been locked already
 
 var teammate_1_exec = false
 func _on_teammate1_toggle_pressed():
@@ -56,7 +70,8 @@ func _on_teammate1_toggle_pressed():
 		print("❌ ToggleWorkButton not found under teammate1")
 
 ## -- LIFECYCLE & HOOKS --
-func _ready():
+func _ready() -> void:
+	"""Initializes the main scene, teammates, timers, audio, and UI."""
 	# add the first teammate to the scene
 	var teammate1 = TeammateScene.instantiate()
 	teammate1.name = "Teammate1"
@@ -76,30 +91,30 @@ func _ready():
 	teammates = get_tree().get_nodes_in_group("teammates")
 	
 	# - initalizing the audio -
-	sfx_ui_button = $Audio/UIButtonSound
-	sfx_coffee = $Audio/CoffeeSound
-	sfx_high_stress = get_node("/root/Main/Audio/HighStressSound") if has_node("/root/Main/Audio/HighStressSound") else null
-	sfx_game_over = $Audio/GameOverSound
-	sfx_victory = $Audio/VictorySound
-	sfx_hire_sound = $Audio/HirePoofSound
-	sfx_evil_laugh = $Audio/EvilLaughSound
-	bgm = $Audio/BackgroundMusic
+	sfx["ui_button"] = $Audio/UIButtonSound
+	sfx["coffee"] = $Audio/CoffeeSound
+	sfx["high_stress"] = get_node("/root/Main/Audio/HighStressSound") if has_node("/root/Main/Audio/HighStressSound") else null
+	sfx["game_over"] = $Audio/GameOverSound
+	sfx["victory"] = $Audio/VictorySound
+	sfx["hire_sound"] = $Audio/HirePoofSound
+	sfx["bgm"] = $Audio/BackgroundMusic
+	sfx["evil_laugh"] = $Audio/EvilLaughSound
 	$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/HireButton.pressed.connect(_on_HireButton_pressed)
 	
 	# - lock toggles at the start of the game -
-	await get_tree().process_frame  # ensure all nodes are ready
-	teammates = get_tree().get_nodes_in_group("teammates")
-	print("Found", teammates.size(), "teammates.")
-
-	for t in teammates:
-		#var btn = t.get_node_or_null("ToggleWorkButton")
-		var btn = get_node_or_null("Teammate1/Sprite2D/ToggleWorkButton")
-		if btn:
-			print("🔍 Found ToggleWorkButton under:", t.name)
-			btn.disabled = true
-			btn.modulate = Color(0.5, 0.5, 0.5)  # optional visual dimming
-		else:
-			print("❌ ToggleWorkButton not found under:", t.name)
+	if not toggles_initialized:
+		await get_tree().process_frame  # ensure all nodes are ready
+		teammates = get_tree().get_nodes_in_group("teammates")
+		print("Found", teammates.size(), "teammates.")
+		for t in teammates:
+			var btn = get_node_or_null("Teammate1/Sprite2D/ToggleWorkButton")
+			if btn:
+				print("🔒 [INIT] Locking ToggleWorkButton under:", t.name)
+				btn.disabled = true
+				btn.modulate = Color(0.5, 0.5, 0.5)  # optional visual dimming
+			else:
+				print("❌ ToggleWorkButton not found under:", t.name)
+		toggles_initialized = true
 
 	#- CEO Splash screen initialization 
 	get_tree().paused = false
@@ -134,16 +149,15 @@ func _process(_delta):
 
 ## -- CORE GAME MECHANICS --
 ### -- timers & state --
-func _on_stress_timeout():
+func _on_stress_timeout() -> void:
+	"""Handles stress timer events, applies damage, and manages wave progression."""
 	var teammates = get_tree().get_nodes_in_group("teammates")
 	var active_teammates = teammates.filter(func(t): return not t.is_burned_out)
 	var damage = randi_range(1, 5)
 	var is_high_stress_wave = current_wave % 5 == 0  # Every 5th wave
-	# print("Active teammates:", active_teammates.size())
 	
 	if is_high_stress_wave:
 		damage = randi_range(20, 30)
-		# print("⚠️ HIGH STRESS WAVE! ⚠️ Damage: ", damage)
 		$CanvasLayer/WaveLabel.text = "💥 High Stress Wave! 💥"
 		flash_high_stress_effect()
 		play_high_stress_sound()
@@ -152,52 +166,12 @@ func _on_stress_timeout():
 	if active_teammates.size() == 0:
 		check_game_over()
 		return
-		
-	# Choose target
-	var chosen: Node
-	if active_teammates.size() == 1:
-		chosen = active_teammates[0]
-	else:
-		chosen = active_teammates[randi() % active_teammates.size()]
-
-	# Shared defense logic
-	var defenses = get_tree().get_nodes_in_group("defenses")
-	var total_reduction = 0
-
-	for defense in defenses:
-		# print("🪑 Checking defense:", defense.name)
-		var shape_node = defense.get_node_or_null("CollisionShape2D")
-		if shape_node == null:
-			shape_node = defense.get_node_or_null("Sprite2D/CollisionShape2D")
-
-		if shape_node == null or shape_node.shape == null:
-			# print("❌ Missing shape for", defense.name)
-			continue
-
-		if shape_node.shape is CircleShape2D:
-			var radius = shape_node.shape.radius
-
-			if chosen.has_method("get_target_position"):
-				var distance = defense.global_position.distance_to(chosen.get_target_position())
-
-				if distance <= radius:
-					var def_type = null
-					if defense.has_method("get") and "defense_type" in defense:
-						def_type = defense.get("defense_type")
-					else:
-						print("❌ Defense has no defense_type!")
-
-					var reduction = defense_types.get(def_type, {}).get("reduction", 0)
-					total_reduction += reduction
-
-
-	# ✅ Only apply damage after all defenses have been checked
+	
+	var chosen: Node = _choose_stress_target(active_teammates)
+	var total_reduction = _calculate_total_defense_reduction(chosen)
 	if total_reduction > 0:
 		damage = max(damage - total_reduction, 0)
 		show_defense_reduction_popup("-" + str(total_reduction) + " blocked", chosen.get_target_position())
-		# print("Total damage reduction from defenses: ", total_reduction)
-	
-	# print("💢 Dealing", damage, "damage to", chosen.name)
 	chosen.lower_morale(damage)
 	
 	if current_wave == 1 and not hired_teammate_2:
@@ -205,32 +179,52 @@ func _on_stress_timeout():
 		$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/Label.visible = true
 	
 	check_game_over()
-	
-	# Reward leadership point and advance current_wave
 	leadership_points += 1
 	current_wave += 1
 	update_leadership_display()
 	update_wave_display()
 	update_defense_hud()
 	
-	# new feature - CEO interruption and refocuses team
 	for t in active_teammates:
 		if not t.is_executive_mode:
 			current_project_progress += progress_per_wave
 		else:
 			executive_progress += progress_per_wave
-
+	
 	print("📦 Customer Progress: ", current_project_progress, "/", total_projects * 10)
 	print("📊 Executive Progress: ", executive_progress, "/ 10", total_projects)
-
 	$CanvasLayer/ProjectProgressBar.value = current_project_progress
 	$CanvasLayer/ExecutiveProgressBar.value = executive_progress
-
 	if current_project_progress >= total_projects * 10:
 		trigger_win_state()
-		
 	if executive_progress >= 100:
 		trigger_ceo_victory()
+
+func _choose_stress_target(active_teammates: Array) -> Node:
+	"""Randomly selects a teammate to receive stress damage."""
+	if active_teammates.size() == 1:
+		return active_teammates[0]
+	return active_teammates[randi() % active_teammates.size()]
+
+func _calculate_total_defense_reduction(chosen: Node) -> int:
+	"""Calculates total damage reduction from all defenses affecting the chosen teammate."""
+	var defenses = get_tree().get_nodes_in_group("defenses")
+	var total_reduction = 0
+	for defense in defenses:
+		var shape_node = defense.get_node_or_null("CollisionShape2D")
+		if shape_node == null:
+			shape_node = defense.get_node_or_null("Sprite2D/CollisionShape2D")
+		if shape_node == null or shape_node.shape == null:
+			continue
+		if shape_node.shape is CircleShape2D:
+			var radius = shape_node.shape.radius
+			if chosen.has_method("get_target_position"):
+				var distance = defense.global_position.distance_to(chosen.get_target_position())
+				if distance <= radius:
+					var def_type = defense.get("defense_type") if "defense_type" in defense else null
+					var reduction = defense_types.get(def_type, {}).get("reduction", 0)
+					total_reduction += reduction
+	return total_reduction
 
 func show_defense_reduction_popup(text: String, position: Vector2):
 	print("🛡️ Showing blocked damage: ", text)
@@ -278,13 +272,18 @@ func show_fake_progress_bar():
 	$CanvasLayer/ExecutiveWorkLabel.visible = true
 
 func enable_team_toggles():
+	print("🔓 enable_team_toggles() called")
 	for t in get_tree().get_nodes_in_group("teammates"):
+		print("🔓 Enabling executive mode and locking toggle for:", t.name)
 		t.is_executive_mode = true
 		t.lock_toggle()
 
 func unlock_toggles():
+	print("🔓 unlock_toggles() called")
 	for t in get_tree().get_nodes_in_group("teammates"):
+		print("🔓 Unlocking toggle for:", t.name)
 		t.unlock_toggle()
+	toggles_locked = false
 
 ### -- defense placement --
 func select_defense(type: String):
@@ -333,7 +332,7 @@ func place_defense(position: Vector2):
 		play_coffee_sound()
 		var teammates = get_tree().get_nodes_in_group("teammates")
 		for t in teammates:
-			if t.get_target_position().distance_to(position) < 100:
+			if t.get_target_position().distance_to(position) < COFFEE_HEAL_RADIUS:
 				t.restore_morale(defense_types["CoffeeMachine"].get("heal", 0))
 				show_heal_effect(t.get_target_position())
 		# ☕️ Coffee is a one-time use — remove after healing
@@ -350,17 +349,14 @@ func place_defense(position: Vector2):
 	print(current_defense_type, " placed at ", position)
 
 ### -- team management --
-func _on_HireButton_pressed():
-	var cost = 10
-	if leadership_points < cost:
-		# print("Not enough Leadership Points to hire!")
+func _on_HireButton_pressed() -> void:
+	"""Handles hiring a new teammate if enough leadership points are available."""
+	if leadership_points < HIRE_COST:
 		show_insufficient_points_warning()
 		return
-
-	leadership_points -= cost
+	leadership_points -= HIRE_COST
 	update_leadership_display()
-
-	hire_teammate("res://scenes/teammates/teammate_2.tscn", Vector2(389.688, 329.507)) # Adjust position as needed
+	hire_teammate("res://scenes/teammates/teammate_2.tscn", Vector2(389.688, 329.507))
 	hired_teammate_2 = true
 	$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/HireButton.visible = false
 	$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/Label.visible = false
@@ -385,14 +381,13 @@ func hire_teammate(scene_path: String, position: Vector2):
 	
 
 ### -- player actions --
-func try_revive(teammate):
-	var cost = teammate.revive_cost if teammate.has_method("revive_cost") else 2
-	
+func try_revive(teammate) -> void:
+	"""Attempts to revive a teammate if enough leadership points are available."""
+	var cost = teammate.revive_cost if teammate.has_method("revive_cost") else REVIVE_COST_DEFAULT
 	if leadership_points < cost:
 		print("Not enough Leadership Points to revive!")
 		show_insufficient_points_warning()
 		return
-
 	leadership_points -= cost
 	teammate.revive()
 	update_leadership_display()
@@ -478,37 +473,45 @@ func show_heal_effect(position: Vector2):
 	label.queue_free()
 
 ## -- AUDIO HELPERS --
-func play_ui_sound():
-	if sfx_ui_button:
-		sfx_ui_button.play()
+func play_ui_sound() -> void:
+	"""Plays the UI button sound effect."""
+	if sfx.has("ui_button") and sfx["ui_button"]:
+		sfx["ui_button"].play()
 
-func play_coffee_sound():
-	if sfx_coffee:
-		sfx_coffee.play()
+func play_coffee_sound() -> void:
+	"""Plays the coffee sound effect."""
+	if sfx.has("coffee") and sfx["coffee"]:
+		sfx["coffee"].play()
 
-func play_high_stress_sound():
-	if sfx_high_stress:
-		sfx_high_stress.play()
+func play_high_stress_sound() -> void:
+	"""Plays the high stress sound effect."""
+	if sfx.has("high_stress") and sfx["high_stress"]:
+		sfx["high_stress"].play()
 
-func play_game_over_sound():
-	if sfx_game_over:
-		sfx_game_over.play()
+func play_game_over_sound() -> void:
+	"""Plays the game over sound effect."""
+	if sfx.has("game_over") and sfx["game_over"]:
+		sfx["game_over"].play()
 
-func play_victory_sound():
-	if sfx_victory:
-		sfx_victory.play()
+func play_victory_sound() -> void:
+	"""Plays the victory sound effect."""
+	if sfx.has("victory") and sfx["victory"]:
+		sfx["victory"].play()
 
-func stop_music():
-	if bgm:
-		bgm.stop()
+func stop_music() -> void:
+	"""Stops the background music."""
+	if sfx.has("bgm") and sfx["bgm"]:
+		sfx["bgm"].stop()
 
-func play_hire_sound():
-	if sfx_hire_sound:
-		sfx_hire_sound.play()
-		
-func play_evil_laugh_sound():
-	if sfx_evil_laugh:
-		sfx_evil_laugh.play()
+func play_hire_sound() -> void:
+	"""Plays the hire teammate sound effect."""
+	if sfx.has("hire_sound") and sfx["hire_sound"]:
+		sfx["hire_sound"].play()
+
+func play_evil_laugh_sound() -> void:
+	"""Plays the evil laugh sound effect."""
+	if sfx.has("evil_laugh") and sfx["evil_laugh"]:
+		sfx["evil_laugh"].play()
 
 ## -- END GAME  --
 func check_game_over():
@@ -530,12 +533,22 @@ func trigger_game_over():
 	var loss_screen = preload("res://scenes/Game Over/GameOver-Burnout.tscn").instantiate()
 	add_child(loss_screen)
 	play_game_over_sound()
+	# Ensure GlobalUI is visible and on top
+	if has_node("/root/GlobalUI"):
+		var global_ui = get_node("/root/GlobalUI")
+		global_ui.visible = true
+		get_tree().root.move_child(global_ui, get_tree().root.get_child_count() - 1)
 
 func trigger_win_state():
 	print("🏆 YOU WIN!")
 	$CanvasLayer/VictoryLabel.visible = true
 	play_victory_sound()
 	cleanup_game()
+	# Ensure GlobalUI is visible and on top
+	if has_node("/root/GlobalUI"):
+		var global_ui = get_node("/root/GlobalUI")
+		global_ui.visible = true
+		get_tree().root.move_child(global_ui, get_tree().root.get_child_count() - 1)
 
 func trigger_ceo_victory():
 	print("🛫 CEO Victory Achieved — customers be damned")
@@ -544,6 +557,11 @@ func trigger_ceo_victory():
 	var ceo_win_screen = preload("res://scenes/Game Over/GameOver-CEOVictoryScreen.tscn").instantiate()
 	add_child(ceo_win_screen)
 	cleanup_game()
+	# Ensure GlobalUI is visible and on top
+	if has_node("/root/GlobalUI"):
+		var global_ui = get_node("/root/GlobalUI")
+		global_ui.visible = true
+		get_tree().root.move_child(global_ui, get_tree().root.get_child_count() - 1)
 
 func cleanup_game():
 	$CanvasLayer/ProjectProgressBar.visible = false
@@ -555,4 +573,4 @@ func cleanup_game():
 	
 	# Remove all defenses
 	for defense in get_tree().get_nodes_in_group("defenses"):
-		defense.queue_free() 
+		defense.queue_free()
