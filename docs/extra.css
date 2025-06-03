@@ -1,0 +1,29 @@
+/* Burnt Potato Games custom MKDocs theme */
+
+:root {
+  --md-primary-fg-color: #ffb347; /* Burnt orange/yellow */
+  --md-accent-fg-color: #e25822;  /* Deep orange */
+  --md-typeset-a-color: #e25822;
+  --md-default-bg-color: #fff8f0; /* Light warm background */
+  --md-code-bg-color: #f5e6d8;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2.2rem;
+}
+
+/* Custom font (if you use one on your site, add @import here) */
+body, .md-typeset {
+  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+}
+
+/* Optional: Add a subtle shadow to the nav bar */
+.md-header {
+  box-shadow: 0 2px 8px rgba(226,88,34,0.08);
+}
+
+/* Optional: Rounded corners for code blocks */
+.md-typeset pre, .md-typeset code {
+  border-radius: 6px;
+}

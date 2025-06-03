@@ -1,0 +1,23 @@
+site_name: BurntOut Documentation
+nav:
+  - Home: index.md
+  - Game Overview:
+      - Features: features.md
+      - Mechanics: mechanics.md
+  - Development:
+      - Code Overview: code-overview.md
+      - Assets: assets.md
+  - FAQ: faq.md
+theme:
+  name: material
+  logo: icon.svg
+  favicon: icon.svg
+  custom_dir: docs
+  palette:
+    primary: custom
+    accent: custom
+  font:
+    text: Inter
+    code: Fira Mono
+extra_css:
+  - extra.css
