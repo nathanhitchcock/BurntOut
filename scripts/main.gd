@@ -50,6 +50,7 @@ var sfx_victory
 var sfx_hire_sound
 var bgm
 var sfx_evil_laugh
+var sfx_negative  # NEW: negative/error sound
 
 ### -- New Features, Debugs, & Cheats --
 var ceo_trigger_ready = false
@@ -99,6 +100,7 @@ func _ready() -> void:
 	sfx["hire_sound"] = $Audio/HirePoofSound
 	sfx["bgm"] = $Audio/BackgroundMusic
 	sfx["evil_laugh"] = $Audio/EvilLaughSound
+	sfx["negative"] = $Audio/NegativeSound if has_node("Audio/NegativeSound") else null  # NEW: negative/error sound
 	$CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer3/HireButton.pressed.connect(_on_HireButton_pressed)
 	
 	# - lock toggles at the start of the game -
@@ -444,6 +446,7 @@ func update_defense_hud():
 			btn.scale = Vector2(1, 1)
 
 func show_insufficient_points_warning():
+	play_negative_sound()
 	var label = $CanvasLayer/InsufficientPointsLabel
 	label.visible = true
 
@@ -512,6 +515,11 @@ func play_evil_laugh_sound() -> void:
 	"""Plays the evil laugh sound effect."""
 	if sfx.has("evil_laugh") and sfx["evil_laugh"]:
 		sfx["evil_laugh"].play()
+
+func play_negative_sound() -> void:
+	"""Plays the negative sound effect when an action fails (e.g., not enough points)."""
+	if sfx.has("negative") and sfx["negative"]:
+		sfx["negative"].play()
 
 ## -- END GAME  --
 func check_game_over():
