@@ -9,13 +9,13 @@ var map_bounds := Rect2(Vector2(0, 0), Vector2(1024, 768))
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("ui_right") or Input.is_action_pressed("move_right"):
 		input.x += 1
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("ui_left") or Input.is_action_pressed("move_left"):
 		input.x -= 1
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") or Input.is_action_pressed("move_down"):
 		input.y += 1
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") or Input.is_action_pressed("move_up"):
 		input.y -= 1
 	if input.length() > 0:
 		input = input.normalized()
