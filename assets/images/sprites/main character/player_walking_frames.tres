@@ -1,0 +1,12 @@
+[gd_resource type="SpriteFrames" load_steps=2 format=3]
+
+[resource]
+animations = [ "walk" ]
+frames = {
+"walk": [
+  ExtResource( 1 ),
+  ExtResource( 2 ),
+  ExtResource( 3 ),
+  ExtResource( 4 )
+]
+}

@@ -1,0 +1,31 @@
+extends CharacterBody2D
+
+var speed := 400.0
+
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
+@onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
+
+func _physics_process(delta):
+	var input = Vector2.ZERO
+	if Input.is_action_pressed("ui_right"):
+		input.x += 1
+	if Input.is_action_pressed("ui_left"):
+		input.x -= 1
+	if Input.is_action_pressed("ui_down"):
+		input.y += 1
+	if Input.is_action_pressed("ui_up"):
+		input.y -= 1
+	if input.length() > 0:
+		input = input.normalized()
+		velocity = input * speed
+		if animated_sprite:
+			animated_sprite.play("walk")
+		if fire_trail:
+			fire_trail.emitting = true
+	else:
+		velocity = Vector2.ZERO
+		if animated_sprite:
+			animated_sprite.stop()
+		if fire_trail:
+			fire_trail.emitting = false
+	move_and_slide()

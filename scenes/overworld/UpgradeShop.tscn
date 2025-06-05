@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+
+[node name="UpgradeShop" type="Node2D"]
+# Add your upgrade shop visuals and logic here
