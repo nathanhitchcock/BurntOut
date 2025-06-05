@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dv3rx6v8cg8a0"]
 
 [ext_resource type="Script" uid="uid://1u640rptmrae" path="res://scripts/ceo_splash.gd" id="1_83ipj"]
-[ext_resource type="Texture2D" uid="uid://ckehla6wnd2u0" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 06_12_41 PM.png" id="1_h8dqg"]
+[ext_resource type="Texture2D" uid="uid://cmbwmy2mc00j0" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 06_12_41 PM.png" id="1_h8dqg"]
 
 [sub_resource type="Animation" id="Animation_a0vbq"]
 length = 0.001

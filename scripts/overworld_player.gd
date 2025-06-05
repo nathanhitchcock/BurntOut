@@ -31,6 +31,14 @@ func _physics_process(delta):
 		if fire_trail:
 			fire_trail.emitting = false
 	move_and_slide()
-	# Clamp position to map bounds
+	# Clamp position to map bounds, accounting for sprite height so player can't walk off the bottom
+	var sprite_height := 0
+	if animated_sprite and animated_sprite.sprite_frames:
+		var anim = animated_sprite.animation
+		var frame = animated_sprite.frame
+		var tex = animated_sprite.sprite_frames.get_frame_texture(anim, frame)
+		if tex:
+			sprite_height = tex.get_height() * animated_sprite.scale.y
+	# If no animated_sprite, fallback to 0
 	position.x = clamp(position.x, map_bounds.position.x, map_bounds.position.x + map_bounds.size.x)
-	position.y = clamp(position.y, map_bounds.position.y, map_bounds.position.y + map_bounds.size.y)
+	position.y = clamp(position.y, map_bounds.position.y, map_bounds.position.y + map_bounds.size.y - sprite_height)
