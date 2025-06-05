@@ -1,36 +1,36 @@
-[gd_scene load_steps=16 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=16 format=3 uid="uid://2vgpweaq58xb"]
 
-[ext_resource type="Texture2D" uid="uid://b188eyr232oeh" path="res://assets/images/backgrounds/Whimsical Village on a Winding Path.png" id="1_jvs31"]
-[ext_resource type="Texture2D" uid="uid://xm6hx1hhypkl" path="res://assets/images/backgrounds/overworld/server-temple.png" id="2_662u0"]
-[ext_resource type="Texture2D" uid="uid://bhjxfiquk0vog" path="res://assets/images/backgrounds/overworld/homebase-exterior.png" id="3_dhsp4"]
-[ext_resource type="Texture2D" uid="uid://8br1vep762qt" path="res://assets/images/backgrounds/overworld/upgrade-shop-exterior.png" id="4_dhsp4"]
-[ext_resource type="Texture2D" uid="uid://kx2tso1kt5vl" path="res://assets/images/backgrounds/overworld/CORP-exterior.png" id="5_b1b42"]
-[ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="6_0wbp6"]
-[ext_resource type="Texture2D" uid="uid://df7w1eagrhl0g" path="res://assets/images/sprites/main character/player_walk_6frame.png" id="7_lvsx0"]
-[ext_resource type="Texture2D" uid="uid://da34mugemvlfr" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="8_lvsx0"]
+[ext_resource type="Texture2D" uid="uid://bq8i5mcga3kc3" path="res://assets/images/backgrounds/CORP office/CORP_office.png" id="1_2lp3j"]
+[ext_resource type="Texture2D" uid="uid://xm6hx1hhypkl" path="res://assets/images/backgrounds/overworld/server-temple.png" id="2_4vt7m"]
+[ext_resource type="Texture2D" uid="uid://bhjxfiquk0vog" path="res://assets/images/backgrounds/overworld/homebase-exterior.png" id="3_pseo3"]
+[ext_resource type="Texture2D" uid="uid://8br1vep762qt" path="res://assets/images/backgrounds/overworld/upgrade-shop-exterior.png" id="4_43272"]
+[ext_resource type="Texture2D" uid="uid://kx2tso1kt5vl" path="res://assets/images/backgrounds/overworld/CORP-exterior.png" id="5_x8ihw"]
+[ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="6_e78h7"]
+[ext_resource type="Texture2D" uid="uid://df7w1eagrhl0g" path="res://assets/images/sprites/main character/player_walk_6frame.png" id="7_n8v8p"]
+[ext_resource type="Texture2D" uid="uid://da34mugemvlfr" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="8_jk14j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bduoi"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(54, 0, 485, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lia7k"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(539, 0, 485, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ff0t0"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(54, 512, 485, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8is1o"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(539, 512, 485, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6hgi4"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(54, 1024, 485, 512)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5tehe"]
-atlas = ExtResource("7_lvsx0")
+atlas = ExtResource("7_n8v8p")
 region = Rect2(539, 1024, 485, 512)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hxnvt"]
@@ -59,16 +59,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Overworld2" type="Node2D"]
+[node name="Overworld" type="Node2D"]
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 position = Vector2(1, 4)
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
-visible = false
 position = Vector2(512.5, 338.25)
 scale = Vector2(0.662109, 0.651855)
-texture = ExtResource("1_jvs31")
+texture = ExtResource("1_2lp3j")
 
 [node name="ServerTemple" type="Button" parent="."]
 visible = false
@@ -77,39 +76,42 @@ offset_top = -14.0
 offset_right = 1304.0
 offset_bottom = 1058.0
 scale = Vector2(0.25, 0.25)
-icon = ExtResource("2_662u0")
+icon = ExtResource("2_4vt7m")
 flat = true
 
 [node name="HomeBase" type="Button" parent="."]
+visible = false
 offset_left = 36.0
 offset_top = 167.0
 offset_right = 1068.0
 offset_bottom = 1199.0
 scale = Vector2(0.25, 0.25)
-icon = ExtResource("3_dhsp4")
+icon = ExtResource("3_pseo3")
 flat = true
 
 [node name="UpgradeShop" type="Button" parent="."]
+visible = false
 offset_left = 441.0
 offset_top = 169.0
 offset_right = 1473.0
 offset_bottom = 1201.0
 scale = Vector2(0.25, 0.25)
-icon = ExtResource("4_dhsp4")
+icon = ExtResource("4_43272")
 flat = true
 
 [node name="Button" type="Button" parent="."]
+visible = false
 offset_left = 850.0
 offset_top = 179.0
 offset_right = 1882.0
 offset_bottom = 1723.0
 scale = Vector2(0.15, 0.15)
-icon = ExtResource("5_b1b42")
+icon = ExtResource("5_x8ihw")
 flat = true
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(300, 300)
-script = ExtResource("6_0wbp6")
+script = ExtResource("6_e78h7")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 scale = Vector2(0.25, 0.25)
@@ -122,4 +124,4 @@ animation = &"walk"
 
 [node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
 emitting = false
-texture = ExtResource("8_lvsx0")
+texture = ExtResource("8_jk14j")

@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 var speed := 400.0
+# Set your map boundaries here (adjust as needed)
+var map_bounds := Rect2(Vector2(0, 0), Vector2(1024, 768))
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
@@ -29,3 +31,6 @@ func _physics_process(delta):
 		if fire_trail:
 			fire_trail.emitting = false
 	move_and_slide()
+	# Clamp position to map bounds
+	position.x = clamp(position.x, map_bounds.position.x, map_bounds.position.x + map_bounds.size.x)
+	position.y = clamp(position.y, map_bounds.position.y, map_bounds.position.y + map_bounds.size.y)
