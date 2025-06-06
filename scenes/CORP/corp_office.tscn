@@ -1,6 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=26 format=3 uid="uid://docso1kx17qoj"]
 
-[ext_resource type="Texture2D" uid="uid://bf8brc4e6htdn" path="res://assets/images/backgrounds/CORP office/CORP-office-cultist.png" id="1_y7now"]
+[ext_resource type="Texture2D" uid="uid://cvw5y0iepwc8y" path="res://assets/images/backgrounds/overworld/CORP_office1.png" id="1_2lp3j"]
 [ext_resource type="Texture2D" uid="uid://bgy42flyxkw1i" path="res://assets/images/backgrounds/overworld/server-temple.png" id="2_2lp3j"]
 [ext_resource type="Texture2D" uid="uid://crrcet3513q6b" path="res://assets/images/backgrounds/overworld/homebase-exterior.png" id="3_i65ii"]
 [ext_resource type="Texture2D" uid="uid://bkt4jcq3flgh0" path="res://assets/images/backgrounds/overworld/upgrade-shop-exterior.png" id="4_rifxr"]
@@ -63,9 +63,33 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2lp3j"]
-radius = 180.044
+radius = 132.0
 
-[node name="Overworld2" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lp3j"]
+size = Vector2(943, 24.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
+size = Vector2(33, 401.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pn5pk"]
+size = Vector2(337.25, 52.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4m04"]
+size = Vector2(33, 118)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23ju4"]
+size = Vector2(24.5, 165.188)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ay4ss"]
+size = Vector2(24.5, 158.125)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5kmm"]
+size = Vector2(404.5, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nsujb"]
+size = Vector2(1024.75, 167.625)
+
+[node name="CORP_MainOffice" type="Node2D"]
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 position = Vector2(0, 14)
@@ -73,7 +97,7 @@ position = Vector2(0, 14)
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
 position = Vector2(515.688, 291.906)
 scale = Vector2(0.668376, 0.597839)
-texture = ExtResource("1_y7now")
+texture = ExtResource("1_2lp3j")
 metadata/_edit_lock_ = true
 
 [node name="ServerTemple" type="Button" parent="."]
@@ -120,7 +144,7 @@ scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(300, 300)
+position = Vector2(485, 155)
 script = ExtResource("5_quye3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -137,6 +161,85 @@ emitting = false
 texture = ExtResource("7_pn5pk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-63, 28)
+position = Vector2(-62, 42)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_2lp3j")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="wall-bottom" type="StaticBody2D" parent="Walls"]
+position = Vector2(14, 502)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-bottom"]
+position = Vector2(506, 96.25)
+shape = SubResource("RectangleShape2D_2lp3j")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-left" type="StaticBody2D" parent="Walls"]
+position = Vector2(-26, 237)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-left"]
+position = Vector2(55, 175)
+shape = SubResource("RectangleShape2D_rifxr")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-right" type="StaticBody2D" parent="Walls"]
+position = Vector2(945, 236)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-right"]
+position = Vector2(61, 73)
+shape = SubResource("RectangleShape2D_rifxr")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-collab-int-1" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-collab-int-1"]
+position = Vector2(213.375, 311)
+shape = SubResource("RectangleShape2D_pn5pk")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-collab-int-2" type="StaticBody2D" parent="Walls"]
+position = Vector2(-26, 237)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-collab-int-2"]
+position = Vector2(404, 173)
+shape = SubResource("RectangleShape2D_r4m04")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-mainhall-1" type="StaticBody2D" parent="Walls"]
+position = Vector2(-26, 237)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-mainhall-1"]
+position = Vector2(534, 132.406)
+shape = SubResource("RectangleShape2D_23ju4")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-entrance-2" type="StaticBody2D" parent="Walls"]
+position = Vector2(-27, 238)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-entrance-2"]
+position = Vector2(601, -109)
+shape = SubResource("RectangleShape2D_ay4ss")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-scrum-left" type="StaticBody2D" parent="Walls"]
+position = Vector2(-26, 237)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-scrum-left"]
+position = Vector2(665, 150)
+shape = SubResource("RectangleShape2D_ay4ss")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-scrum-top" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-scrum-top"]
+position = Vector2(835, 281)
+shape = SubResource("RectangleShape2D_p5kmm")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="wall-cafe" type="StaticBody2D" parent="Walls"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-cafe"]
+position = Vector2(516, 77.8125)
+shape = SubResource("RectangleShape2D_nsujb")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
