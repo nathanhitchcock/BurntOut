@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://dmm7dvgkio3h7"]
 
 [ext_resource type="Script" uid="uid://d2fk6wgnjnjer" path="res://scripts/start_screen.gd" id="1_pswtb"]
-[ext_resource type="Texture2D" uid="uid://4ip83f6rjh7x" path="res://assets/images/ui/start-screen.png" id="2_a0vbq"]
-[ext_resource type="Texture2D" uid="uid://dr7xmt5tpuihb" path="res://assets/images/ui/start-button.png" id="3_nj7f0"]
+[ext_resource type="Texture2D" uid="uid://dv5yc2j1gjv4t" path="res://assets/images/ui/start-screen.png" id="2_a0vbq"]
+[ext_resource type="Texture2D" uid="uid://wnd1x65jk7kf" path="res://assets/images/ui/start-button.png" id="3_nj7f0"]
 
 [sub_resource type="GDScript" id="GDScript_pswtb"]
 script/source = "extends CanvasLayer
