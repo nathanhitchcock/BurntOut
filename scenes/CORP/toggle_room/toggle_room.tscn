@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://lbrto7e61p4g"]
+
+[ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="1_ktqae"]
+
+[node name="ToggleRoom" type="Node2D"]
+
+[node name="BackgroundWrapper" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundWrapper"]
+position = Vector2(511, 299.5)
+scale = Vector2(0.66276, 0.586914)
+texture = ExtResource("1_ktqae")

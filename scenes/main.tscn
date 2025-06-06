@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://ckl50iwfsbvsp"]
 
 [ext_resource type="Script" uid="uid://dpv1dbjbtepbw" path="res://scripts/main.gd" id="1_jyhfs"]
-[ext_resource type="Texture2D" uid="uid://dmfqcwennsr8u" path="res://assets/images/backgrounds/ai-background-3wide_blackend.png" id="2_0ld40"]
+[ext_resource type="Texture2D" uid="uid://dmfqcwennsr8u" path="res://assets/images/backgrounds/CORP office/ai-background-3wide_blackend.png" id="2_0ld40"]
 [ext_resource type="Texture2D" uid="uid://dmxhftv7nn7j7" path="res://assets/images/ui/game_over_burnout.png" id="6_0ld40"]
 [ext_resource type="Texture2D" uid="uid://c6yrllqhg7qm6" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 10_55_13 AM.png" id="6_gqmmt"]
 [ext_resource type="AudioStream" uid="uid://bvn6fiyd84rh2" path="res://assets/audio/sfx/coffee_place_drop.mp3" id="7_o6xl0"]
@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://kcnhj26kv1r5" path="res://assets/audio/sfx/revive_sound.mp3" id="8_tipki"]
 [ext_resource type="AudioStream" uid="uid://c25ljaolqrl2g" path="res://assets/audio/sfx/big-thunder-clap-99753.mp3" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://cl8rf3hxjq4l3" path="res://scripts/DefenseButton.gd" id="9_dp3eg"]
-[ext_resource type="Texture2D" uid="uid://bxhtics6afpxu" path="res://assets/images/defenses/coffee_icon.png" id="9_muem4"]
+[ext_resource type="Texture2D" uid="uid://dprox8qj7ejvl" path="res://assets/images/defenses/coffee_icon.png" id="9_muem4"]
 [ext_resource type="Texture2D" uid="uid://b4aer1c4cl5rs" path="res://assets/images/ui/Vintage Strategic Objectives Sign.png" id="9_yc10j"]
 [ext_resource type="AudioStream" uid="uid://bmtkpj73qlsqi" path="res://assets/audio/music/background_music.mp3" id="10_choun"]
 [ext_resource type="Texture2D" uid="uid://g0thjih3wqyc" path="res://assets/images/defenses/desk_icon.png" id="10_dp3eg"]
@@ -189,6 +189,7 @@ texture_normal = ExtResource("9_muem4")
 ignore_texture_size = true
 stretch_mode = 0
 script = ExtResource("9_dp3eg")
+defense_type = "Coffee"
 
 [node name="Label" type="Label" parent="CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer"]
 layout_mode = 2

@@ -1,9 +1,9 @@
 [gd_scene load_steps=26 format=3 uid="uid://docso1kx17qoj"]
 
 [ext_resource type="Texture2D" uid="uid://cvw5y0iepwc8y" path="res://assets/images/backgrounds/overworld/CORP_office1.png" id="1_2lp3j"]
-[ext_resource type="Texture2D" uid="uid://bgy42flyxkw1i" path="res://assets/images/backgrounds/overworld/server-temple.png" id="2_2lp3j"]
-[ext_resource type="Texture2D" uid="uid://crrcet3513q6b" path="res://assets/images/backgrounds/overworld/homebase-exterior.png" id="3_i65ii"]
-[ext_resource type="Texture2D" uid="uid://bkt4jcq3flgh0" path="res://assets/images/backgrounds/overworld/upgrade-shop-exterior.png" id="4_rifxr"]
+[ext_resource type="Texture2D" path="res://assets/images/backgrounds/overworld/server-temple.png" id="2_2lp3j"]
+[ext_resource type="Texture2D" path="res://assets/images/backgrounds/overworld/homebase-exterior.png" id="3_i65ii"]
+[ext_resource type="Texture2D" path="res://assets/images/backgrounds/overworld/upgrade-shop-exterior.png" id="4_rifxr"]
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="5_quye3"]
 [ext_resource type="Texture2D" uid="uid://cbt0ugnrcc8s2" path="res://assets/images/sprites/main character/player_walk_6frame.png" id="7_n8v8p"]
@@ -95,6 +95,7 @@ size = Vector2(1024.75, 167.625)
 position = Vector2(0, 14)
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
+modulate = Color(0.697578, 0.697578, 0.697578, 1)
 position = Vector2(515.688, 291.906)
 scale = Vector2(0.668376, 0.597839)
 texture = ExtResource("1_2lp3j")
