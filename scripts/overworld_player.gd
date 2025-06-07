@@ -77,3 +77,24 @@ func show_floating_feedback(text: String, color: Color = Color(0.2, 0.9, 0.2, 1)
 	tween.tween_property(label, "modulate:a", 0, 2.0)
 	tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
 	tween.finished.connect(label.queue_free)
+
+func take_damage(amount: int):
+	# Reduce health if you have a health variable or bar
+	if has_node("HealthBar"):
+		var bar = get_node("HealthBar")
+		bar.value = max(bar.value - amount, bar.min_value)
+
+	# Twitch (quick shake)
+	if animated_sprite:
+		var original_pos = animated_sprite.position
+		var tween = create_tween()
+		tween.tween_property(animated_sprite, "position:x", original_pos.x + 10, 0.05)
+		tween.tween_property(animated_sprite, "position:x", original_pos.x - 10, 0.05)
+		tween.tween_property(animated_sprite, "position:x", original_pos.x, 0.05)
+
+	# Flash (white flash)
+	if animated_sprite:
+		var flash_tween = create_tween()
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1), 0.05)
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1,0.5), 0.05)
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1,1), 0.1)
