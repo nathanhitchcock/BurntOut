@@ -73,6 +73,18 @@ func _on_toggle_pressed(toggle_index: int):
 		# Award sprint points for solving the puzzle
 		if has_node("/root/player_data"):
 			get_node("/root/player_data").sprint_points += 1
+		# Show floating label for sprint point
+		if player:
+			var label = Label.new()
+			label.text = "+1 Sprint Point!"
+			label.modulate = Color(0.2, 0.9, 0.2, 1) # green
+			label.global_position = player.global_position + Vector2(0, -40)
+			label.z_index = 100
+			get_tree().current_scene.add_child(label)
+			var tween = create_tween()
+			tween.tween_property(label, "modulate:a", 0, 2.0)
+			tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+			tween.finished.connect(label.queue_free)
 		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()
