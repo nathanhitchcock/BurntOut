@@ -19,3 +19,7 @@ func _process(_delta):
 	if player_in_range and Input.is_action_just_pressed("ui_accept"):
 		print("Interacted with the DSU Board!")
 		get_tree().change_scene_to_file("res://scenes/CORP/toggle_room/toggle_room.tscn")
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
