@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://27c7iwa8pixh"]
 
-[ext_resource type="Texture2D" uid="uid://d26l4uda6a4xa" path="res://assets/images/sprites/teammate_1.png" id="1_b1xel"]
+[ext_resource type="Texture2D" uid="uid://b4dwerb5wttus" path="res://assets/images/sprites/teammate_1.png" id="1_b1xel"]
 [ext_resource type="Script" uid="uid://cm8i2bpd5ruxt" path="res://scripts/teammate.gd" id="2_ibt1x"]
-[ext_resource type="Texture2D" uid="uid://bdvkbbs625en5" path="res://assets/images/ui/ai-graphic-click-to-revive.png" id="3_jeuph"]
-[ext_resource type="Texture2D" uid="uid://vn4vxvagd6rs" path="res://assets/images/ui/toggle_button/ToggleButton-CSTM.png" id="4_frl4u"]
-[ext_resource type="Texture2D" uid="uid://dcp86lhne827a" path="res://assets/images/ui/toggle_button/ToggleButton-EXEC_pressed.png" id="5_t216s"]
+[ext_resource type="Texture2D" uid="uid://ctwr78gklfyji" path="res://assets/images/ui/ai-graphic-click-to-revive.png" id="3_jeuph"]
+[ext_resource type="Texture2D" uid="uid://btehxbgdbv4lp" path="res://assets/images/ui/toggle_button/ToggleButton-CSTM.png" id="4_frl4u"]
+[ext_resource type="Texture2D" uid="uid://dlgfskxwd4k33" path="res://assets/images/ui/toggle_button/ToggleButton-EXEC_pressed.png" id="5_t216s"]
 
 [sub_resource type="FontVariation" id="FontVariation_b1xel"]
 
