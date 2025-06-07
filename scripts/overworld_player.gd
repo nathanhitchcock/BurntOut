@@ -65,3 +65,15 @@ func _process(delta):
 		save_to_player_data()
 	if Input.is_action_just_pressed("ui_debug_load"):
 		load_from_player_data()
+
+func show_floating_feedback(text: String, color: Color = Color(0.2, 0.9, 0.2, 1)):
+	var label = Label.new()
+	label.text = text
+	label.modulate = color
+	label.global_position = global_position + Vector2(0, -40)
+	label.z_index = 100
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 2.0)
+	tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+	tween.finished.connect(label.queue_free)
