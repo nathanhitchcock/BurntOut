@@ -7,6 +7,11 @@ var player_sequence: Array = []
 # Number of toggles in the puzzle
 const TOGGLE_COUNT := 3
 
+@onready var incorrect_label = $IncorrectLabel if has_node("IncorrectLabel") else null
+@onready var solved_label = $SolvedLabel if has_node("SolvedLabel") else null
+@onready var fail_sound = $FailSound if has_node("FailSound") else null
+@onready var success_sound = $SuccessSound if has_node("SuccessSound") else null
+
 func _ready():
 	# Generate a random solution sequence
 	solution = []
@@ -24,6 +29,11 @@ func _ready():
 			btn.toggle_index = i
 			btn.connect("toggle_pressed", Callable(self, "_on_toggle_pressed"))
 
+	if incorrect_label:
+		incorrect_label.visible = false
+	if solved_label:
+		solved_label.visible = false
+
 func _on_toggle_pressed(toggle_index: int):
 	print("[TogglePuzzle] Player pressed:", toggle_index)
 	player_sequence.append(toggle_index)
@@ -31,12 +41,24 @@ func _on_toggle_pressed(toggle_index: int):
 	for i in player_sequence.size():
 		if player_sequence[i] != solution[i]:
 			print("[TogglePuzzle] Incorrect! Resetting.")
+			if fail_sound:
+				fail_sound.play()
+			if incorrect_label:
+				incorrect_label.visible = true
+				await get_tree().create_timer(1.0).timeout
+				incorrect_label.visible = false
 			player_sequence.clear()
 			_reset_toggles()
 			return
 	# If the player has completed the sequence
 	if player_sequence.size() == solution.size():
 		print("[TogglePuzzle] Puzzle solved!")
+		if success_sound:
+			success_sound.play()
+		if solved_label:
+			solved_label.visible = true
+			await get_tree().create_timer(1.0).timeout
+			solved_label.visible = false
 		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()

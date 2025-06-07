@@ -5,6 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b04iudc0byaey" path="res://assets/images/ui/toggle_button/toggle_off.png" id="2_0pjm4"]
 
 [node name="ToggleButton_tscn" type="TextureButton"]
-texture_normal = ExtResource("1_agqos")
-texture_pressed = ExtResource("2_0pjm4")
+texture_normal = ExtResource("2_0pjm4")
+texture_pressed = ExtResource("1_agqos")
 script = ExtResource("1_jiyb1")

@@ -19,6 +19,8 @@ func update_visual():
 	if is_on:
 		# Set the texture for the ON state
 		self.texture_normal = preload("res://assets/images/ui/toggle_button/toggle_on.png")
+		self.texture_pressed = preload("res://assets/images/ui/toggle_button/toggle_on.png")
 	else:
 		# Set the texture for the OFF state
 		self.texture_normal = preload("res://assets/images/ui/toggle_button/toggle_off.png")
+		self.texture_pressed = preload("res://assets/images/ui/toggle_button/toggle_off.png")
