@@ -54,4 +54,11 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
+	# Hide sprint points label on StartScreen
+	var current_scene = get_tree().current_scene
+	if sprint_points_label:
+		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
+			sprint_points_label.visible = false
+		else:
+			sprint_points_label.visible = true
 	update_sprint_points_display()

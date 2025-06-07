@@ -70,6 +70,9 @@ func _on_toggle_pressed(toggle_index: int):
 			solved_label.visible = false
 		if portal:
 			portal.visible = true
+		# Award sprint points for solving the puzzle
+		if has_node("/root/player_data"):
+			get_node("/root/player_data").sprint_points += 1
 		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()
