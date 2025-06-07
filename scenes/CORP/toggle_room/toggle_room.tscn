@@ -1,6 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://lbrto7e61p4g"]
+[gd_scene load_steps=13 format=3 uid="uid://lbrto7e61p4g"]
 
 [ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="1_ktqae"]
+[ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="2_dbf1m"]
+[ext_resource type="Texture2D" uid="uid://cbt0ugnrcc8s2" path="res://assets/images/sprites/main character/player_walk_6frame.png" id="3_tt38t"]
+[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bduoi"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(54, 0, 485, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lia7k"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(539, 0, 485, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ff0t0"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(54, 512, 485, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8is1o"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(539, 512, 485, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hgi4"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(54, 1024, 485, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5tehe"]
+atlas = ExtResource("3_tt38t")
+region = Rect2(539, 1024, 485, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sbx1t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bduoi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lia7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ff0t0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8is1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hgi4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5tehe")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6p8hy"]
+radius = 132.0
 
 [node name="ToggleRoom" type="Node2D"]
 
@@ -10,3 +66,26 @@
 position = Vector2(511, 299.5)
 scale = Vector2(0.66276, 0.586914)
 texture = ExtResource("1_ktqae")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+process_mode = 3
+position = Vector2(485, 155)
+script = ExtResource("2_dbf1m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.25, 0.25)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-60, 8)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_sbx1t")
+animation = &"walk"
+
+[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
+emitting = false
+texture = ExtResource("4_twdje")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-62, 42)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CircleShape2D_6p8hy")
