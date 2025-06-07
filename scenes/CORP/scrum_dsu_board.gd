@@ -18,4 +18,4 @@ func _on_area_body_exited(body):
 func _process(_delta):
 	if player_in_range and Input.is_action_just_pressed("ui_accept"):
 		print("Interacted with the DSU Board!")
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		get_tree().change_scene_to_file("res://scenes/CORP/toggle_room/toggle_room.tscn")

@@ -6,6 +6,7 @@ var map_bounds := Rect2(Vector2(0, 0), Vector2(1024, 768))
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
+@onready var player_data = get_node_or_null("/root/player_data")
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
@@ -42,3 +43,25 @@ func _physics_process(delta):
 	# If no animated_sprite, fallback to 0
 	position.x = clamp(position.x, map_bounds.position.x, map_bounds.position.x + map_bounds.size.x)
 	position.y = clamp(position.y, map_bounds.position.y, map_bounds.position.y + map_bounds.size.y - sprite_height)
+
+func save_to_player_data():
+	if player_data:
+		player_data.position = position
+		print("[Player] Saved position to player_data: %s" % str(position))
+		print("[Player] player_data singleton ref:", player_data)
+
+func load_from_player_data():
+	if player_data and player_data.position:
+		position = player_data.position
+		print("[Player] Loaded position from player_data: %s" % str(player_data.position))
+		print("[Player] player_data singleton ref:", player_data)
+
+func _ready():
+	load_from_player_data()
+
+func _process(delta):
+	# print("[Player] _process running")  # Commented out to reduce console spam
+	if Input.is_action_just_pressed("ui_debug_save"):
+		save_to_player_data()
+	if Input.is_action_just_pressed("ui_debug_load"):
+		load_from_player_data()
