@@ -11,6 +11,8 @@ func _ready():
 	self.pressed.connect(_on_pressed)
 
 func _on_pressed():
+	if has_node("ClickSound"):
+		$ClickSound.play()
 	is_on = !is_on
 	update_visual()
 	emit_signal("toggle_pressed", toggle_index)
