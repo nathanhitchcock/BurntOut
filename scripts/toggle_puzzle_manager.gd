@@ -11,6 +11,8 @@ const TOGGLE_COUNT := 3
 @onready var solved_label = $SolvedLabel if has_node("SolvedLabel") else null
 @onready var fail_sound = $FailSound if has_node("FailSound") else null
 @onready var success_sound = $SuccessSound if has_node("SuccessSound") else null
+@onready var portal = $PortalToCorpOffice if has_node("PortalToCorpOffice") else null
+@onready var player = $Player if has_node("Player") else null
 
 func _ready():
 	# Generate a random solution sequence
@@ -43,10 +45,17 @@ func _on_toggle_pressed(toggle_index: int):
 			print("[TogglePuzzle] Incorrect! Resetting.")
 			if fail_sound:
 				fail_sound.play()
+			if player and player.has_method("take_damage"):
+				player.take_damage(20) # Deal 20 damage on fail
+			elif player and player.has_node("HealthBar"):
+				var bar = player.get_node("HealthBar")
+				bar.value = max(bar.value - 20, bar.min_value)
 			if incorrect_label:
 				incorrect_label.visible = true
 				await get_tree().create_timer(1.0).timeout
 				incorrect_label.visible = false
+			if portal:
+				portal.visible = true
 			player_sequence.clear()
 			_reset_toggles()
 			return
@@ -59,6 +68,8 @@ func _on_toggle_pressed(toggle_index: int):
 			solved_label.visible = true
 			await get_tree().create_timer(1.0).timeout
 			solved_label.visible = false
+		if portal:
+			portal.visible = true
 		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()
@@ -69,3 +80,13 @@ func _reset_toggles():
 		if btn:
 			btn.is_on = false
 			btn.update_visual()
+
+func _process(_delta):
+	if player and player.has_node("HealthBar"):
+		var bar = player.get_node("HealthBar")
+		if bar.value <= bar.min_value:
+			if portal:
+				portal.visible = true
+				# Add a short delay before transporting to allow sound/feedback
+				await get_tree().create_timer(1.0).timeout
+				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")

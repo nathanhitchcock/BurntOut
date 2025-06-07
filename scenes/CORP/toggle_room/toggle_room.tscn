@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://lbrto7e61p4g"]
+[gd_scene load_steps=22 format=3 uid="uid://lbrto7e61p4g"]
 
 [ext_resource type="Script" uid="uid://bcwyuhuqcks7h" path="res://scripts/toggle_puzzle_manager.gd" id="1_twdje"]
 [ext_resource type="PackedScene" uid="uid://c8piwflixtj5g" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="2_tt38t"]
@@ -64,6 +64,14 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_6p8hy"]
 radius = 92.0
 
+[sub_resource type="FontVariation" id="FontVariation_vdwej"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_g2535"]
+color = Color(0, 0.721569, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqk76"]
+bg_color = Color(0.360784, 0.682353, 0.435294, 1)
+
 [node name="ToggleRoom" type="Node2D"]
 script = ExtResource("1_twdje")
 
@@ -121,6 +129,24 @@ position = Vector2(-62, 42)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_6p8hy")
 
+[node name="HealthBar" type="ProgressBar" parent="Player"]
+anchors_preset = -1
+anchor_left = -0.000612222
+anchor_top = -0.132463
+anchor_right = 1.13165
+anchor_bottom = -0.132463
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 960.0
+offset_bottom = 300.0
+scale = Vector2(0.0750436, 0.053259)
+theme_override_fonts/font = SubResource("FontVariation_vdwej")
+theme_override_font_sizes/font_size = 200
+theme_override_styles/background = SubResource("StyleBoxLine_g2535")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mqk76")
+value = 100.0
+metadata/_edit_use_anchors_ = true
+
 [node name="IncorrectLabel" type="Label" parent="."]
 visible = false
 offset_left = 4.0
@@ -144,6 +170,7 @@ stream = ExtResource("7_6p8hy")
 stream = ExtResource("8_aoyeq")
 
 [node name="PortalToCorpOffice" type="Area2D" parent="."]
+visible = false
 position = Vector2(100, 900)
 script = ExtResource("9_portal")
 
