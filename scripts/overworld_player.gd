@@ -117,6 +117,8 @@ func take_damage(amount: int):
 			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
 			sfx.stop()
 			sfx.play()
+		else:
+			print("[Player] ERROR: /root/GlobalAudio/Player/PlayerDamageSound not found!")
 
 	# Twitch (quick shake)
 	if animated_sprite:

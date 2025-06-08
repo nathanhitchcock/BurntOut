@@ -43,8 +43,8 @@ func _on_toggle_pressed(toggle_index: int):
 	for i in player_sequence.size():
 		if player_sequence[i] != solution[i]:
 			print("[TogglePuzzle] Incorrect! Resetting.")
-			if fail_sound:
-				fail_sound.play()
+			# if fail_sound:
+			#     fail_sound.play()  # Commented out: use player damage SFX instead
 			if player and player.has_method("take_damage"):
 				player.take_damage(20) # Deal 20 damage on fail
 			elif player and player.has_node("HealthBar"):
