@@ -17,10 +17,24 @@ func _ready():
 	self.visible = false
 	await get_tree().create_timer(2.0).timeout
 	self.visible = true
-	# Show sparks if enabled
-	if show_sparks_on_load:
+	# Only one random button gets the effect
+	if is_random_effect_target():
 		await get_tree().process_frame # Ensure button is visible before flash
 		spawn_sparks()
+
+# Helper to determine if this button is the random target
+func is_random_effect_target() -> bool:
+	# Only run on first frame for all toggles
+	if not get_tree().has_meta("_toggle_effect_randomized"):
+		var toggles = get_parent().get_children().filter(func(n): return n is TextureButton)
+		if toggles.size() == 0:
+			return false
+		# Always pick at least one
+		var idx = randi() % toggles.size()
+		for i in range(toggles.size()):
+			toggles[i].set_meta("random_effect_target", i == idx)
+		get_tree().set_meta("_toggle_effect_randomized", true)
+	return self.get_meta("random_effect_target", false)
 
 func _on_pressed():
 	if has_node("ClickSound"):
