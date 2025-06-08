@@ -92,12 +92,31 @@ func show_floating_feedback(text: String, color: Color = Color(0.2, 0.9, 0.2, 1)
 	tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
 	tween.finished.connect(label.queue_free)
 
+func show_damage_popup(amount: int):
+	var label = Label.new()
+	label.text = "-" + str(amount)
+	label.modulate = Color("f24646")  # Red for damage
+	label.global_position = global_position + Vector2(0, -60)
+	label.z_index = 100
+	label.add_theme_font_size_override("font_size", 24)
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 1.2)
+	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
+	tween.finished.connect(label.queue_free)
+
 func take_damage(amount: int):
 	# Reduce health if you have a health variable or bar
 	if has_node("HealthBar"):
 		var bar = get_node("HealthBar")
 		bar.value = max(bar.value - amount, bar.min_value)
 		save_to_player_data() # Save health after taking damage
+		show_damage_popup(amount)
+		# Play damage sound using GlobalAudio singleton
+		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
+			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
+			sfx.stop()
+			sfx.play()
 
 	# Twitch (quick shake)
 	if animated_sprite:
