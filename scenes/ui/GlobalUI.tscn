@@ -2,25 +2,45 @@
 
 [ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scenes/ui/global_ui.gd" id="1_472px"]
 
-[node name="GlobalUI" type="Control"]
-visibility_layer = 524288
-layout_mode = 3
-anchors_preset = 0
+[node name="GlobalUI" type="CanvasLayer"]
+process_mode = 1
+layer = 50
 script = ExtResource("1_472px")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
+process_mode = 1
+layer = 50
 
-[node name="PauseBackground" type="ColorRect" parent="CanvasLayer"]
+[node name="Control" type="Control" parent="CanvasLayer"]
+process_mode = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 502.5
+offset_top = 249.5
+offset_right = 577.5
+offset_bottom = 249.5
+
+[node name="PauseBackground" type="ColorRect" parent="CanvasLayer/Control"]
+process_mode = 1
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -502.5
+offset_top = -249.5
+offset_right = -502.5
+offset_bottom = -249.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.33162, 1.07146)
 color = Color(0, 0, 0, 0.00392157)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+process_mode = 1
+top_level = true
+light_mask = 513
+visibility_layer = 513
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -32,39 +52,53 @@ offset_right = 37.5
 offset_bottom = 50.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 
-[node name="ResumeButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="ResumeButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+process_mode = 1
+light_mask = 513
+visibility_layer = 513
 layout_mode = 2
 text = "RESUME"
 
-[node name="RestartButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+process_mode = 1
+light_mask = 513
+visibility_layer = 513
 layout_mode = 2
 text = "RESTART"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
+process_mode = 1
+light_mask = 513
+visibility_layer = 513
 layout_mode = 2
 text = "QUIT"
 
-[node name="SprintPointsLabel" type="Label" parent="CanvasLayer"]
-offset_left = 20.0
-offset_top = 20.0
+[node name="SprintPointsLabel" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = -482.5
+offset_top = -229.5
+offset_right = -277.5
+offset_bottom = -190.5
 theme_override_font_sizes/font_size = 28
 text = "Sprint Points: 0"
 
-[node name="InteractPrompt" type="Label" parent="CanvasLayer"]
+[node name="InteractPrompt" type="Label" parent="CanvasLayer/Control"]
 visible = false
 z_index = 1000
+layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.8
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -80.0
-offset_bottom = -20.0
+offset_left = -502.5
+offset_top = 150.5
+offset_right = -239.5
+offset_bottom = 210.5
 theme_override_font_sizes/font_size = 36
-text = "Press [E] to interact"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResumeButton" to="CanvasLayer" method="_on_resume_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/RestartButton" to="CanvasLayer" method="_on_restart_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/QuitButton" to="CanvasLayer" method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/ResumeButton" to="CanvasLayer" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/RestartButton" to="CanvasLayer" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/QuitButton" to="CanvasLayer" method="_on_quit_pressed"]

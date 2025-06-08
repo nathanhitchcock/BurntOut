@@ -71,7 +71,9 @@ _data = {
 &"fade_out": SubResource("Animation_nj7f0")
 }
 
-[node name="StartScreen_tscn" type="Node2D"]
+[node name="StartScreen_tscn" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_pswtb")
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
@@ -89,6 +91,7 @@ offset_bottom = 590.0
 icon = ExtResource("3_nj7f0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
 script = SubResource("GDScript_pswtb")
 
 [node name="FadeRect" type="ColorRect" parent="CanvasLayer"]

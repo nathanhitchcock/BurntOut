@@ -20,7 +20,7 @@ config/icon="res://icon.svg"
 UIAnchor="*res://scenes/ui/control_root.tscn"
 player_data="*res://scripts/player_data.gd"
 GlobalAudio="*res://assets/audio/global_audio.tscn"
-GlobalUI="*res://scenes/ui/global_ui.gd"
+GlobalUI="*res://scenes/ui/GlobalUI.tscn"
 
 [display]
 
