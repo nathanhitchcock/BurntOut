@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scenes/ui/global_ui.gd" id="1_472px"]
 
-[node name="GlobalUi" type="Control"]
+[node name="GlobalUI" type="Control"]
 visibility_layer = 524288
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_472px")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
-script = ExtResource("1_472px")
 
 [node name="PauseBackground" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -50,6 +50,20 @@ offset_left = 20.0
 offset_top = 20.0
 theme_override_font_sizes/font_size = 28
 text = "Sprint Points: 0"
+
+[node name="InteractPrompt" type="Label" parent="CanvasLayer"]
+visible = false
+z_index = 1000
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 36
+text = "Press [E] to interact"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/ResumeButton" to="CanvasLayer" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/RestartButton" to="CanvasLayer" method="_on_restart_button_pressed"]

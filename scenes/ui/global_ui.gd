@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var sprint_points_label = $SprintPointsLabel if has_node("SprintPointsLabel") else null
 @onready var pause_menu = $VBoxContainer
 @onready var pause_bg = $PauseBackground
+@onready var interact_prompt = $CanvasLayer/InteractPrompt if has_node("CanvasLayer/InteractPrompt") else null
 
 func _ready():
 	print("GlobalUI loaded!")
@@ -62,3 +63,48 @@ func _process(_delta):
 		else:
 			sprint_points_label.visible = true
 	update_sprint_points_display()
+
+func show_interact_prompt(show: bool = true, position: Vector2 = Vector2.INF):
+	if interact_prompt:
+		interact_prompt.visible = show
+		if position != Vector2.INF:
+			interact_prompt.global_position = position
+
+func get_interact_prompt():
+	# Try direct path first
+	if has_node("CanvasLayer/InteractPrompt"):
+		return get_node("CanvasLayer/InteractPrompt")
+	# Fallback: search recursively
+	for child in get_children():
+		var found = _find_interact_prompt_recursive(child)
+		if found:
+			return found
+	return null
+
+func _find_interact_prompt_recursive(node):
+	if node is Label and node.name == "InteractPrompt":
+		return node
+	for child in node.get_children():
+		var found = _find_interact_prompt_recursive(child)
+		if found:
+			return found
+	return null
+
+func set_interact_prompt_text(text: String):
+	if interact_prompt:
+		interact_prompt.text = text
+
+func show_interact_popup_near_player(player: Node):
+	if not player:
+		return
+	var label = Label.new()
+	label.text = "[E]"
+	label.modulate = Color(1, 1, 1, 1)
+	label.global_position = player.global_position + Vector2(0, -60)
+	label.z_index = 1000
+	label.add_theme_font_size_override("font_size", 24)
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 1.0)
+	tween.tween_property(label, "position:y", label.position.y - 20, 1.0)
+	tween.finished.connect(label.queue_free)

@@ -105,3 +105,5 @@ func _process(_delta):
 				portal.visible = true
 				await get_tree().create_timer(1.5).timeout # Delay before transporting
 				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")
+	# Show interact prompt when player is near interactable (example usage)
+	GlobalUI.show_interact_prompt(true)

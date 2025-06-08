@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bficxc6jyqike"]
 
 [ext_resource type="Script" uid="uid://cb3xsabcus5vm" path="res://scripts/burnout_game_over.gd" id="1_sb4v1"]
-[ext_resource type="Texture2D" uid="uid://bjit5vyrb6ydw" path="res://assets/images/ui/game_over_burnout.png" id="2_qkvdw"]
+[ext_resource type="Texture2D" uid="uid://dmxhftv7nn7j7" path="res://assets/images/ui/game_over_burnout.png" id="2_qkvdw"]
 
 [node name="BurnoutGameOver" type="Node2D"]
 script = ExtResource("1_sb4v1")

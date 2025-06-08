@@ -10,3 +10,9 @@ func _ready():
 	$CanvasLayer/VBoxContainer/ShieldButton.pressed.connect(func(): purchase_upgrade(1))
 	$CanvasLayer/VBoxContainer/CloseButton.pressed.connect(func(): self.visible = false) # If you have a close button
 	update_shop_ui()
+
+func purchase_upgrade(index):
+	pass # TODO: Implement upgrade logic
+
+func update_shop_ui():
+	pass # TODO: Implement UI update logic

@@ -2,6 +2,9 @@ extends Node2D
 
 @onready var shop_ui = get_node("../UpgradeShopUI")
 
+var player_in_range := false
+var interact_prompt_shown := false
+
 func _ready():
 	$Area2D.body_entered.connect(_on_body_entered)
 	$Area2D.body_exited.connect(_on_body_exited)
@@ -24,6 +27,9 @@ func _on_body_entered(body):
 			if child is CanvasLayer or child is VBoxContainer:
 				child.visible = true
 				child.show()
+		player_in_range = true
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI").show_interact_prompt(true)
 
 func _on_body_exited(body):
 	if body.name == "Player" and shop_ui:
@@ -34,3 +40,6 @@ func _on_body_exited(body):
 			if child is CanvasLayer or child is VBoxContainer:
 				child.visible = false
 				child.hide()
+		player_in_range = false
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI").show_interact_prompt(false)
