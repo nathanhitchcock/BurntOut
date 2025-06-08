@@ -73,6 +73,11 @@ func spawn_sparks():
 	var particles = sparks.get_node_or_null("CPUParticles2D")
 	if particles:
 		particles.emitting = true
+	# Play short-circuit sound effect (revert to original file name)
+	var sfx = AudioStreamPlayer.new()
+	sfx.stream = preload("res://assets/audio/sfx/short_circuit_01.wav")
+	add_child(sfx)
+	sfx.play()
 	# Shake effect (runs in parallel with flashing)
 	var original_pos = self.position
 	var shake_tween = create_tween()
