@@ -70,6 +70,12 @@ func _on_toggle_pressed(toggle_index: int):
 			solved_label.visible = false
 		if portal:
 			portal.visible = true
+		# Award sprint points for solving the puzzle
+		if has_node("/root/player_data"):
+			get_node("/root/player_data").sprint_points += 1
+		# Show floating label for sprint point using player method
+		if player and player.has_method("show_floating_feedback"):
+			player.show_floating_feedback("+1 Sprint Point!", Color(0.2, 0.9, 0.2, 1))
 		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()
@@ -86,7 +92,16 @@ func _process(_delta):
 		var bar = player.get_node("HealthBar")
 		if bar.value <= bar.min_value:
 			if portal:
+				# Show label before transporting
+				var info_label = Label.new()
+				info_label.text = "You are exhausted! Returning to the Corporate Office..."
+				info_label.modulate = Color(1, 0.3, 0.3, 1)
+				info_label.global_position = player.global_position + Vector2(0, -80)
+				info_label.z_index = 200
+				get_tree().current_scene.add_child(info_label)
+				var tween = create_tween()
+				tween.tween_property(info_label, "modulate:a", 0, 1.0).set_delay(1.5)
+				tween.finished.connect(info_label.queue_free)
 				portal.visible = true
-				# Add a short delay before transporting to allow sound/feedback
-				await get_tree().create_timer(1.0).timeout
+				await get_tree().create_timer(1.5).timeout # Delay before transporting
 				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")

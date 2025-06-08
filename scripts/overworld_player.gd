@@ -47,13 +47,27 @@ func _physics_process(delta):
 func save_to_player_data():
 	if player_data:
 		player_data.position = position
-		print("[Player] Saved position to player_data: %s" % str(position))
+		if has_node("HealthBar"):
+			player_data.health = get_node("HealthBar").value
+		print("[Player] [SAVE] HealthBar value:", get_node("HealthBar").value)
+		print("[Player] [SAVE] player_data.health:", player_data.health)
+		print("[Player] Saved position and health to player_data: %s, %s" % [str(position), str(player_data.health)])
 		print("[Player] player_data singleton ref:", player_data)
 
 func load_from_player_data():
-	if player_data and player_data.position:
-		position = player_data.position
-		print("[Player] Loaded position from player_data: %s" % str(player_data.position))
+	if player_data:
+		if player_data.position:
+			position = player_data.position
+		if has_node("HealthBar"):
+			var bar = get_node("HealthBar")
+			if player_data.health != null:
+				bar.value = player_data.health
+				print("[Player] [LOAD] Loaded health from player_data:", player_data.health)
+			else:
+				bar.value = 100 # Only set to 100 if no value is present
+				player_data.health = 100
+				print("[Player] [LOAD] No health in player_data, defaulting to 100")
+		print("[Player] Loaded position and health from player_data: %s, %s" % [str(player_data.position), str(player_data.health)])
 		print("[Player] player_data singleton ref:", player_data)
 
 func _ready():
@@ -65,3 +79,62 @@ func _process(delta):
 		save_to_player_data()
 	if Input.is_action_just_pressed("ui_debug_load"):
 		load_from_player_data()
+
+func show_floating_feedback(text: String, color: Color = Color(0.2, 0.9, 0.2, 1)):
+	var label = Label.new()
+	label.text = text
+	label.modulate = color
+	label.global_position = global_position + Vector2(0, -40)
+	label.z_index = 100
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 2.0)
+	tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+	tween.finished.connect(label.queue_free)
+
+func show_damage_popup(amount: int):
+	var label = Label.new()
+	label.text = "-" + str(amount)
+	label.modulate = Color("f24646")  # Red for damage
+	label.global_position = global_position + Vector2(0, -60)
+	label.z_index = 100
+	label.add_theme_font_size_override("font_size", 24)
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 1.2)
+	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
+	tween.finished.connect(label.queue_free)
+
+func take_damage(amount: int):
+	# Reduce health if you have a health variable or bar
+	if has_node("HealthBar"):
+		var bar = get_node("HealthBar")
+		bar.value = max(bar.value - amount, bar.min_value)
+		save_to_player_data() # Save health after taking damage
+		show_damage_popup(amount)
+		# Play damage sound using GlobalAudio singleton
+		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
+			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
+			sfx.stop()
+			sfx.play()
+
+	# Twitch (quick shake)
+	if animated_sprite:
+		var original_pos = animated_sprite.position
+		var tween = create_tween()
+		tween.tween_property(animated_sprite, "position:x", original_pos.x + 10, 0.05)
+		tween.tween_property(animated_sprite, "position:x", original_pos.x - 10, 0.05)
+		tween.tween_property(animated_sprite, "position:x", original_pos.x, 0.05)
+
+	# Flash (white flash)
+	if animated_sprite:
+		var flash_tween = create_tween()
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1), 0.05)
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1,0.5), 0.05)
+		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1,1), 0.1)
+
+func heal(amount: int):
+	if has_node("HealthBar"):
+		var bar = get_node("HealthBar")
+		bar.value = min(bar.value + amount, bar.max_value)
+		save_to_player_data() # Save health after healing

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bbc5boia22mes" path="res://assets/images/ui/toggle_button/toggle_on.png" id="1_agqos"]
 [ext_resource type="Script" uid="uid://cm1wumlwftktn" path="res://scripts/toggle_button.gd" id="1_jiyb1"]
 [ext_resource type="Texture2D" uid="uid://b04iudc0byaey" path="res://assets/images/ui/toggle_button/toggle_off.png" id="2_0pjm4"]
-[ext_resource type="AudioStream" uid="uid://dut5u81tlji2" path="res://assets/audio/sfx/mouse-click-290204.mp3" id="4_0pjm4"]
+[ext_resource type="AudioStream" uid="uid://bexqd6qt36myu" path="res://assets/audio/sfx/breaker-switch-45684.mp3" id="4_0pjm4"]
 
 [node name="ToggleButton_tscn" type="TextureButton"]
 texture_normal = ExtResource("2_0pjm4")

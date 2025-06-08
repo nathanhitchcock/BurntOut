@@ -17,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.33162, 1.07146)
 color = Color(0, 0, 0, 0.00392157)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
@@ -43,6 +44,12 @@ text = "RESTART"
 [node name="QuitButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "QUIT"
+
+[node name="SprintPointsLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 20.0
+theme_override_font_sizes/font_size = 28
+text = "Sprint Points: 0"
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/ResumeButton" to="CanvasLayer" method="_on_resume_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/RestartButton" to="CanvasLayer" method="_on_restart_button_pressed"]
