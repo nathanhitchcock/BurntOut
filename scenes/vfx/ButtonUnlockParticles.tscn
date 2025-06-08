@@ -1,12 +1,22 @@
-[gd_scene format=3 uid="uid://curcko3ksdli2"]
+[gd_scene load_steps=2 format=3 uid="uid://curcko3ksdli2"]
+
+[ext_resource type="Texture2D" uid="uid://b50kagku4237a" path="res://assets/images/vfx/particle_spark.png" id="1_6026h"]
 
 [node name="ButtonUnlockParticles" type="Node2D"]
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(200, 200)
 emitting = false
+amount = 1
+texture = ExtResource("1_6026h")
 lifetime = 0.5
 one_shot = true
 speed_scale = 0.5
+lifetime_randomness = 0.5
 spread = 180.0
 gravity = Vector2(0, 0)
-color = Color(0.67451, 0.67451, 0.00392157, 0.843137)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+scale_amount_min = 0.1
+scale_amount_max = 0.2
+color = Color(0.67, 0.67, 0.3149, 0.843137)

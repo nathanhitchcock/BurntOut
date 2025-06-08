@@ -23,8 +23,9 @@ player_data="*res://scripts/player_data.gd"
 
 [display]
 
-window/size/viewport_width=1024
+window/size/viewport_width=1080
 window/size/viewport_height=600
+window/size/initial_position_type=4
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 

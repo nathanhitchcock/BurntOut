@@ -4,11 +4,23 @@ extends TextureButton
 signal toggle_pressed(toggle_index: int)
 
 @export var toggle_index: int = 0
+@export var show_sparks_on_load: bool = false
+
 var is_on: bool = false
 
 func _ready():
+	print("[ToggleButton] _ready called for toggle_index %s" % str(toggle_index))
+	self.modulate = Color(1,1,1,1) # Ensure default color
 	update_visual()
 	self.pressed.connect(_on_pressed)
+	# Delay showing the toggle for effect
+	self.visible = false
+	await get_tree().create_timer(2.0).timeout
+	self.visible = true
+	# Show sparks if enabled
+	if show_sparks_on_load:
+		await get_tree().process_frame # Ensure button is visible before flash
+		spawn_sparks()
 
 func _on_pressed():
 	if has_node("ClickSound"):
@@ -26,3 +38,38 @@ func update_visual():
 		# Set the texture for the OFF state
 		self.texture_normal = preload("res://assets/images/ui/toggle_button/toggle_off.png")
 		self.texture_pressed = preload("res://assets/images/ui/toggle_button/toggle_off.png")
+
+func set_on(on: bool = true):
+	is_on = on
+	update_visual()
+	print("[ToggleButton] set_on called for toggle_index %s, is_on: %s" % [str(toggle_index), str(is_on)])
+
+func animate_toggle_off(delay: float = 0.0):
+	# Tween the button visually from on to off after a delay
+	if is_on:
+		print("[ToggleButton] animate_toggle_off called for toggle_index %s, delay: %s" % [str(toggle_index), str(delay)])
+		var tween = create_tween()
+		tween.tween_interval(delay)
+		tween.tween_callback(Callable(self, "set_on").bind(false))
+
+func spawn_sparks():
+	var sparks = preload("res://scenes/vfx/ButtonUnlockParticles.tscn").instantiate()
+	add_child(sparks)
+	sparks.global_position = self.global_position
+	var particles = sparks.get_node_or_null("CPUParticles2D")
+	if particles:
+		particles.emitting = true
+	# Shake effect (runs in parallel with flashing)
+	var original_pos = self.position
+	var shake_tween = create_tween()
+	shake_tween.tween_property(self, "position:x", original_pos.x + 8, 0.05)
+	shake_tween.tween_property(self, "position:x", original_pos.x - 8, 0.05)
+	shake_tween.tween_property(self, "position:x", original_pos.x, 0.08)
+	# Flash the button multiple times for visibility
+	for i in range(3):
+		self.modulate = Color(1,1,1,1) # Pure white
+		await get_tree().create_timer(0.1).timeout
+		self.modulate = Color(1,0.7,0.2,1) # Orange/yellow
+		await get_tree().create_timer(0.1).timeout
+	self.modulate = Color(1,1,1,1)
+	print("[ToggleButton] Flash end for toggle_index %s" % str(toggle_index))
