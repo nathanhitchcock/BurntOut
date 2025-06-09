@@ -45,11 +45,13 @@ func _on_toggle_pressed(toggle_index: int):
 			print("[TogglePuzzle] Incorrect! Resetting.")
 			# if fail_sound:
 			#     fail_sound.play()  # Commented out: use player damage SFX instead
+			# Randomize damage between 10 and 30
+			var damage = randi_range(5, 10)
 			if player and player.has_method("take_damage"):
-				player.take_damage(20) # Deal 20 damage on fail
+				player.take_damage(damage) # Deal random damage on fail
 			elif player and player.has_node("HealthBar"):
 				var bar = player.get_node("HealthBar")
-				bar.value = max(bar.value - 20, bar.min_value)
+				bar.value = max(bar.value - damage, bar.min_value)
 			if incorrect_label:
 				incorrect_label.visible = true
 				await get_tree().create_timer(1.0).timeout
@@ -105,3 +107,5 @@ func _process(_delta):
 				portal.visible = true
 				await get_tree().create_timer(1.5).timeout # Delay before transporting
 				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")
+	# Show interact prompt when player is near interactable (example usage)
+	GlobalUI.show_interact_prompt(true)

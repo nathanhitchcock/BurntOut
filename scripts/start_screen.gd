@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 func _on_begin_sprint_pressed() -> void:
 	$AnimationPlayer.play("fade_out")

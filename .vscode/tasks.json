@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Godot: Run Game for UI Validation",
+			"command": "godot --path . --no-window --quit --script res://scripts/validate_ui.gd",
+			"problemMatcher": [],
+			"isBackground": false
+		}
+	]
+}

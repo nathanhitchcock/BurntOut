@@ -1,14 +1,26 @@
 extends CanvasLayer
 
-@onready var resume_button = $VBoxContainer/ResumeButton
-@onready var quit_button = $VBoxContainer/QuitButton
-@onready var restart_button = $VBoxContainer/RestartButton
-@onready var sprint_points_label = $SprintPointsLabel if has_node("SprintPointsLabel") else null
-@onready var pause_menu = $VBoxContainer
-@onready var pause_bg = $PauseBackground
+var resume_button: Button = null
+var quit_button: Button = null
+var restart_button: Button = null
+var sprint_points_label: Label = null
+var pause_menu: Control = null
+var pause_bg: Control = null
+var interact_prompt: Label = null
+
+# Remove tree pausing, use a gameplay_enabled flag instead
+var gameplay_enabled := true
 
 func _ready():
 	print("GlobalUI loaded!")
+	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
+	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
+	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
+	restart_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/RestartButton")
+	sprint_points_label = get_node_or_null("CanvasLayer/Control/SprintPointsLabel")
+	pause_menu = get_node_or_null("CanvasLayer/Control/VBoxContainer")
+	pause_bg = get_node_or_null("CanvasLayer/Control/PauseBackground")
+	interact_prompt = get_node_or_null("CanvasLayer/Control/InteractPrompt")
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -17,19 +29,49 @@ func _ready():
 		pause_menu.visible = false
 	if pause_bg:
 		pause_bg.visible = false
+	# Ensure pause menu and its buttons process input when paused (recursively)
+	if pause_menu:
+		pause_menu.process_mode = 1
+		_set_buttons_pausable(pause_menu)
+	# Debug: print when pause menu is shown and connect button signals
+	if pause_menu:
+		print("[DEBUG] Pause menu node found and ready.")
+	if resume_button:
+		resume_button.pressed.connect(_on_resume_button_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
+	if restart_button:
+		restart_button.pressed.connect(_on_restart_button_pressed)
+	if pause_menu:
+		pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
+
+func _set_buttons_pausable(node):
+	for child in node.get_children():
+		if child is Button:
+			child.process_mode = 1
+		if child.get_child_count() > 0:
+			_set_buttons_pausable(child)
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		toggle_pause()
 
 func toggle_pause():
-	if pause_menu:
+	if pause_menu and pause_bg:
 		pause_menu.visible = not pause_menu.visible
-	if pause_bg:
 		pause_bg.visible = not pause_bg.visible
-	get_tree().paused = pause_menu.visible
-	if pause_menu.visible and resume_button:
-		resume_button.grab_focus()
+		gameplay_enabled = not pause_menu.visible
+		# Pause or resume music
+		var music_player = GlobalAudio.get_node_or_null("AmbientHum")
+		if music_player:
+			music_player.stream_paused = pause_menu.visible
+		print("[DEBUG] toggle_pause: pause_menu.visible=", pause_menu.visible, ", gameplay_enabled=", gameplay_enabled)
+		if pause_menu.visible:
+			pause_menu.move_to_front()
+			if resume_button:
+				resume_button.grab_focus()
+	else:
+		print("[GlobalUI] Warning: pause_menu or pause_bg is null!")
 
 func _on_quit_pressed():
 	get_tree().quit()
@@ -42,7 +84,7 @@ func _on_restart_button_pressed() -> void:
 		pause_menu.visible = false
 	if pause_bg:
 		pause_bg.visible = false
-	get_tree().paused = false
+	gameplay_enabled = true
 	await get_tree().create_timer(0.3).timeout
 	get_tree().reload_current_scene()
 
@@ -62,3 +104,59 @@ func _process(_delta):
 		else:
 			sprint_points_label.visible = true
 	update_sprint_points_display()
+
+func get_interact_prompt():
+	# Try direct path first
+	if has_node("CanvasLayer/InteractPrompt"):
+		return get_node("CanvasLayer/InteractPrompt")
+	# Fallback: search recursively
+	for child in get_children():
+		var found = _find_interact_prompt_recursive(child)
+		if found:
+			return found
+	return null
+
+func _find_interact_prompt_recursive(node):
+	if node is Label and node.name == "InteractPrompt":
+		return node
+	for child in node.get_children():
+		var found = _find_interact_prompt_recursive(child)
+		if found:
+			return found
+	return null
+
+func set_interact_prompt_text(text: String):
+	var prompt = get_interact_prompt()
+	if prompt:
+		prompt.text = text
+
+func show_interact_prompt(show: bool = true, position: Vector2 = Vector2.INF):
+	var prompt = get_interact_prompt()
+	if prompt:
+		prompt.visible = show
+		if position != Vector2.INF:
+			prompt.global_position = position
+
+func show_interact_popup_near_player(player: Node):
+	if not player:
+		return
+	var label = Label.new()
+	label.text = "[E]"
+	label.modulate = Color(1, 1, 1, 1)
+	label.global_position = player.global_position + Vector2(0, -60)
+	label.z_index = 1000
+	label.add_theme_font_size_override("font_size", 24)
+	get_tree().current_scene.add_child(label)
+	var tween = create_tween()
+	tween.tween_property(label, "modulate:a", 0, 1.0)
+	tween.tween_property(label, "position:y", label.position.y - 20, 1.0)
+	tween.finished.connect(label.queue_free)
+
+func _on_pause_menu_gui_input(event):
+	print("[DEBUG] Pause menu received input: ", event)
+
+func _unhandled_input(event):
+	# Workaround: Forward mouse input to pause menu when paused so UI buttons work
+	if get_tree().paused and pause_menu and pause_menu.visible:
+		if event is InputEventMouseButton or event is InputEventMouseMotion:
+			pause_menu.propagate_call("gui_input", [event])

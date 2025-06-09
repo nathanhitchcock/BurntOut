@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://lbrto7e61p4g"]
+[gd_scene load_steps=22 format=3 uid="uid://lbrto7e61p4g"]
 
 [ext_resource type="Script" uid="uid://bcwyuhuqcks7h" path="res://scripts/toggle_puzzle_manager.gd" id="1_twdje"]
 [ext_resource type="PackedScene" uid="uid://c8piwflixtj5g" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="2_tt38t"]
@@ -10,7 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://c8r05h6nnkpug" path="res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3" id="8_aoyeq"]
 [ext_resource type="Script" uid="uid://d0y0kdsd8eb42" path="res://scripts/portal_to_corp_office.gd" id="9_portal"]
 [ext_resource type="Texture2D" uid="uid://dl8pcsj3tvb3o" path="res://assets/images/ui/return_to_corp_portal.png" id="10_vdwej"]
-[ext_resource type="AudioStream" uid="uid://th13ct2pqjtw" path="res://assets/audio/music/background_low-hum-14645.mp3" id="11_g2535"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bduoi"]
 atlas = ExtResource("3_tt38t")
@@ -172,7 +171,6 @@ stream = ExtResource("7_6p8hy")
 stream = ExtResource("8_aoyeq")
 
 [node name="PortalToCorpOffice" type="Area2D" parent="."]
-visible = false
 position = Vector2(100, 900)
 script = ExtResource("9_portal")
 
@@ -184,8 +182,3 @@ shape = SubResource("CircleShape2D_6p8hy")
 position = Vector2(841, -435)
 scale = Vector2(0.282962, 0.249939)
 texture = ExtResource("10_vdwej")
-
-[node name="BackgroundHum" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_g2535")
-volume_db = -18.0
-autoplay = true

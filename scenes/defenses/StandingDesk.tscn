@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dbsss8mp5wg6k"]
 
 [ext_resource type="Script" uid="uid://bm3rawaf66lgc" path="res://scripts/standing_desk.gd" id="1_77itj"]
-[ext_resource type="Texture2D" uid="uid://bg0vlyo362xi2" path="res://assets/images/defenses/desk_icon.png" id="1_dgneb"]
+[ext_resource type="Texture2D" uid="uid://g0thjih3wqyc" path="res://assets/images/defenses/desk_icon.png" id="1_dgneb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rjdkn"]
 radius = 171.237

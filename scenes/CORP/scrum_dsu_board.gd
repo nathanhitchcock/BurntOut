@@ -1,6 +1,7 @@
 extends Node2D
 
 var player_in_range := false
+var interact_prompt_shown := false
 
 func _ready():
 	$ScrumDSUBoardArea.body_entered.connect(_on_area_body_entered)
@@ -16,6 +17,14 @@ func _on_area_body_exited(body):
 		player_in_range = false
 		print("Player is in range of the DSU Board!")
 func _process(_delta):
+	if player_in_range:
+		if not interact_prompt_shown:
+			var player = get_tree().current_scene.get_node_or_null("Player")
+			if player:
+				GlobalUI.show_interact_popup_near_player(player)
+			interact_prompt_shown = true
+	else:
+		interact_prompt_shown = false
 	if player_in_range and Input.is_action_just_pressed("ui_accept"):
 		print("Interacted with the DSU Board!")
 		get_tree().change_scene_to_file("res://scenes/CORP/toggle_room/toggle_room.tscn")
