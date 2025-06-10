@@ -30,6 +30,9 @@ func _ready():
 		if btn:
 			btn.toggle_index = i
 			btn.connect("toggle_pressed", Callable(self, "_on_toggle_pressed"))
+			# Disable mouse input for accessibility: toggles are only activated by keyboard
+			btn.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		# Remove gui_input connection for mouse clicks
 
 	# Connect Area2D signals for each ToggleButton
 	for i in range(TOGGLE_COUNT):
@@ -38,6 +41,9 @@ func _ready():
 			var area = btn.get_node("Area2D")
 			area.body_entered.connect(_on_toggle_area_body_entered.bind(i, btn))
 			area.body_exited.connect(_on_toggle_area_body_exited.bind(i, btn))
+		# Connect GUI input to track mouse selection
+		if btn.has_method("connect"):
+			btn.connect("gui_input", Callable(self, "_on_toggle_button_gui_input").bind(i))
 
 	if incorrect_label:
 		incorrect_label.visible = false
@@ -134,10 +140,14 @@ func _process(_delta):
 				await get_tree().create_timer(1.5).timeout # Delay before transporting
 				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")
 	# Handle interaction for toggles
+	var toggle_to_press := -1
 	for i in range(TOGGLE_COUNT):
-		if player_near_toggle[i] == 1 and Input.is_action_just_pressed("ui_accept"):
-			var btn = get_node("ToggleButton%d" % (i+1))
-			if btn:
-				btn._on_pressed()
+		if player_near_toggle[i] == 1:
+			toggle_to_press = i
+			break
+	if toggle_to_press != -1 and Input.is_action_just_pressed("ui_accept"):
+		var btn = get_node("ToggleButton%d" % (toggle_to_press+1))
+		if btn:
+			btn._on_pressed()
 	# Show interact prompt when player is near interactable (example usage)
 	GlobalUI.show_interact_prompt(true)
