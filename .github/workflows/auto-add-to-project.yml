@@ -1,0 +1,15 @@
+name: Add issues to project
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  add-to-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to project
+        uses: actions/add-to-project@v1
+        with:
+          project-url: https://github.com/users/nathanhitchcock/projects/5
+          github-token: ${{ secrets.GITHUB_TOKEN }}
