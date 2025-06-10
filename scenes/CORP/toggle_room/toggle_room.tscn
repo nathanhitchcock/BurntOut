@@ -97,9 +97,9 @@ offset_bottom = 266.0
 scale = Vector2(0.59, 0.59)
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="Area2D" parent="ToggleButton1"]
+[node name="Area2D" type="Area2D" parent="ToggleButton1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton1/Node2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton1/Area2D"]
 position = Vector2(100, 91.5254)
 shape = SubResource("CircleShape2D_vdwej")
 
@@ -111,9 +111,9 @@ offset_bottom = 263.0
 scale = Vector2(0.61, 0.61)
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="Area2D" parent="ToggleButton2"]
+[node name="Area2D" type="Area2D" parent="ToggleButton2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton2/Node2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton2/Area2D"]
 position = Vector2(100, 91.5254)
 shape = SubResource("CircleShape2D_vdwej")
 
@@ -125,9 +125,9 @@ offset_bottom = 263.0
 scale = Vector2(0.6, 0.6)
 metadata/_edit_lock_ = true
 
-[node name="Node2D" type="Area2D" parent="ToggleButton3"]
+[node name="Area2D" type="Area2D" parent="ToggleButton3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton3/Node2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton3/Area2D"]
 position = Vector2(100, 91.5254)
 shape = SubResource("CircleShape2D_vdwej")
 
