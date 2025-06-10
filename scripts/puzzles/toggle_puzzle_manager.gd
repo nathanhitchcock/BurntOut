@@ -102,7 +102,9 @@ func _on_toggle_area_body_entered(body, toggle_index, btn):
 	if body.name == "Player":
 		player_near_toggle[toggle_index] = 1
 		if not interact_prompt_shown[toggle_index]:
-			GlobalUI.show_interact_prompt(true, btn.global_position + Vector2(0, -40))
+			# Show the floating [E] prompt near the player's head
+			if GlobalUI and GlobalUI.has_method("show_interact_popup_near_player"):
+				GlobalUI.show_interact_popup_near_player(player)
 			interact_prompt_shown[toggle_index] = true
 
 func _on_toggle_area_body_exited(body, toggle_index, btn):
