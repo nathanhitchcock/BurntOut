@@ -31,6 +31,14 @@ func _ready():
 			btn.toggle_index = i
 			btn.connect("toggle_pressed", Callable(self, "_on_toggle_pressed"))
 
+	# Connect Area2D signals for each ToggleButton
+	for i in range(TOGGLE_COUNT):
+		var btn = get_node("ToggleButton%d" % (i+1))
+		if btn and btn.has_node("Area2D"):
+			var area = btn.get_node("Area2D")
+			area.body_entered.connect(_on_toggle_area_body_entered.bind(i, btn))
+			area.body_exited.connect(_on_toggle_area_body_exited.bind(i, btn))
+
 	if incorrect_label:
 		incorrect_label.visible = false
 	if solved_label:
@@ -86,6 +94,26 @@ func _reset_toggles():
 			btn.is_on = false
 			btn.update_visual()
 
+# Track which button the player is near
+var player_near_toggle := [-1, -1, -1]
+var interact_prompt_shown := [false, false, false]
+
+func _on_toggle_area_body_entered(body, toggle_index, btn):
+	if body.name == "Player":
+		player_near_toggle[toggle_index] = 1
+		if not interact_prompt_shown[toggle_index]:
+			# Show the floating [E] prompt near the player's head
+			if GlobalUI and GlobalUI.has_method("show_interact_popup_near_player"):
+				GlobalUI.show_interact_popup_near_player(player)
+			interact_prompt_shown[toggle_index] = true
+
+func _on_toggle_area_body_exited(body, toggle_index, btn):
+	if body.name == "Player":
+		player_near_toggle[toggle_index] = -1
+		if interact_prompt_shown[toggle_index]:
+			GlobalUI.show_interact_prompt(false)
+			interact_prompt_shown[toggle_index] = false
+
 func _process(_delta):
 	if player and player.has_node("HealthBar"):
 		var bar = player.get_node("HealthBar")
@@ -104,5 +132,11 @@ func _process(_delta):
 				portal.visible = true
 				await get_tree().create_timer(1.5).timeout # Delay before transporting
 				get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")
+	# Handle interaction for toggles
+	for i in range(TOGGLE_COUNT):
+		if player_near_toggle[i] == 1 and Input.is_action_just_pressed("ui_accept"):
+			var btn = get_node("ToggleButton%d" % (i+1))
+			if btn:
+				btn._on_pressed()
 	# Show interact prompt when player is near interactable (example usage)
 	GlobalUI.show_interact_prompt(true)
