@@ -34,8 +34,8 @@ func _ready():
 	# Connect Area2D signals for each ToggleButton
 	for i in range(TOGGLE_COUNT):
 		var btn = get_node("ToggleButton%d" % (i+1))
-		if btn and btn.has_node("Node2D"):
-			var area = btn.get_node("Node2D")
+		if btn and btn.has_node("Area2D"):
+			var area = btn.get_node("Area2D")
 			area.body_entered.connect(_on_toggle_area_body_entered.bind(i, btn))
 			area.body_exited.connect(_on_toggle_area_body_exited.bind(i, btn))
 
