@@ -82,6 +82,7 @@ bg_color = Color(0.360784, 0.682353, 0.435294, 1)
 script = ExtResource("1_twdje")
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
+position = Vector2(-524, -315)
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundWrapper"]
 position = Vector2(511, 299.5)
@@ -90,12 +91,11 @@ texture = ExtResource("3_fail")
 metadata/_edit_lock_ = true
 
 [node name="ToggleButton1" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = 229.0
-offset_top = 45.0
-offset_right = 439.0
-offset_bottom = 266.0
+offset_left = -295.0
+offset_top = -270.0
+offset_right = -85.0
+offset_bottom = -49.0
 scale = Vector2(0.59, 0.59)
-metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="ToggleButton1"]
 
@@ -104,12 +104,11 @@ position = Vector2(100, 91.5254)
 shape = SubResource("CircleShape2D_vdwej")
 
 [node name="ToggleButton2" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = 427.0
-offset_top = 42.0
-offset_right = 637.0
-offset_bottom = 263.0
+offset_left = -97.0
+offset_top = -273.0
+offset_right = 113.0
+offset_bottom = -52.0
 scale = Vector2(0.61, 0.61)
-metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="ToggleButton2"]
 
@@ -118,12 +117,11 @@ position = Vector2(100, 91.5254)
 shape = SubResource("CircleShape2D_vdwej")
 
 [node name="ToggleButton3" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = 616.0
-offset_top = 42.0
-offset_right = 826.0
-offset_bottom = 263.0
+offset_left = 92.0
+offset_top = -273.0
+offset_right = 302.0
+offset_bottom = -52.0
 scale = Vector2(0.6, 0.6)
-metadata/_edit_lock_ = true
 
 [node name="Area2D" type="Area2D" parent="ToggleButton3"]
 
@@ -154,7 +152,7 @@ stream = ExtResource("7_6p8hy")
 stream = ExtResource("8_aoyeq")
 
 [node name="PortalToCorpOffice" type="Area2D" parent="."]
-position = Vector2(100, 900)
+position = Vector2(-424, 585)
 script = ExtResource("9_portal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortalToCorpOffice"]
@@ -168,7 +166,7 @@ texture = ExtResource("10_vdwej")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 process_mode = 3
-position = Vector2(609, 484)
+position = Vector2(85, 169)
 script = ExtResource("4_success")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -206,3 +204,5 @@ theme_override_styles/background = SubResource("StyleBoxLine_lht17")
 theme_override_styles/fill = SubResource("StyleBoxFlat_hj5jl")
 value = 100.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]

@@ -103,8 +103,11 @@ size = Vector2(1024.75, 167.625)
 
 [node name="CORP_MainOffice" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+
 [node name="BackgroundWrapper" type="Node2D" parent="."]
-position = Vector2(0, 14)
+position = Vector2(-528, -306)
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
 modulate = Color(0.697578, 0.697578, 0.697578, 1)
@@ -114,6 +117,7 @@ texture = ExtResource("1_2lp3j")
 metadata/_edit_lock_ = true
 
 [node name="Scrum-DSUBoard" type="Node2D" parent="."]
+position = Vector2(-528, -320)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("5_2lp3j")
 
@@ -127,7 +131,7 @@ scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
 [node name="UpgradeCafe" type="Sprite2D" parent="."]
-position = Vector2(170, 160)
+position = Vector2(-358, -160)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_y7now")
 script = ExtResource("3_2lp3j")
@@ -144,7 +148,7 @@ script = ExtResource("6_i65ii")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 process_mode = 3
-position = Vector2(485, 155)
+position = Vector2(-27, -152)
 script = ExtResource("5_quye3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -184,6 +188,7 @@ value = 100.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Walls" type="Node2D" parent="."]
+position = Vector2(-528, -320)
 
 [node name="wall-bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2(14, 502)

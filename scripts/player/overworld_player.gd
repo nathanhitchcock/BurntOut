@@ -1,8 +1,7 @@
 extends CharacterBody2D
 
 var speed := 400.0
-# Set your map boundaries here (adjust as needed)
-var map_bounds := Rect2(Vector2(0, 0), Vector2(1024, 768))
+# Remove map_bounds variable entirely; use collision shapes for movement boundaries
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
@@ -32,17 +31,7 @@ func _physics_process(delta):
 		if fire_trail:
 			fire_trail.emitting = false
 	move_and_slide()
-	# Clamp position to map bounds, accounting for sprite height so player can't walk off the bottom
-	var sprite_height := 0
-	if animated_sprite and animated_sprite.sprite_frames:
-		var anim = animated_sprite.animation
-		var frame = animated_sprite.frame
-		var tex = animated_sprite.sprite_frames.get_frame_texture(anim, frame)
-		if tex:
-			sprite_height = tex.get_height() * animated_sprite.scale.y
-	# If no animated_sprite, fallback to 0
-	position.x = clamp(position.x, map_bounds.position.x, map_bounds.position.x + map_bounds.size.x)
-	position.y = clamp(position.y, map_bounds.position.y, map_bounds.position.y + map_bounds.size.y - sprite_height)
+	# No code-based clamping; rely on collision shapes for movement boundaries
 
 func save_to_player_data():
 	if player_data:
@@ -72,6 +61,13 @@ func load_from_player_data():
 
 func _ready():
 	load_from_player_data()
+	# Only set position from player_data if it's not Vector2.ZERO and the StartScreen is not the previous scene
+	if player_data and player_data.position != Vector2.ZERO and not ("StartScreen" in get_tree().current_scene.scene_file_path):
+		position = player_data.position
+		player_data.position = Vector2.ZERO
+	else:
+		# Normal load: do not override position
+		pass
 
 func _process(delta):
 	# print("[Player] _process running")  # Commented out to reduce console spam
