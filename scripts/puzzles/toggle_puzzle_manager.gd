@@ -102,10 +102,11 @@ func _on_toggle_area_body_entered(body, toggle_index, btn):
 	if body.name == "Player":
 		player_near_toggle[toggle_index] = 1
 		if not interact_prompt_shown[toggle_index]:
-			# Show the floating [E] prompt near the player's head
+			# Show the floating [E] prompt near the player's head (use player global position)
 			if GlobalUI and GlobalUI.has_method("show_interact_popup_near_player"):
 				GlobalUI.show_interact_popup_near_player(player)
 			interact_prompt_shown[toggle_index] = true
+		# Do NOT trigger the button interaction here; wait for input
 
 func _on_toggle_area_body_exited(body, toggle_index, btn):
 	if body.name == "Player":
