@@ -84,6 +84,7 @@ scale = Vector2(0.827148, 0.577148)
 texture = ExtResource("2_a0vbq")
 
 [node name="BeginSprint" type="Button" parent="."]
+layout_mode = 0
 offset_left = 410.0
 offset_top = 488.0
 offset_right = 656.0

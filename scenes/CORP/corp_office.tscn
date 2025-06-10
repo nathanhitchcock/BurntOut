@@ -6,9 +6,9 @@
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="5_quye3"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
-[ext_resource type="Texture2D" uid="uid://cbt0ugnrcc8s2" path="res://assets/images/sprites/main character/player_walk_6frame.png" id="7_n8v8p"]
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
+[ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
 size = Vector2(539.999, 492.5)
@@ -16,50 +16,50 @@ size = Vector2(539.999, 492.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
 size = Vector2(1785.64, 617.562)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bduoi"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(54, 0, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(0, 25, 341, 499)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lia7k"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(539, 0, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_quye3"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(341, 25, 341, 499)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ff0t0"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(54, 512, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn5pk"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(682, 25, 341, 499)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8is1o"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(539, 512, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4m04"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(0, 524, 341, 499)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6hgi4"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(54, 1024, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_23ju4"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(341, 524, 341, 499)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5tehe"]
-atlas = ExtResource("7_n8v8p")
-region = Rect2(539, 1024, 485, 512)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay4ss"]
+atlas = ExtResource("8_i65ii")
+region = Rect2(682, 524, 341, 499)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hxnvt"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bduoi")
+"texture": SubResource("AtlasTexture_rifxr")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lia7k")
+"texture": SubResource("AtlasTexture_quye3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ff0t0")
+"texture": SubResource("AtlasTexture_pn5pk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8is1o")
+"texture": SubResource("AtlasTexture_r4m04")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6hgi4")
+"texture": SubResource("AtlasTexture_23ju4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5tehe")
+"texture": SubResource("AtlasTexture_ay4ss")
 }],
 "loop": true,
 "name": &"walk",

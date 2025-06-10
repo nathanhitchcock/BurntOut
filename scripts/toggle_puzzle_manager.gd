@@ -18,14 +18,14 @@ func _ready():
 	# Generate a random solution sequence
 	solution = []
 	var indices = []
-	for i in TOGGLE_COUNT:
+	for i in range(TOGGLE_COUNT):
 		indices.append(i)
 	indices.shuffle()
 	solution = indices.duplicate()
 	print("[TogglePuzzle] Solution:", solution)
 
 	# Connect signals from all ToggleButton children
-	for i in TOGGLE_COUNT:
+	for i in range(TOGGLE_COUNT):
 		var btn = get_node("ToggleButton%d" % (i+1))
 		if btn:
 			btn.toggle_index = i
@@ -43,9 +43,7 @@ func _on_toggle_pressed(toggle_index: int):
 	for i in player_sequence.size():
 		if player_sequence[i] != solution[i]:
 			print("[TogglePuzzle] Incorrect! Resetting.")
-			# if fail_sound:
-			#     fail_sound.play()  # Commented out: use player damage SFX instead
-			# Randomize damage between 10 and 30
+			# Randomize damage between 5 and 10
 			var damage = randi_range(5, 10)
 			if player and player.has_method("take_damage"):
 				player.take_damage(damage) # Deal random damage on fail
@@ -78,12 +76,11 @@ func _on_toggle_pressed(toggle_index: int):
 		# Show floating label for sprint point using player method
 		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("+1 Sprint Point!", Color(0.2, 0.9, 0.2, 1))
-		# TODO: Add your puzzle completion logic here
 		player_sequence.clear()
 		_reset_toggles()
 
 func _reset_toggles():
-	for i in TOGGLE_COUNT:
+	for i in range(TOGGLE_COUNT):
 		var btn = get_node("ToggleButton%d" % (i+1))
 		if btn:
 			btn.is_on = false
