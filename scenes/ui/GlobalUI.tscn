@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0xruxc3wj45j"]
+[gd_scene load_steps=2 format=3 uid="uid://fkbtcweuppxs"]
 
-[ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scenes/ui/global_ui.gd" id="1_472px"]
+[ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scripts/ui/global_ui.gd" id="1_472px"]
 
 [node name="GlobalUI" type="CanvasLayer"]
 process_mode = 1

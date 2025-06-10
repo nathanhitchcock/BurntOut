@@ -2,7 +2,7 @@
 
 ## Scenes
 - `res://scenes/teammates/teammate_1.tscn`: The first teammate scene.
-- `res://scenes/defenses/CoffeeMachine.tscn`: Coffee machine defense.
+- `res://scenes/defenses/Coffee_machine.tscn`: Coffee machine defense.
 
 ## Sounds
 - `sfx_ui_button`: Plays when a UI button is clicked.

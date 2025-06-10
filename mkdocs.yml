@@ -1,0 +1,51 @@
+site_name: Burnt Out
+
+# Use Material for MkDocs theme
+repo_url: https://github.com/nathanhitchcock/BurntOut
+repo_name: BurntOut on GitHub
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nathanhitchcock/BurntOut
+  copyright:
+    text: "© 2025 Burnt Potato Games"
+
+# Enable dark mode by default
+# Set palette for both default and dark (slate) schemes
+# Orange branding for both
+# User can toggle, but dark is default
+# See: https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/
+theme:
+  name: material
+  logo: logo.png
+  favicon: favicon.png
+  palette:
+    - scheme: slate
+      primary: orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - scheme: default
+      primary: orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Home: index.md
+  - Autoloads: autoloads.md
+  - Style Guide: STYLE_GUIDE.md
+  - Contributing: CONTRIBUTING.md
+  - FAQ: faq.md
+  - Assets: assets.md
+
+extra_css:
+  - extra.css

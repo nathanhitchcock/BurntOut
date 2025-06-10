@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dmm7dvgkio3h7"]
 
-[ext_resource type="Script" uid="uid://d2fk6wgnjnjer" path="res://scripts/start_screen.gd" id="1_pswtb"]
+[ext_resource type="Script" uid="uid://d2fk6wgnjnjer" path="res://scripts/ui/start_screen.gd" id="1_pswtb"]
 [ext_resource type="Texture2D" uid="uid://dv5yc2j1gjv4t" path="res://assets/images/ui/start-screen.png" id="2_a0vbq"]
 [ext_resource type="Texture2D" uid="uid://wnd1x65jk7kf" path="res://assets/images/ui/start-button.png" id="3_nj7f0"]
 
@@ -84,6 +84,7 @@ scale = Vector2(0.827148, 0.577148)
 texture = ExtResource("2_a0vbq")
 
 [node name="BeginSprint" type="Button" parent="."]
+layout_mode = 0
 offset_left = 410.0
 offset_top = 488.0
 offset_right = 656.0

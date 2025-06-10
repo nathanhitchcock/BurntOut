@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://boo4xk4c8p1pl"]
+[gd_scene load_steps=3 format=3 uid="uid://cfqhi7muf6wfp"]
 
 [ext_resource type="AudioStream" uid="uid://dmabufxr7i60y" path="res://assets/audio/sfx/hurt_sound.mp3" id="1_ldbqs"]
 [ext_resource type="AudioStream" uid="uid://th13ct2pqjtw" path="res://assets/audio/music/background_low-hum-14645.mp3" id="2_hum"]

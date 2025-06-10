@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://boo4xk4c8p1pl"]
+
+[ext_resource type="AudioStream" uid="uid://dmabufxr7i60y" path="res://assets/audio/sfx/hurt_sound.mp3" id="1_ldbqs"]
+[ext_resource type="AudioStream" uid="uid://th13ct2pqjtw" path="res://assets/audio/music/background_low-hum-14645.mp3" id="2_hum"]
+
+[node name="GlobalAudio" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="PlayerDamageSound" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource("1_ldbqs")
+
+[node name="AmbientHum" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_hum")
+volume_db = -16.0
+autoplay = true
