@@ -26,6 +26,10 @@ func _process(_delta):
 				GlobalUI.show_interact_popup_near_player(player)
 			interact_prompt_shown = true
 		if Input.is_action_just_pressed("ui_accept"):
+			if has_node("/root/player_data"):
+				var player = get_tree().current_scene.get_node_or_null("Player")
+				if player:
+					get_node("/root/player_data").position = player.global_position
 			get_tree().change_scene_to_file(target_scene)
 	else:
 		interact_prompt_shown = false
