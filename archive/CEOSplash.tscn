@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dv3rx6v8cg8a0"]
 
-[ext_resource type="Script" uid="uid://1u640rptmrae" path="res://scripts/ceo_splash.gd" id="1_83ipj"]
-[ext_resource type="Texture2D" uid="uid://cmbwmy2mc00j0" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 06_12_41 PM.png" id="1_h8dqg"]
+[ext_resource type="Script" uid="uid://1u640rptmrae" path="res://scripts/ceo_splash.gd" id="1_xkoib"]
+[ext_resource type="Texture2D" uid="uid://cmbwmy2mc00j0" path="res://archive/ChatGPT Image May 25, 2025, 06_12_41 PM.png" id="2_d6yip"]
 
 [sub_resource type="Animation" id="Animation_a0vbq"]
 length = 0.001
@@ -57,14 +57,14 @@ _data = {
 
 [node name="CEOSplash_tscn" type="CanvasLayer"]
 process_mode = 3
-script = ExtResource("1_83ipj")
+script = ExtResource("1_xkoib")
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
 position = Vector2(512.375, 310.75)
 scale = Vector2(1.00122, 0.592285)
-texture = ExtResource("1_h8dqg")
+texture = ExtResource("2_d6yip")
 
 [node name="ContinueButton" type="Button" parent="."]
 offset_left = 387.0

@@ -1,28 +1,28 @@
-[gd_scene load_steps=33 format=3 uid="uid://ckl50iwfsbvsp"]
+[gd_scene load_steps=33 format=3 uid="uid://dtor7lf3mn2ij"]
 
-[ext_resource type="Script" uid="uid://dpv1dbjbtepbw" path="res://scripts/main.gd" id="1_ay2l0"]
-[ext_resource type="Texture2D" uid="uid://dmfqcwennsr8u" path="res://assets/images/backgrounds/CORP office/ai-background-3wide_blackend.png" id="2_6dtdl"]
-[ext_resource type="Texture2D" uid="uid://c6yrllqhg7qm6" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 10_55_13 AM.png" id="3_mkbm8"]
-[ext_resource type="Texture2D" uid="uid://dmxhftv7nn7j7" path="res://assets/images/ui/game_over_burnout.png" id="4_c3h5f"]
-[ext_resource type="Texture2D" uid="uid://7ito28lg1iba" path="res://assets/images/ui/victory - pizza party-wide.png" id="5_cmijj"]
-[ext_resource type="Texture2D" uid="uid://b4aer1c4cl5rs" path="res://assets/images/ui/Vintage Strategic Objectives Sign.png" id="6_fe7vc"]
-[ext_resource type="Texture2D" uid="uid://dprox8qj7ejvl" path="res://assets/images/defenses/coffee_icon.png" id="7_k5a7s"]
-[ext_resource type="Script" uid="uid://cl8rf3hxjq4l3" path="res://scripts/DefenseButton.gd" id="8_m4ye6"]
-[ext_resource type="Texture2D" uid="uid://g0thjih3wqyc" path="res://assets/images/defenses/desk_icon.png" id="9_3u2i0"]
-[ext_resource type="Texture2D" uid="uid://cvw6u3s7ub7nh" path="res://assets/images/sprites/ChatGPT Image May 22, 2025, 03_25_58 PM.png" id="10_lp2si"]
-[ext_resource type="AudioStream" uid="uid://kcnhj26kv1r5" path="res://assets/audio/sfx/revive_sound.mp3" id="11_1a64o"]
-[ext_resource type="AudioStream" uid="uid://bmtkpj73qlsqi" path="res://assets/audio/music/background_music.mp3" id="12_0e7xa"]
-[ext_resource type="AudioStream" uid="uid://bvn6fiyd84rh2" path="res://assets/audio/sfx/coffee_place_drop.mp3" id="13_xkuxp"]
-[ext_resource type="AudioStream" uid="uid://c25ljaolqrl2g" path="res://assets/audio/sfx/big-thunder-clap-99753.mp3" id="14_48yxt"]
-[ext_resource type="AudioStream" uid="uid://c8r05h6nnkpug" path="res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3" id="15_u4wet"]
-[ext_resource type="AudioStream" uid="uid://cb5sfowa7h4k8" path="res://assets/audio/sfx/game-over-arcade-6435.mp3" id="16_vdltu"]
-[ext_resource type="AudioStream" uid="uid://dut5u81tlji2" path="res://assets/audio/sfx/mouse-click-290204.mp3" id="17_51rvh"]
-[ext_resource type="AudioStream" uid="uid://csyw1gpba6n3m" path="res://assets/audio/sfx/hire_poof.mp3" id="18_7q0od"]
-[ext_resource type="AudioStream" uid="uid://ccdcjcddlhgca" path="res://assets/audio/sfx/diabolic-laugh-202978.mp3" id="19_nrxxr"]
-[ext_resource type="AudioStream" uid="uid://lxyjpbx1wcoh" path="res://assets/audio/sfx/ui-button-click-negative.mp3" id="20_47nyx"]
+[ext_resource type="Script" uid="uid://dpv1dbjbtepbw" path="res://scripts/main.gd" id="1_1k8x3"]
+[ext_resource type="Texture2D" uid="uid://dmfqcwennsr8u" path="res://archive/ai-background-3wide_blackend.png" id="2_gjpy1"]
+[ext_resource type="Texture2D" uid="uid://c6yrllqhg7qm6" path="res://assets/images/ui/ChatGPT Image May 25, 2025, 10_55_13 AM.png" id="3_dpp21"]
+[ext_resource type="Texture2D" uid="uid://dmxhftv7nn7j7" path="res://archive/game_over_burnout.png" id="4_vj8fk"]
+[ext_resource type="Texture2D" uid="uid://7ito28lg1iba" path="res://archive/victory - pizza party-wide.png" id="5_uul0s"]
+[ext_resource type="Texture2D" uid="uid://b4aer1c4cl5rs" path="res://archive/Vintage Strategic Objectives Sign.png" id="6_l8f33"]
+[ext_resource type="Texture2D" uid="uid://dprox8qj7ejvl" path="res://archive/coffee_icon.png" id="7_5n63e"]
+[ext_resource type="Script" uid="uid://cl8rf3hxjq4l3" path="res://scripts/DefenseButton.gd" id="8_aitcx"]
+[ext_resource type="Texture2D" uid="uid://g0thjih3wqyc" path="res://assets/images/defenses/desk_icon.png" id="9_a8x42"]
+[ext_resource type="Texture2D" uid="uid://cvw6u3s7ub7nh" path="res://assets/images/sprites/ChatGPT Image May 22, 2025, 03_25_58 PM.png" id="10_df31m"]
+[ext_resource type="AudioStream" uid="uid://kcnhj26kv1r5" path="res://assets/audio/sfx/revive_sound.mp3" id="11_ptftp"]
+[ext_resource type="AudioStream" uid="uid://bmtkpj73qlsqi" path="res://assets/audio/music/background_music.mp3" id="12_yg6ia"]
+[ext_resource type="AudioStream" uid="uid://bvn6fiyd84rh2" path="res://assets/audio/sfx/coffee_place_drop.mp3" id="13_i7b1s"]
+[ext_resource type="AudioStream" uid="uid://c25ljaolqrl2g" path="res://assets/audio/sfx/big-thunder-clap-99753.mp3" id="14_mla08"]
+[ext_resource type="AudioStream" uid="uid://c8r05h6nnkpug" path="res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3" id="15_v2su5"]
+[ext_resource type="AudioStream" uid="uid://cb5sfowa7h4k8" path="res://assets/audio/sfx/game-over-arcade-6435.mp3" id="16_3jtst"]
+[ext_resource type="AudioStream" uid="uid://dut5u81tlji2" path="res://assets/audio/sfx/mouse-click-290204.mp3" id="17_en2yn"]
+[ext_resource type="AudioStream" uid="uid://csyw1gpba6n3m" path="res://assets/audio/sfx/hire_poof.mp3" id="18_a04u7"]
+[ext_resource type="AudioStream" uid="uid://ccdcjcddlhgca" path="res://assets/audio/sfx/diabolic-laugh-202978.mp3" id="19_fcioe"]
+[ext_resource type="AudioStream" uid="uid://lxyjpbx1wcoh" path="res://assets/audio/sfx/ui-button-click-negative.mp3" id="20_nogsf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yc10j"]
-texture = ExtResource("3_mkbm8")
+texture = ExtResource("3_dpp21")
 
 [sub_resource type="FontVariation" id="FontVariation_tefeu"]
 
@@ -31,10 +31,10 @@ font = SubResource("FontVariation_tefeu")
 font_size = 60
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_trceg"]
-texture = ExtResource("4_c3h5f")
+texture = ExtResource("4_vj8fk")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_choun"]
-texture = ExtResource("5_cmijj")
+texture = ExtResource("5_uul0s")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eb6dy"]
 bg_color = Color(0.71993, 0.58247, 0.18956, 1)
@@ -43,7 +43,7 @@ bg_color = Color(0.71993, 0.58247, 0.18956, 1)
 bg_color = Color(0.776107, 0.319357, 0.306359, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jscy8"]
-texture = ExtResource("6_fe7vc")
+texture = ExtResource("6_l8f33")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
 bg_color = Color(0.384314, 0.619608, 0.854902, 1)
@@ -57,14 +57,14 @@ bg_color = Color(0.383441, 0.619142, 0.855578, 1)
 bg_color = Color(1, 0.266667, 0.266667, 1)
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_ay2l0")
+script = ExtResource("1_1k8x3")
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
 position = Vector2(463.5, 252.5)
 scale = Vector2(0.669922, 0.59082)
-texture = ExtResource("2_6dtdl")
+texture = ExtResource("2_gjpy1")
 metadata/_edit_lock_ = true
 
 [node name="StressTimer" type="Timer" parent="."]
@@ -185,10 +185,10 @@ z_as_relative = false
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 tooltip_text = "☕ Coffee – Restores morale. Effects may weaken with overuse."
-texture_normal = ExtResource("7_k5a7s")
+texture_normal = ExtResource("7_5n63e")
 ignore_texture_size = true
 stretch_mode = 0
-script = ExtResource("8_m4ye6")
+script = ExtResource("8_aitcx")
 defense_type = "Coffee"
 
 [node name="Label" type="Label" parent="CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer"]
@@ -205,10 +205,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 tooltip_text = "🛡 Standing Desk Reduces stress damage to nearby teammates."
-texture_normal = ExtResource("9_3u2i0")
+texture_normal = ExtResource("9_a8x42")
 ignore_texture_size = true
 stretch_mode = 5
-script = ExtResource("8_m4ye6")
+script = ExtResource("8_aitcx")
 defense_type = "StandingDesk"
 
 [node name="Label" type="Label" parent="CanvasLayer/DefenseHUD/HBoxContainer/VBoxContainer2"]
@@ -226,7 +226,7 @@ visible = false
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 tooltip_text = "🧑‍💻 Hire Teammate"
-texture_normal = ExtResource("10_lp2si")
+texture_normal = ExtResource("10_df31m")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -254,34 +254,34 @@ vertical_alignment = 1
 [node name="Audio" type="AudioStreamPlayer" parent="."]
 
 [node name="ReviveSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("11_1a64o")
+stream = ExtResource("11_ptftp")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("12_0e7xa")
+stream = ExtResource("12_yg6ia")
 autoplay = true
 parameters/looping = true
 
 [node name="CoffeeSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("13_xkuxp")
+stream = ExtResource("13_i7b1s")
 
 [node name="HighStressSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("14_48yxt")
+stream = ExtResource("14_mla08")
 
 [node name="VictorySound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("15_u4wet")
+stream = ExtResource("15_v2su5")
 
 [node name="GameOverSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("16_vdltu")
+stream = ExtResource("16_3jtst")
 
 [node name="UIButtonSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("17_51rvh")
+stream = ExtResource("17_en2yn")
 volume_db = -13.0
 
 [node name="HirePoofSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("18_7q0od")
+stream = ExtResource("18_a04u7")
 
 [node name="EvilLaughSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("19_nrxxr")
+stream = ExtResource("19_fcioe")
 
 [node name="NegativeSound" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("20_47nyx")
+stream = ExtResource("20_nogsf")

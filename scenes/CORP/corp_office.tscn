@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="5_quye3"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
-[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
+[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
 

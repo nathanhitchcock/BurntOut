@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c8piwflixtj5g" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="2_tt38t"]
 [ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="3_fail"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/overworld_player.gd" id="4_success"]
-[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://assets/images/sprites/main character/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
+[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
 [ext_resource type="AudioStream" uid="uid://cb5sfowa7h4k8" path="res://assets/audio/sfx/game-over-arcade-6435.mp3" id="7_6p8hy"]
 [ext_resource type="AudioStream" uid="uid://c8r05h6nnkpug" path="res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3" id="8_aoyeq"]
 [ext_resource type="Script" uid="uid://d0y0kdsd8eb42" path="res://scripts/portal_to_corp_office.gd" id="9_portal"]
