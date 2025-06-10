@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2l1w7rerhgjn"]
+[gd_scene load_steps=4 format=3 uid="uid://cy1qrk3a7nn5r"]
 
 [ext_resource type="Script" uid="uid://bm3rawaf66lgc" path="res://scripts/standing_desk.gd" id="1_rjdkn"]
 [ext_resource type="Texture2D" uid="uid://dprox8qj7ejvl" path="res://archive/coffee_icon.png" id="1_vr7ee"]

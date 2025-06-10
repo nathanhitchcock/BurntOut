@@ -1,13 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://miox8u50bd0l"]
+[gd_scene load_steps=2 format=3 uid="uid://miox8u50bd0l"]
 
-[ext_resource type="Script" path="res://scripts/overworld_player.gd" id="1_hlubc"]
 [ext_resource type="Texture2D" uid="uid://qie3s3hb7lpl" path="res://archive/teammate1.png" id="2_yp1tc"]
 
 [node name="TestingGround" type="Node2D"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(300, 300)
-script = ExtResource("1_hlubc")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("2_yp1tc")

@@ -24,12 +24,12 @@ var hired_teammate_2: bool = false
 # --- DEFENSE VARIABLES ---
 var defense_types: Dictionary = {
 	DEFENSE_COFFEE: {
-		"scene": "res://scenes/defenses/CoffeeMachine.tscn",
+		"scene": "res://scenes/defenses/Coffee_machine.tscn",
 		"cost": 1,
 		"heal": 20
 	},
 	DEFENSE_STANDING_DESK: {
-		"scene": "res://scenes/defenses/StandingDesk.tscn",
+		"scene": "res://scenes/defenses/Standing_desk.tscn",
 		"cost": 5,
 		"reduction": 14
 	}

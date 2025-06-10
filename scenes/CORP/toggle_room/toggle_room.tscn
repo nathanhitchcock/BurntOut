@@ -1,7 +1,6 @@
 [gd_scene load_steps=23 format=3 uid="uid://lbrto7e61p4g"]
 
 [ext_resource type="Script" uid="uid://bcwyuhuqcks7h" path="res://scripts/puzzles/toggle_puzzle_manager.gd" id="1_twdje"]
-[ext_resource type="PackedScene" uid="uid://c8piwflixtj5g" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="2_tt38t"]
 [ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="3_fail"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="4_success"]
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
@@ -10,6 +9,7 @@
 [ext_resource type="Script" uid="uid://d0y0kdsd8eb42" path="res://scripts/puzzles/portal_to_corp_office.gd" id="9_portal"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="9_vdwej"]
 [ext_resource type="Texture2D" uid="uid://dl8pcsj3tvb3o" path="res://assets/images/ui/return_to_corp_portal.png" id="10_vdwej"]
+[ext_resource type="PackedScene" uid="uid://06h15c8yyqj8" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="toggle_button_scene"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6p8hy"]
 radius = 92.0
@@ -85,30 +85,26 @@ position = Vector2(511, 299.5)
 scale = Vector2(0.66276, 0.586914)
 texture = ExtResource("3_fail")
 
-[node name="ToggleButton1" parent="." instance=ExtResource("2_tt38t")]
-offset_left = 224.47
-offset_top = 46.81
-offset_right = 1248.47
-offset_bottom = 1070.81
-scale = Vector2(0.650616, 0.56898)
-toggle_index = 1
+[node name="ToggleButton1" parent="." instance=ExtResource("toggle_button_scene")]
+offset_left = 229.0
+offset_top = 45.0
+offset_right = 439.0
+offset_bottom = 266.0
+scale = Vector2(0.59, 0.59)
 
-[node name="ToggleButton2" parent="." instance=ExtResource("2_tt38t")]
-offset_left = 421.19
-offset_top = 46.81
-offset_right = 1445.19
-offset_bottom = 1070.81
-scale = Vector2(0.651, 0.649)
-toggle_index = 2
+[node name="ToggleButton2" parent="." instance=ExtResource("toggle_button_scene")]
+offset_left = 427.0
+offset_top = 42.0
+offset_right = 637.0
+offset_bottom = 263.0
+scale = Vector2(0.61, 0.61)
 
-[node name="ToggleButton3" parent="." instance=ExtResource("2_tt38t")]
-offset_left = 609.62
-offset_top = 28.73
-offset_right = 1633.62
-offset_bottom = 1052.73
-scale = Vector2(0.651, 0.651)
-toggle_index = 3
-show_sparks_on_load = true
+[node name="ToggleButton3" parent="." instance=ExtResource("toggle_button_scene")]
+offset_left = 616.0
+offset_top = 42.0
+offset_right = 826.0
+offset_bottom = 263.0
+scale = Vector2(0.6, 0.6)
 
 [node name="IncorrectLabel" type="Label" parent="."]
 visible = false
