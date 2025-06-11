@@ -1,0 +1,241 @@
+[gd_scene load_steps=23 format=3 uid="uid://dhffnq76pkju1"]
+
+[ext_resource type="Texture2D" uid="uid://crtyokiiwbpg2" path="res://assets/images/backgrounds/CORP office/skyline/skyline_background.png" id="1_0h82s"]
+[ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="2_kydfl"]
+[ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="3_buos0"]
+[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_opend"]
+[ext_resource type="Script" uid="uid://c5wbatcwdd11q" path="res://scripts/skyline_watch.gd" id="5_1"]
+[ext_resource type="AudioStream" uid="uid://fmk5o0iilm3s" path="res://assets/audio/music/bgm_skyline.mp3" id="6_opend"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
+atlas = ExtResource("3_buos0")
+region = Rect2(0, 25, 341, 499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quye3"]
+atlas = ExtResource("3_buos0")
+region = Rect2(341, 25, 341, 499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pn5pk"]
+atlas = ExtResource("3_buos0")
+region = Rect2(682, 25, 341, 499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4m04"]
+atlas = ExtResource("3_buos0")
+region = Rect2(0, 524, 341, 499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23ju4"]
+atlas = ExtResource("3_buos0")
+region = Rect2(341, 524, 341, 499)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay4ss"]
+atlas = ExtResource("3_buos0")
+region = Rect2(682, 524, 341, 499)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ajgad"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rifxr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quye3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pn5pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4m04")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23ju4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay4ss")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hdf83"]
+radius = 132.0
+
+[sub_resource type="FontVariation" id="FontVariation_qjnpg"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_e6lsq"]
+color = Color(0, 0.721569, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yx7j2"]
+bg_color = Color(0.360784, 0.682353, 0.435294, 1)
+
+[sub_resource type="GDScript" id="GDScript_5yc38"]
+script/source = "extends CanvasLayer
+
+signal cutscene_finished
+
+func _ready():
+	await get_tree().create_timer(0.5).timeout
+	set_process_input(true)
+
+func _input(event):
+	if event.is_action_pressed(\"ui_accept\"):
+		queue_free()
+		emit_signal(\"cutscene_finished\")
+"
+
+[sub_resource type="Animation" id="Animation_a0vbq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0.00392157)]
+}
+
+[sub_resource type="Animation" id="Animation_pswtb"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nj7f0"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/FadeRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0.133333, 0.333333, 0.333333, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nj7f0"]
+_data = {
+&"RESET": SubResource("Animation_a0vbq"),
+&"fade_in": SubResource("Animation_pswtb"),
+&"fade_out": SubResource("Animation_nj7f0")
+}
+
+[node name="SkylineWatch" type="Node2D"]
+script = ExtResource("5_1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="BackgroundWrapper" type="Node2D" parent="."]
+position = Vector2(-524, -315)
+
+[node name="Sprite2D" type="Sprite2D" parent="BackgroundWrapper"]
+position = Vector2(511, 299.5)
+scale = Vector2(0.66276, 0.586914)
+texture = ExtResource("1_0h82s")
+metadata/_edit_lock_ = true
+
+[node name="Player" type="CharacterBody2D" parent="."]
+process_mode = 3
+visible = false
+position = Vector2(85, 169)
+script = ExtResource("2_kydfl")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.25, 0.25)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-60, 8)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_ajgad")
+animation = &"walk"
+
+[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
+emitting = false
+texture = ExtResource("4_opend")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-62, 42)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CircleShape2D_hdf83")
+
+[node name="HealthBar" type="ProgressBar" parent="Player"]
+anchors_preset = -1
+anchor_left = -0.000612222
+anchor_top = -0.132463
+anchor_right = 1.13165
+anchor_bottom = -0.132463
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 960.0
+offset_bottom = 300.0
+scale = Vector2(0.0750436, 0.053259)
+theme_override_fonts/font = SubResource("FontVariation_qjnpg")
+theme_override_font_sizes/font_size = 200
+theme_override_styles/background = SubResource("StyleBoxLine_e6lsq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yx7j2")
+value = 100.0
+metadata/_edit_use_anchors_ = true
+
+[node name="BurnoutLabel" type="Label" parent="."]
+offset_left = 85.0
+offset_top = 169.0
+offset_right = 125.0
+offset_bottom = 192.0
+text = "Burnout: 0"
+
+[node name="QuoteLabel" type="Label" parent="."]
+offset_left = -224.0
+offset_top = -256.0
+offset_right = -26.0
+offset_bottom = -222.0
+theme_override_font_sizes/font_size = 24
+text = "Quote goes here."
+
+[node name="ContinuePrompt" type="Button" parent="."]
+visible = false
+offset_left = -299.0
+offset_top = 95.0
+offset_right = -124.0
+offset_bottom = 118.0
+text = "\"Press Z to continue...\""
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+script = SubResource("GDScript_5yc38")
+
+[node name="FadeRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(0, 0, 0, 0.00392157)
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nj7f0")
+}
+autoplay = "fade_in"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_opend")
+autoplay = true

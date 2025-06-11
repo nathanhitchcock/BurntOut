@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
 var speed := 400.0
+var burnout_level: int = 0 # 0 = no burnout, 1-5 = burnout stages
 # Remove map_bounds variable entirely; use collision shapes for movement boundaries
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
 @onready var player_data = get_node_or_null("/root/player_data")
+@onready var burnout_label = $BurnoutLabel if has_node("BurnoutLabel") else null
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
@@ -60,14 +62,11 @@ func load_from_player_data():
 		print("[Player] player_data singleton ref:", player_data)
 
 func _ready():
+	burnout_level = player_data.burnout_level if player_data and player_data.burnout_level != null else 0
 	load_from_player_data()
-	# Only set position from player_data if it's not Vector2.ZERO and the StartScreen is not the previous scene
-	if player_data and player_data.position != Vector2.ZERO and not ("StartScreen" in get_tree().current_scene.scene_file_path):
-		position = player_data.position
-		player_data.position = Vector2.ZERO
-	else:
-		# Normal load: do not override position
-		pass
+	if burnout_label:
+		burnout_label.visible = true
+		burnout_label.text = "Burnout: %d" % burnout_level
 
 func _process(delta):
 	# print("[Player] _process running")  # Commented out to reduce console spam
@@ -75,6 +74,8 @@ func _process(delta):
 		save_to_player_data()
 	if Input.is_action_just_pressed("ui_debug_load"):
 		load_from_player_data()
+	if burnout_label:
+		burnout_label.text = "Burnout: %d" % burnout_level
 
 func show_floating_feedback(text: String, color: Color = Color(0.2, 0.9, 0.2, 1)):
 	var label = Label.new()
@@ -101,14 +102,12 @@ func show_damage_popup(amount: int):
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
 	tween.finished.connect(label.queue_free)
 
-func take_damage(amount: int):
-	# Reduce health if you have a health variable or bar
+func take_damage(amount: int) -> void:
 	if has_node("HealthBar"):
 		var bar = get_node("HealthBar")
 		bar.value = max(bar.value - amount, bar.min_value)
-		save_to_player_data() # Save health after taking damage
+		save_to_player_data()
 		show_damage_popup(amount)
-		# Play damage sound using GlobalAudio singleton
 		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
 			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
 			sfx.stop()
@@ -116,7 +115,15 @@ func take_damage(amount: int):
 		else:
 			print("[Player] ERROR: /root/GlobalAudio/Player/PlayerDamageSound not found!")
 
-	# Twitch (quick shake)
+		if bar.value <= bar.min_value:
+			if player_data:
+				player_data.burnout_level = clamp(player_data.burnout_level + 1, 1, 5)
+				burnout_level = player_data.burnout_level
+				player_data.health = 0
+				player_data.position = Vector2.ZERO
+				get_tree().change_scene_to_file("res://scenes/CORP/skyline/SkylineWatch.tscn")
+				return
+
 	if animated_sprite:
 		var original_pos = animated_sprite.position
 		var tween = create_tween()
@@ -124,7 +131,6 @@ func take_damage(amount: int):
 		tween.tween_property(animated_sprite, "position:x", original_pos.x - 10, 0.05)
 		tween.tween_property(animated_sprite, "position:x", original_pos.x, 0.05)
 
-	# Flash (white flash)
 	if animated_sprite:
 		var flash_tween = create_tween()
 		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1), 0.05)

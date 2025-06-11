@@ -205,4 +205,8 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_hj5jl")
 value = 100.0
 metadata/_edit_use_anchors_ = true
 
+[node name="BurnoutLabel" type="Label" parent="Player"]
+offset_right = 40.0
+offset_bottom = 23.0
+
 [node name="Camera2D" type="Camera2D" parent="."]
