@@ -8,4 +8,7 @@ var loop_progression: int = 0
 var sprint_points: int = 0 # Sprint points persist across all scenes
 var portal_to_corp_used: bool = false # Set true when using portal, checked on load
 var burnout_level: int = 0 # Persistent burnout tracker (0-5)
+var productivity_progress: float = 0.0 # Persistent progress for ProductivityMachine
 # Add any other persistent fields you need
+
+signal puzzle_solved(progress_amount)
