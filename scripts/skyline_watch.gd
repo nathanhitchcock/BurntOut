@@ -26,7 +26,7 @@ func _ready():
 		continue_button.pressed.connect(_on_continue_pressed)
 
 func _on_continue_pressed():
-	# Respawn player at last checkpoint or main scene
+	# Restore player health and teleport to the main office (corp_office.tscn)
 	if player_data:
 		player_data.health = 100
-		get_tree().change_scene_to_file("res://scenes/CORP/overworld/Overworld.tscn")
+		get_tree().change_scene_to_file("res://scenes/CORP/corp_office.tscn")
