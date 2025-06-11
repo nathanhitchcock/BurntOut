@@ -89,6 +89,11 @@ func _on_toggle_pressed(toggle_index: int):
 		# Show floating label for sprint point using player method
 		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("+1 Sprint Point!", Color(0.2, 0.9, 0.2, 1))
+		# Add progress to ProductivityMachine via global signal and persistent variable
+		if has_node("/root/player_data"):
+			var pd = get_node("/root/player_data")
+			pd.productivity_progress = clamp(pd.productivity_progress + 0.2, 0.0, 1.0)
+			pd.emit_signal("puzzle_solved", 0.2)
 		player_sequence.clear()
 		_reset_toggles()
 
