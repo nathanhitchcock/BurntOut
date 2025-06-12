@@ -34,8 +34,19 @@ shape = SubResource("RectangleShape2D_e6n77")
 metadata/_edit_lock_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
-offset_left = -359.0
-offset_top = 468.0
-offset_right = 426.0
-offset_bottom = 662.0
+offset_left = -373.0
+offset_top = -659.0
+offset_right = 412.0
+offset_bottom = -465.0
 theme_override_font_sizes/font_size = 64
+
+[node name="SpendButton" type="Button" parent="."]
+offset_left = -394.0
+offset_top = 451.0
+offset_right = 400.0
+offset_bottom = 726.0
+size_flags_horizontal = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 89
+text = "Spend Points, 
+Feed the Machine!"

@@ -1,13 +1,31 @@
 extends CharacterBody2D
 
-var speed := 400.0
+var speed := 220.0 # Comfortable walk speed
 var burnout_level: int = 0 # 0 = no burnout, 1-5 = burnout stages
-# Remove map_bounds variable entirely; use collision shapes for movement boundaries
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
 @onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
 @onready var player_data = get_node_or_null("/root/player_data")
 @onready var burnout_label = $BurnoutLabel if has_node("BurnoutLabel") else null
+@onready var camera: Camera2D = $Camera2D if has_node("Camera2D") else null
+
+var camera_zoom_in := Vector2(1.5, 1.5)
+var camera_zoom_out := Vector2(2.5, 2.5)
+var camera_zoom_duration := 1.5 # Slower zoom for smoother effect
+var _is_zoomed_in := false
+@export var speed_multiplier: float = 1.0
+
+func _ready():
+	burnout_level = player_data.burnout_level if player_data and player_data.burnout_level != null else 0
+	# Apply speed multiplier (editable in Inspector)
+	speed *= speed_multiplier
+	load_from_player_data()
+	if burnout_label:
+		burnout_label.visible = true
+		burnout_label.text = "Burnout: %d" % burnout_level
+	if camera:
+		camera.make_current()
+		camera.zoom = camera_zoom_out
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
@@ -19,19 +37,28 @@ func _physics_process(delta):
 		input.y += 1
 	if Input.is_action_pressed("ui_up") or Input.is_action_pressed("move_up"):
 		input.y -= 1
-	if input.length() > 0:
+	var moving = input.length() > 0
+	if moving:
 		input = input.normalized()
 		velocity = input * speed
 		if animated_sprite:
 			animated_sprite.play("walk")
 		if fire_trail:
 			fire_trail.emitting = true
+		if camera and not _is_zoomed_in:
+			_is_zoomed_in = true
+			var tween = create_tween()
+			tween.tween_property(camera, "zoom", camera_zoom_in, camera_zoom_duration)
 	else:
 		velocity = Vector2.ZERO
 		if animated_sprite:
 			animated_sprite.stop()
 		if fire_trail:
 			fire_trail.emitting = false
+		if camera and _is_zoomed_in:
+			_is_zoomed_in = false
+			var tween = create_tween()
+			tween.tween_property(camera, "zoom", camera_zoom_out, camera_zoom_duration)
 	move_and_slide()
 	# No code-based clamping; rely on collision shapes for movement boundaries
 
@@ -60,13 +87,6 @@ func load_from_player_data():
 				print("[Player] [LOAD] No health in player_data, defaulting to 100")
 		print("[Player] Loaded position and health from player_data: %s, %s" % [str(player_data.position), str(player_data.health)])
 		print("[Player] player_data singleton ref:", player_data)
-
-func _ready():
-	burnout_level = player_data.burnout_level if player_data and player_data.burnout_level != null else 0
-	load_from_player_data()
-	if burnout_label:
-		burnout_label.visible = true
-		burnout_label.text = "Burnout: %d" % burnout_level
 
 func _process(delta):
 	# print("[Player] _process running")  # Commented out to reduce console spam
