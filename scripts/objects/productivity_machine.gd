@@ -47,9 +47,9 @@ var proximity_quotes := [
 ]
 
 @onready var area2d = $Area2D if has_node("Area2D") else null
+@onready var player_data = get_node_or_null("/root/player_data")
 
-# Add a variable to track points spent on the machine
-var machine_points: int = 0
+# Remove local machine_points, use player_data.machine_points
 var max_machine_points: int = 10
 
 func _ready():
@@ -64,6 +64,9 @@ func _ready():
 	var spend_button = get_node_or_null("SpendButton")
 	if spend_button:
 		spend_button.pressed.connect(_on_spend_button_pressed)
+	# Set progress bar from persistent machine_points
+	if progress_bar and player_data:
+		progress_bar.value = clamp(player_data.machine_points, progress_bar.min_value, progress_bar.max_value)
 
 func _process(delta):
 	# CRT screen flicker: randomize modulate.a and color slightly
@@ -85,9 +88,9 @@ func _process(delta):
 		candle.position = candle_base_pos + flicker_offset
 		candle.scale = candle_base_scale * flicker_scale
 
-	# Update ProgressBar from machine_points
-	if progress_bar:
-		progress_bar.value = clamp(machine_points, progress_bar.min_value, progress_bar.max_value)
+	# Update ProgressBar from persistent machine_points
+	if progress_bar and player_data:
+		progress_bar.value = clamp(player_data.machine_points, progress_bar.min_value, progress_bar.max_value)
 
 func _on_area2d_body_entered(body):
 	if body.name == "Player":
@@ -97,7 +100,7 @@ func _on_area2d_body_entered(body):
 func _show_spend_prompt():
 	# Show a floating label: Press [E] to spend 1 Sprint Point on the machine
 	var label = Label.new()
-	label.text = "Press [E] to spend 1 Sprint Point on the machine"
+	# label.text = "Press [E] to spend 1 Sprint Point on the machine"
 	label.modulate = Color(0.8, 1, 1, 0.95)
 	label.add_theme_font_size_override("font_size", 48)
 	label.position = Vector2(0, 80)
@@ -118,9 +121,9 @@ func _input(event):
 
 func _spend_sprint_point():
 	var pd = get_node("/root/player_data")
-	if pd.sprint_points > 0 and machine_points < max_machine_points:
+	if pd.sprint_points > 0 and pd.machine_points < max_machine_points:
 		pd.sprint_points -= 1
-		machine_points += 1
+		pd.machine_points += 1
 		_show_floating_feedback("+1 to Machine!", Color(0.2, 0.9, 1, 1))
 	else:
 		_show_floating_feedback("No points to spend!", Color(1,0.2,0.2,1))
