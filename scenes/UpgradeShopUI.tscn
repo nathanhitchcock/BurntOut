@@ -21,6 +21,7 @@ text = "Cafe Upgrades"
 [node name="CoffeeButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Buy Coffee (Heal) - 2 Pts"
+icon_alignment = 1
 
 [node name="ShieldButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2

@@ -168,6 +168,7 @@ texture = ExtResource("10_vdwej")
 process_mode = 3
 position = Vector2(85, 169)
 script = ExtResource("4_success")
+speed_multiplier = 2.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 scale = Vector2(0.25, 0.25)

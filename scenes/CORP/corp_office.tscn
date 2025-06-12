@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=31 format=3 uid="uid://docso1kx17qoj"]
 
 [ext_resource type="Texture2D" uid="uid://bpe8inotgbrx7" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
 [ext_resource type="Script" uid="uid://cfj4oe7wwdka7" path="res://scenes/CORP/upgrade_cafe.gd" id="3_2lp3j"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bwh75m800ar48" path="res://assets/images/backgrounds/CORP office/upgrade_shop.png" id="4_r4m04"]
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="5_quye3"]
+[ext_resource type="PackedScene" uid="uid://b0cwvulf0qu4d" path="res://scenes/CORP/focus_pod.tscn" id="6_23ju4"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
@@ -15,10 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
-size = Vector2(539.999, 492.5)
+size = Vector2(1327.5, 751.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
-size = Vector2(1785.64, 617.562)
+size = Vector2(1946.75, 666.541)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
 atlas = ExtResource("8_i65ii")
@@ -90,25 +91,7 @@ size = Vector2(943, 24.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
 size = Vector2(33, 629.75)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pn5pk"]
-size = Vector2(337.25, 52.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r4m04"]
-size = Vector2(33, 118)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_23ju4"]
-size = Vector2(24.5, 165.188)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ay4ss"]
-size = Vector2(24.5, 158.125)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5kmm"]
-size = Vector2(404.5, 21)
-
 [node name="CORP_MainOffice" type="Node2D"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 position = Vector2(-528, -306)
@@ -121,26 +104,26 @@ texture = ExtResource("1_rifxr")
 metadata/_edit_lock_ = true
 
 [node name="Scrum-DSUBoard" type="Node2D" parent="."]
-position = Vector2(-528, -320)
+position = Vector2(-579, -283)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("5_2lp3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scrum-DSUBoard"]
-position = Vector2(2362.5, 1197.5)
-scale = Vector2(0.25, 0.25)
+position = Vector2(2362.5, 600)
+scale = Vector2(0.295616, 0.233218)
 texture = ExtResource("3_r4m04")
 
 [node name="ScrumDSUBoardArea" type="Area2D" parent="Scrum-DSUBoard"]
-position = Vector2(2337.5, 1195)
+position = Vector2(1968, 638)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scrum-DSUBoard/ScrumDSUBoardArea"]
-position = Vector2(19.9999, 3.4375)
+position = Vector2(128.812, 14.75)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
 [node name="UpgradeCafe" type="Sprite2D" parent="."]
-position = Vector2(-359, -241)
+position = Vector2(-391, -19)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_r4m04")
 script = ExtResource("3_2lp3j")
@@ -149,19 +132,24 @@ script = ExtResource("3_2lp3j")
 scale = Vector2(0.595864, 0.939178)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeCafe/Area2D"]
-position = Vector2(-33.5647, 210.823)
+position = Vector2(483.332, 29.8133)
 shape = SubResource("RectangleShape2D_y7now")
+
+[node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
+position = Vector2(-11, -163)
+scale = Vector2(0.15, 0.15)
 
 [node name="UpgradeShopUI" parent="." instance=ExtResource("7_y7now")]
 script = ExtResource("6_i65ii")
 
 [node name="ProductivityMachine" parent="." instance=ExtResource("10_rifxr")]
-position = Vector2(-11, -27)
+position = Vector2(-11, 6)
 scale = Vector2(0.15, 0.15)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 process_mode = 3
-position = Vector2(49, -277)
+position = Vector2(46, -270)
+scale = Vector2(0.251, 0.25)
 script = ExtResource("5_quye3")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -178,7 +166,7 @@ emitting = false
 texture = ExtResource("7_pn5pk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-62, 42)
+position = Vector2(-58, 41)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_2lp3j")
 
@@ -205,10 +193,16 @@ offset_right = 40.0
 offset_bottom = 23.0
 metadata/_edit_use_anchors_ = true
 
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2.5, 2.5)
+position_smoothing_enabled = true
+
 [node name="Walls" type="Node2D" parent="."]
 position = Vector2(-528, -320)
+metadata/_edit_lock_ = true
 
 [node name="wall-top" type="StaticBody2D" parent="Walls"]
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls/wall-top"]
 position = Vector2(534, 13)
@@ -221,6 +215,7 @@ debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
 [node name="wall-bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2(14, 502)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-bottom"]
 position = Vector2(506, 96.25)
@@ -233,6 +228,7 @@ texture = ExtResource("11_pn5pk")
 
 [node name="wall-left" type="StaticBody2D" parent="Walls"]
 position = Vector2(-26, 237)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-left"]
 position = Vector2(55, 60.875)
@@ -245,6 +241,7 @@ texture = ExtResource("12_r4m04")
 
 [node name="wall-right" type="StaticBody2D" parent="Walls"]
 position = Vector2(945, 236)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-right"]
 position = Vector2(61, 73)
@@ -254,57 +251,5 @@ debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 [node name="Sprite2D" type="Sprite2D" parent="Walls/wall-right"]
 position = Vector2(53, -4)
 texture = ExtResource("12_r4m04")
-
-[node name="wall-collab-int-1" type="StaticBody2D" parent="Walls"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-collab-int-1"]
-position = Vector2(213.375, 311)
-shape = SubResource("RectangleShape2D_pn5pk")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="wall-collab-int-2" type="StaticBody2D" parent="Walls"]
-position = Vector2(-26, 237)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-collab-int-2"]
-position = Vector2(404, 173)
-shape = SubResource("RectangleShape2D_r4m04")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="wall-mainhall-1" type="StaticBody2D" parent="Walls"]
-position = Vector2(-26, 237)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-mainhall-1"]
-position = Vector2(534, 132.406)
-shape = SubResource("RectangleShape2D_23ju4")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="wall-entrance-2" type="StaticBody2D" parent="Walls"]
-position = Vector2(-27, 238)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-entrance-2"]
-position = Vector2(601, -109)
-shape = SubResource("RectangleShape2D_ay4ss")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="wall-scrum-left" type="StaticBody2D" parent="Walls"]
-position = Vector2(-26, 237)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-scrum-left"]
-position = Vector2(665, 150)
-shape = SubResource("RectangleShape2D_ay4ss")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="wall-scrum-top" type="StaticBody2D" parent="Walls"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-scrum-top"]
-position = Vector2(835, 281)
-shape = SubResource("RectangleShape2D_p5kmm")
-disabled = true
-debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
 [connection signal="body_entered" from="UpgradeCafe/Area2D" to="UpgradeCafe" method="_on_body_entered"]
