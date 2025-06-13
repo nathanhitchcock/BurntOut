@@ -42,7 +42,6 @@ func purchase_upgrade(index):
 		return
 	player_data.sprint_points -= upgrade.cost
 	if upgrade.effect == "heal":
-		# Heal the player and update the global UI health bar
 		if has_node("/root/player_data"):
 			player_data.health = min(player_data.health + 30, 100)
 		if has_node("/root/GlobalUI"):

@@ -148,11 +148,11 @@ position = Vector2(-424, 585)
 script = ExtResource("9_portal")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PortalToCorpOffice"]
-position = Vector2(867, -408)
+position = Vector2(705, -406)
 shape = SubResource("CircleShape2D_6p8hy")
 
 [node name="Sprite2D" type="Sprite2D" parent="PortalToCorpOffice"]
-position = Vector2(841, -435)
+position = Vector2(678, -427)
 scale = Vector2(0.282962, 0.249939)
 texture = ExtResource("10_vdwej")
 

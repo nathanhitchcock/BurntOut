@@ -141,6 +141,7 @@ func show_damage_popup(amount: int):
 
 func take_damage(amount: int) -> void:
 	if player_data:
+<<<<<<< HEAD
 		# Shield acts as temporary HP
 		if player_data.shield_hp > 0:
 			var absorbed = min(amount, player_data.shield_hp)
@@ -154,6 +155,30 @@ func take_damage(amount: int) -> void:
 				show_floating_feedback("Shield Broken!", Color(1,0.5,0.2), Vector2(0, 20))
 			if amount <= 0:
 				return
+=======
+		if player_data.has_shield:
+			# Shield absorbs up to shield_hp points before breaking
+			if player_data.shield_hp > 0:
+				var absorbed = min(amount, player_data.shield_hp)
+				player_data.shield_hp -= absorbed
+				amount -= absorbed
+				show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2))
+				if player_data.shield_hp <= 0:
+					player_data.has_shield = false
+					# Show 'Shield Broken!' just below the absorbed popup
+					var label = Label.new()
+					label.text = "Shield Broken!"
+					label.modulate = Color(1,0.5,0.2)
+					label.global_position = global_position + Vector2(0, -10) # Slightly below the absorbed popup
+					label.z_index = 100
+					get_tree().current_scene.add_child(label)
+					var tween = create_tween()
+					tween.tween_property(label, "modulate:a", 0, 2.0)
+					tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+					tween.finished.connect(label.queue_free)
+				if amount <= 0:
+					return
+>>>>>>> origin/main
 		player_data.health = max(player_data.health - amount, 0)
 		save_to_player_data()
 		if has_node("/root/GlobalUI"):
