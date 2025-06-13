@@ -7,6 +7,8 @@ var sprint_points_label: Label = null
 var pause_menu: Control = null
 var pause_bg: Control = null
 var interact_prompt: Label = null
+var volume_slider: HSlider = null
+var volume_label: Label = null
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
@@ -21,6 +23,8 @@ func _ready():
 	pause_menu = get_node_or_null("CanvasLayer/Control/VBoxContainer")
 	pause_bg = get_node_or_null("CanvasLayer/Control/PauseBackground")
 	interact_prompt = get_node_or_null("CanvasLayer/Control/InteractPrompt")
+	volume_slider = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeSlider")
+	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -44,6 +48,10 @@ func _ready():
 		restart_button.pressed.connect(_on_restart_button_pressed)
 	if pause_menu:
 		pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
+	if volume_slider:
+		volume_slider.value = 0.5
+		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
+		_update_volume_label()
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -160,3 +168,13 @@ func _unhandled_input(event):
 	if get_tree().paused and pause_menu and pause_menu.visible:
 		if event is InputEventMouseButton or event is InputEventMouseMotion:
 			pause_menu.propagate_call("gui_input", [event])
+
+func _on_volume_slider_changed(value):
+	# Set global audio volume using the Master bus
+	var db = lerp(-40, 0, value)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
+	_update_volume_label()
+
+func _update_volume_label():
+	if volume_label and volume_slider:
+		volume_label.text = "Volume: %d%%" % int(volume_slider.value * 100)
