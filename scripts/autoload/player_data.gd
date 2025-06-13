@@ -11,6 +11,7 @@ var portal_to_corp_used: bool = false # Set true when using portal, checked on l
 var burnout_level: int = 0 # Persistent burnout tracker (0-5)
 var productivity_progress: float = 0.0 # Persistent progress for ProductivityMachine
 var has_shield: bool = false # Persistent shield state
+var shield_hp: int = 0 # Amount of damage the shield can absorb before breaking
 # Add any other persistent fields you need
 
 signal puzzle_solved(progress_amount)

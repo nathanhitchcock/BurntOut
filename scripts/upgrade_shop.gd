@@ -51,7 +51,8 @@ func purchase_upgrade(index):
 	elif upgrade.effect == "shield":
 		if has_node("/root/player_data"):
 			player_data.has_shield = true
+			player_data.shield_hp = 20 # Shield absorbs 20 points of damage before breaking
 		if player and player.has_method("show_floating_feedback"):
-			player.show_floating_feedback("Shield Ready!", Color(1,1,0.2))
+			player.show_floating_feedback("Shield Ready! (20 HP)", Color(1,1,0.2))
 	# Add more effects as needed
 	update_shop_ui()
