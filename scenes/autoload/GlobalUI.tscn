@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0vdxm6jlu1cs" path="res://scripts/ui/global_ui.gd" id="1_472px"]
 
-[node name="GlobalUI" type="CanvasLayer"]
+[node name="GlobalUI2" type="CanvasLayer"]
 process_mode = 1
 layer = 50
 script = ExtResource("1_472px")
@@ -74,6 +74,20 @@ light_mask = 513
 visibility_layer = 513
 layout_mode = 2
 text = "QUIT"
+
+[node name="VolumeSlider" type="HSlider" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="VolumeLabel" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Volume"
 
 [node name="SprintPointsLabel" type="Label" parent="CanvasLayer/Control"]
 layout_mode = 0
