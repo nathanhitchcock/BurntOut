@@ -103,6 +103,17 @@ func _generate_new_solution():
 	indices.shuffle()
 	solution = indices.duplicate()
 	print("[TogglePuzzle] New randomized solution:", solution)
+	# Move toggles to new random positions
+	var positions = []
+	for i in range(TOGGLE_COUNT):
+		var btn = get_node("ToggleButton%d" % (i+1))
+		if btn:
+			positions.append(btn.position)
+	positions.shuffle()
+	for i in range(TOGGLE_COUNT):
+		var btn = get_node("ToggleButton%d" % (i+1))
+		if btn:
+			btn.position = positions[i]
 
 func _reset_toggles():
 	for i in range(TOGGLE_COUNT):
