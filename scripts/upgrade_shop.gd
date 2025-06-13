@@ -42,7 +42,6 @@ func purchase_upgrade(index):
 		return
 	player_data.sprint_points -= upgrade.cost
 	if upgrade.effect == "heal":
-		# Heal the player and update the global UI health bar
 		if has_node("/root/player_data"):
 			player_data.health = min(player_data.health + 30, 100)
 		if has_node("/root/GlobalUI"):
@@ -50,8 +49,9 @@ func purchase_upgrade(index):
 		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("+30 Health!", Color(0.2,0.8,1))
 	elif upgrade.effect == "shield":
-		if player:
-			player.set_meta("has_shield", true)
+		if has_node("/root/player_data"):
+			player_data.has_shield = true
+		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("Shield Ready!", Color(1,1,0.2))
 	# Add more effects as needed
 	update_shop_ui()
