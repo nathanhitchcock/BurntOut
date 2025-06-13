@@ -130,7 +130,17 @@ func take_damage(amount: int) -> void:
 				show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2))
 				if player_data.shield_hp <= 0:
 					player_data.has_shield = false
-					show_floating_feedback("Shield Broken!", Color(1,0.5,0.2))
+					# Show 'Shield Broken!' just below the absorbed popup
+					var label = Label.new()
+					label.text = "Shield Broken!"
+					label.modulate = Color(1,0.5,0.2)
+					label.global_position = global_position + Vector2(0, -10) # Slightly below the absorbed popup
+					label.z_index = 100
+					get_tree().current_scene.add_child(label)
+					var tween = create_tween()
+					tween.tween_property(label, "modulate:a", 0, 2.0)
+					tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+					tween.finished.connect(label.queue_free)
 				if amount <= 0:
 					return
 		player_data.health = max(player_data.health - amount, 0)
