@@ -122,30 +122,47 @@ func show_damage_popup(amount: int):
 func take_damage(amount: int) -> void:
 	if player_data:
 		if player_data.has_shield:
-			player_data.has_shield = false
-			if has_node("/root/GlobalUI"):
-				get_node("/root/GlobalUI").show_floating_feedback("Shield Blocked!", Color(1,1,0.2))
-			return
-		player_data.health = max(player_data.health - amount, 0)
-		save_to_player_data()
-		if has_node("/root/GlobalUI"):
-			get_node("/root/GlobalUI")._update_health_bar()
-		show_damage_popup(amount)
-		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
-			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
-			sfx.stop()
-			sfx.play()
-		else:
-			print("[Player] ERROR: /root/GlobalAudio/Player/PlayerDamageSound not found!")
-
-		if player_data.health <= 0:
-			if player_data:
-				player_data.burnout_level = clamp(player_data.burnout_level + 1, 1, 5)
-				burnout_level = player_data.burnout_level
-				player_data.health = 0
-				player_data.position = Vector2.ZERO
-				get_tree().change_scene_to_file("res://scenes/CORP/skyline/SkylineWatch.tscn")
+			# Shield absorbs up to shield_hp points before breaking
+			if player_data.shield_hp > 0:
+				var absorbed = min(amount, player_data.shield_hp)
+				player_data.shield_hp -= absorbed
+				amount -= absorbed
+				show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2))
+				if player_data.shield_hp <= 0:
+					player_data.has_shield = false
+					# Show 'Shield Broken!' just below the absorbed popup
+					var label = Label.new()
+					label.text = "Shield Broken!"
+					label.modulate = Color(1,0.5,0.2)
+					label.global_position = global_position + Vector2(0, -10) # Slightly below the absorbed popup
+					label.z_index = 100
+					get_tree().current_scene.add_child(label)
+					var tween = create_tween()
+					tween.tween_property(label, "modulate:a", 0, 2.0)
+					tween.tween_property(label, "position:y", label.position.y - 30, 2.0)
+					tween.finished.connect(label.queue_free)
+			if amount <= 0:
 				return
+			player_data.health = max(player_data.health - amount, 0)
+			save_to_player_data()
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI")._update_health_bar()
+			show_damage_popup(amount)
+			if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
+				var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
+				sfx.stop()
+				sfx.play()
+			else:
+				print("[Player] ERROR: /root/GlobalAudio/Player/PlayerDamageSound not found!")
+
+			if player_data.health <= 0:
+				if player_data:
+					player_data.burnout_level = clamp(player_data.burnout_level + 1, 1, 5)
+					burnout_level = player_data.burnout_level
+					player_data.health = 0
+					player_data.position = Vector2.ZERO
+					get_tree().change_scene_to_file("res://scenes/CORP/skyline/SkylineWatch.tscn")
+					return
 
 	if animated_sprite:
 		var original_pos = animated_sprite.position
