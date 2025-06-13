@@ -114,10 +114,10 @@ text = "Sprint Pts: 0"
 [node name="BurnoutLabel" type="Label" parent="CanvasLayer/Control"]
 z_index = 1
 layout_mode = 1
-offset_left = -260.5
-offset_top = -188.5
-offset_right = -137.5
-offset_bottom = -154.5
+offset_left = -482.5
+offset_top = -152.5
+offset_right = -321.5
+offset_bottom = -118.5
 theme_override_font_sizes/font_size = 24
 text = "Burnout Lvl: 0"
 
