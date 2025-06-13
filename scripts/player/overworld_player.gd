@@ -65,9 +65,7 @@ func _physics_process(delta):
 func save_to_player_data():
 	if player_data:
 		player_data.position = position
-		if has_node("HealthBar"):
-			player_data.health = get_node("HealthBar").value
-		print("[Player] [SAVE] HealthBar value:", get_node("HealthBar").value)
+		player_data.health = player_data.health # Already up to date elsewhere
 		print("[Player] [SAVE] player_data.health:", player_data.health)
 		print("[Player] Saved position and health to player_data: %s, %s" % [str(position), str(player_data.health)])
 		print("[Player] player_data singleton ref:", player_data)
@@ -76,15 +74,14 @@ func load_from_player_data():
 	if player_data:
 		if player_data.position:
 			position = player_data.position
-		if has_node("HealthBar"):
-			var bar = get_node("HealthBar")
-			if player_data.health != null:
-				bar.value = player_data.health
-				print("[Player] [LOAD] Loaded health from player_data:", player_data.health)
-			else:
-				bar.value = 100 # Only set to 100 if no value is present
-				player_data.health = 100
-				print("[Player] [LOAD] No health in player_data, defaulting to 100")
+		if player_data.health != null:
+			player_data.health = player_data.health
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI")._update_health_bar()
+		else:
+			player_data.health = 100
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI")._update_health_bar()
 		print("[Player] Loaded position and health from player_data: %s, %s" % [str(player_data.position), str(player_data.health)])
 		print("[Player] player_data singleton ref:", player_data)
 
@@ -123,10 +120,11 @@ func show_damage_popup(amount: int):
 	tween.finished.connect(label.queue_free)
 
 func take_damage(amount: int) -> void:
-	if has_node("HealthBar"):
-		var bar = get_node("HealthBar")
-		bar.value = max(bar.value - amount, bar.min_value)
+	if player_data:
+		player_data.health = max(player_data.health - amount, 0)
 		save_to_player_data()
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI")._update_health_bar()
 		show_damage_popup(amount)
 		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
 			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
@@ -135,7 +133,7 @@ func take_damage(amount: int) -> void:
 		else:
 			print("[Player] ERROR: /root/GlobalAudio/Player/PlayerDamageSound not found!")
 
-		if bar.value <= bar.min_value:
+		if player_data.health <= 0:
 			if player_data:
 				player_data.burnout_level = clamp(player_data.burnout_level + 1, 1, 5)
 				burnout_level = player_data.burnout_level
@@ -158,7 +156,8 @@ func take_damage(amount: int) -> void:
 		flash_tween.tween_property(animated_sprite, "modulate", Color(1,1,1,1), 0.1)
 
 func heal(amount: int):
-	if has_node("HealthBar"):
-		var bar = get_node("HealthBar")
-		bar.value = min(bar.value + amount, bar.max_value)
-		save_to_player_data() # Save health after healing
+	if player_data:
+		player_data.health = min(player_data.health + amount, 100)
+		save_to_player_data()
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI")._update_health_bar()

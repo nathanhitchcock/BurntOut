@@ -3,20 +3,25 @@
 [node name="UpgradeShop" type="Control"]
 visible = false
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
-offset_left = 50.0
-offset_top = 100.0
-offset_right = 242.0
-offset_bottom = 255.0
-
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Cafe Upgrades"
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -77.5
+offset_right = 96.0
+offset_bottom = 77.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="CoffeeButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
@@ -26,13 +31,3 @@ icon_alignment = 1
 [node name="ShieldButton" type="Button" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 text = "Buy Shield - 3 Pts"
-
-[node name="PointsLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Sprint Points: 0"
-
-[node name="CloseButton" type="Button" parent="CanvasLayer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Exit Shop"

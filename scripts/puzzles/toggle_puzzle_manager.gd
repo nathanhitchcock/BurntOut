@@ -7,7 +7,6 @@ var player_sequence: Array = []
 # Number of toggles in the puzzle
 const TOGGLE_COUNT := 3
 
-@onready var incorrect_label = $IncorrectLabel if has_node("IncorrectLabel") else null
 @onready var solved_label = $SolvedLabel if has_node("SolvedLabel") else null
 @onready var fail_sound = $FailSound if has_node("FailSound") else null
 @onready var success_sound = $SuccessSound if has_node("SuccessSound") else null
@@ -45,11 +44,10 @@ func _ready():
 		if btn.has_method("connect"):
 			btn.connect("gui_input", Callable(self, "_on_toggle_button_gui_input").bind(i))
 
-	if incorrect_label:
-		incorrect_label.visible = false
 	if solved_label:
 		solved_label.visible = false
 
+# Godot 3.x/4.x compatibility: use 'func' and 'await' without 'async' if error occurs
 func _on_toggle_pressed(toggle_index: int):
 	print("[TogglePuzzle] Player pressed:", toggle_index)
 	player_sequence.append(toggle_index)
@@ -64,9 +62,7 @@ func _on_toggle_pressed(toggle_index: int):
 			elif player and player.has_node("HealthBar"):
 				var bar = player.get_node("HealthBar")
 				bar.value = max(bar.value - damage, bar.min_value)
-			if incorrect_label:
-				incorrect_label.visible = true
-				# No await/timer needed, just show until next input
+			# No incorrect_label shown
 			if portal:
 				portal.visible = true
 			player_sequence.clear()
