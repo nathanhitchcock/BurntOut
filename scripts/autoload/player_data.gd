@@ -10,6 +10,7 @@ var machine_points: int = 0 # Persistent machine points for ProductivityMachine
 var portal_to_corp_used: bool = false # Set true when using portal, checked on load
 var burnout_level: int = 0 # Persistent burnout tracker (0-5)
 var productivity_progress: float = 0.0 # Persistent progress for ProductivityMachine
+var has_shield: bool = false # Persistent shield state
 # Add any other persistent fields you need
 
 signal puzzle_solved(progress_amount)

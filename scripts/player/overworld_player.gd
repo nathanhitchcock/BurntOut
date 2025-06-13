@@ -121,6 +121,11 @@ func show_damage_popup(amount: int):
 
 func take_damage(amount: int) -> void:
 	if player_data:
+		if player_data.has_shield:
+			player_data.has_shield = false
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI").show_floating_feedback("Shield Blocked!", Color(1,1,0.2))
+			return
 		player_data.health = max(player_data.health - amount, 0)
 		save_to_player_data()
 		if has_node("/root/GlobalUI"):
