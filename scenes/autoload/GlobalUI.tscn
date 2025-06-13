@@ -5,7 +5,7 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_22ujj"]
 bg_color = Color(0.149952, 0.707114, 0.447703, 1)
 
-[node name="GlobalUI2" type="CanvasLayer"]
+[node name="GlobalUI3" type="CanvasLayer"]
 process_mode = 1
 layer = 50
 script = ExtResource("1_472px")
