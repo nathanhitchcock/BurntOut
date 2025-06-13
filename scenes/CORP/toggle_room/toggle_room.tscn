@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://lbrto7e61p4g"]
+[gd_scene load_steps=21 format=3 uid="uid://lbrto7e61p4g"]
 
 [ext_resource type="Script" uid="uid://bcwyuhuqcks7h" path="res://scripts/puzzles/toggle_puzzle_manager.gd" id="1_twdje"]
 [ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="3_fail"]
@@ -69,14 +69,6 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mqk76"]
 radius = 132.0
-
-[sub_resource type="FontVariation" id="FontVariation_a3ww3"]
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_lht17"]
-color = Color(0, 0.721569, 0, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hj5jl"]
-bg_color = Color(0.360784, 0.682353, 0.435294, 1)
 
 [node name="ToggleRoom" type="Node2D"]
 script = ExtResource("1_twdje")
@@ -187,27 +179,5 @@ texture = ExtResource("4_twdje")
 position = Vector2(-62, 42)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_mqk76")
-
-[node name="HealthBar" type="ProgressBar" parent="Player"]
-anchors_preset = -1
-anchor_left = -0.000612222
-anchor_top = -0.132463
-anchor_right = 1.13165
-anchor_bottom = -0.132463
-offset_left = -40.0
-offset_top = -40.0
-offset_right = 960.0
-offset_bottom = 300.0
-scale = Vector2(0.0750436, 0.053259)
-theme_override_fonts/font = SubResource("FontVariation_a3ww3")
-theme_override_font_sizes/font_size = 200
-theme_override_styles/background = SubResource("StyleBoxLine_lht17")
-theme_override_styles/fill = SubResource("StyleBoxFlat_hj5jl")
-value = 100.0
-metadata/_edit_use_anchors_ = true
-
-[node name="BurnoutLabel" type="Label" parent="Player"]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [node name="Camera2D" type="Camera2D" parent="."]

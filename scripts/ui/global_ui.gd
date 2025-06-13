@@ -10,11 +10,13 @@ var interact_prompt: Label = null
 var volume_slider: HSlider = null
 var volume_label: Label = null
 var health_bar: ProgressBar = null
+var burnout_label: Label = null
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
 
 func _ready():
+	set_process_input(true)
 	print("GlobalUI loaded!")
 	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
 	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
@@ -27,6 +29,7 @@ func _ready():
 	volume_slider = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeSlider")
 	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
+	burnout_label = get_node_or_null("CanvasLayer/Control/BurnoutLabel")
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -57,6 +60,8 @@ func _ready():
 	if health_bar:
 		health_bar.value = 100
 		_update_health_bar()
+	if burnout_label:
+		_update_burnout_label()
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -109,19 +114,24 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
-	# Hide sprint points and health bar on StartScreen
+	# Hide sprint points, health bar, and burnout label on StartScreen
 	var current_scene = get_tree().current_scene
 	if sprint_points_label:
 		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
 			sprint_points_label.visible = false
 			if health_bar:
 				health_bar.visible = false
+			if has_node("CanvasLayer/Control/BurnoutLabel"):
+				get_node("CanvasLayer/Control/BurnoutLabel").visible = false
 		else:
 			sprint_points_label.visible = true
 			if health_bar:
 				health_bar.visible = true
+			if has_node("CanvasLayer/Control/BurnoutLabel"):
+				get_node("CanvasLayer/Control/BurnoutLabel").visible = true
 	update_sprint_points_display()
 	_update_health_bar()
+	_update_burnout_label()
 
 func _update_health_bar():
 	if health_bar:
@@ -129,6 +139,14 @@ func _update_health_bar():
 		if has_node("/root/player_data"):
 			health = get_node("/root/player_data").health
 		health_bar.value = health
+
+func _update_burnout_label():
+	if burnout_label and has_node("/root/player_data"):
+		var pd = get_node("/root/player_data")
+		var burnout = 0
+		if "burnout_level" in pd:
+			burnout = pd.burnout_level
+		burnout_label.text = "Burnout Lvl: %d" % burnout
 
 func get_interact_prompt():
 	# Try direct path first

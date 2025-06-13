@@ -26,14 +26,10 @@ func _ready():
 	# Connect UI buttons
 	$CanvasLayer/VBoxContainer/CoffeeButton.pressed.connect(func(): purchase_upgrade(0))
 	$CanvasLayer/VBoxContainer/ShieldButton.pressed.connect(func(): purchase_upgrade(1))
-	$CanvasLayer/VBoxContainer/CloseButton.pressed.connect(func(): self.visible = false) # If you have a close button
 	update_shop_ui()
 	update_shop_ui()
 
 func update_shop_ui():
-	# Update the points label
-	$CanvasLayer/VBoxContainer/PointsLabel.text = "Sprint Points: %d" % player_data.sprint_points
-	# This is a stub. In your actual UI, populate item buttons/labels with upgrade info.
 	print("[Shop] Available upgrades:")
 	for u in upgrades:
 		print("- %s (%d points): %s" % [u.name, u.cost, u.description])
@@ -46,9 +42,12 @@ func purchase_upgrade(index):
 		return
 	player_data.sprint_points -= upgrade.cost
 	if upgrade.effect == "heal":
-		if player and player.has_node("HealthBar"):
-			var bar = player.get_node("HealthBar")
-			bar.value = min(bar.value + 30, bar.max_value)
+		# Heal the player and update the global UI health bar
+		if has_node("/root/player_data"):
+			player_data.health = min(player_data.health + 30, 100)
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI")._update_health_bar()
+		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("+30 Health!", Color(0.2,0.8,1))
 	elif upgrade.effect == "shield":
 		if player:
