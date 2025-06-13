@@ -123,7 +123,7 @@ func take_damage(amount: int) -> void:
 	if player_data:
 		if player_data.has_shield:
 			# Shield absorbs up to shield_hp points before breaking
-			if player_data.shield_hp > 0:
+			if "shield_hp" in player_data and player_data.shield_hp > 0:
 				var absorbed = min(amount, player_data.shield_hp)
 				player_data.shield_hp -= absorbed
 				amount -= absorbed
