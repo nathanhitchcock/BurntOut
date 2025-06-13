@@ -90,8 +90,19 @@ func _on_toggle_pressed(toggle_index: int):
 			var pd = get_node("/root/player_data")
 			pd.productivity_progress = clamp(pd.productivity_progress + 0.2, 0.0, 1.0)
 			pd.emit_signal("puzzle_solved", 0.2)
+		# Randomize the puzzle solution after solving
+		_generate_new_solution()
 		player_sequence.clear()
 		_reset_toggles()
+
+func _generate_new_solution():
+	solution = []
+	var indices = []
+	for i in range(TOGGLE_COUNT):
+		indices.append(i)
+	indices.shuffle()
+	solution = indices.duplicate()
+	print("[TogglePuzzle] New randomized solution:", solution)
 
 func _reset_toggles():
 	for i in range(TOGGLE_COUNT):
