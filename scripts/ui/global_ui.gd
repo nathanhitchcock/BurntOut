@@ -11,6 +11,7 @@ var volume_slider: HSlider = null
 var volume_label: Label = null
 var health_bar: ProgressBar = null
 var burnout_label: Label = null
+var shield_bar: ProgressBar = null
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
@@ -30,6 +31,7 @@ func _ready():
 	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
 	burnout_label = get_node_or_null("CanvasLayer/Control/BurnoutLabel")
+	shield_bar = get_node_or_null("CanvasLayer/Control/ShieldBar")
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -60,6 +62,10 @@ func _ready():
 	if health_bar:
 		health_bar.value = 100
 		_update_health_bar()
+	if shield_bar:
+		shield_bar.value = 100
+		shield_bar.visible = false
+	_update_shield_bar()
 	if burnout_label:
 		_update_burnout_label()
 
@@ -129,8 +135,14 @@ func _process(_delta):
 				health_bar.visible = true
 			if has_node("CanvasLayer/Control/BurnoutLabel"):
 				get_node("CanvasLayer/Control/BurnoutLabel").visible = true
+	if shield_bar:
+		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
+			shield_bar.visible = false
+		else:
+			shield_bar.visible = shield_bar.value > 0
 	update_sprint_points_display()
 	_update_health_bar()
+	_update_shield_bar()
 	_update_burnout_label()
 
 func _update_health_bar():
@@ -139,6 +151,14 @@ func _update_health_bar():
 		if has_node("/root/player_data"):
 			health = get_node("/root/player_data").health
 		health_bar.value = health
+
+func _update_shield_bar():
+	if shield_bar:
+		var shield = 0
+		if has_node("/root/player_data"):
+			shield = get_node("/root/player_data").shield_hp
+		shield_bar.value = shield
+		shield_bar.visible = shield > 0
 
 func _update_burnout_label():
 	if burnout_label and has_node("/root/player_data"):

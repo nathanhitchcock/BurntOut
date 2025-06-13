@@ -52,6 +52,9 @@ func purchase_upgrade(index):
 	elif upgrade.effect == "shield":
 		if has_node("/root/player_data"):
 			player_data.has_shield = true
+			player_data.shield_hp = 100 # Set shield HP to max when purchased
+		if has_node("/root/GlobalUI"):
+			get_node("/root/GlobalUI")._update_shield_bar()
 		if player and player.has_method("show_floating_feedback"):
 			player.show_floating_feedback("Shield Ready!", Color(1,1,0.2))
 	# Add more effects as needed
