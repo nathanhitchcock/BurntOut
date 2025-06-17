@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cprhm2sr45b57" path="res://assets/images/sprites/productivity_machine/candle_flame.png" id="4_x2cwd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6blcu"]
-size = Vector2(896.25, 924.5)
+size = Vector2(1693.12, 547.25)
 
 [node name="FocusPod" type="Sprite2D"]
 
@@ -17,7 +17,7 @@ visible = false
 texture = ExtResource("1_17ntm")
 
 [node name="FocusPodSign" type="Sprite2D" parent="."]
-position = Vector2(8, -534)
+position = Vector2(-434, -322)
 scale = Vector2(2, 2)
 texture = ExtResource("2_6blcu")
 
@@ -33,9 +33,7 @@ position = Vector2(335, -34)
 texture = ExtResource("4_x2cwd")
 
 [node name="Area2D" type="Area2D" parent="."]
-metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(9.875, -1)
+position = Vector2(803, -185)
 shape = SubResource("RectangleShape2D_6blcu")
-metadata/_edit_lock_ = true

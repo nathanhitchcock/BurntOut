@@ -16,10 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
-size = Vector2(598.75, 751.25)
+size = Vector2(619.375, 820.625)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
-size = Vector2(1946.75, 666.541)
+size = Vector2(1099.16, 942.24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
 atlas = ExtResource("8_i65ii")
@@ -101,8 +101,8 @@ scale = Vector2(0.4, 0.4)
 script = ExtResource("5_2lp3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scrum-DSUBoard"]
-position = Vector2(2042.5, 352.5)
-scale = Vector2(0.295616, 0.233218)
+position = Vector2(2117.5, 515)
+scale = Vector2(0.160015, 0.13614)
 texture = ExtResource("3_r4m04")
 
 [node name="ScrumDSUBoardArea" type="Area2D" parent="Scrum-DSUBoard"]
@@ -110,13 +110,13 @@ position = Vector2(1968, 638)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scrum-DSUBoard/ScrumDSUBoardArea"]
-position = Vector2(39.9062, 19.75)
+position = Vector2(41.0781, 7.32813)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
 [node name="UpgradeCafe" type="Sprite2D" parent="."]
-position = Vector2(-391, -19)
-scale = Vector2(0.25, 0.25)
+position = Vector2(-273, -85)
+scale = Vector2(0.205614, 0.170977)
 texture = ExtResource("4_r4m04")
 script = ExtResource("3_2lp3j")
 
@@ -124,11 +124,11 @@ script = ExtResource("3_2lp3j")
 scale = Vector2(0.595864, 0.939178)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeCafe/Area2D"]
-position = Vector2(483.332, 29.8133)
+position = Vector2(130.593, 444.324)
 shape = SubResource("RectangleShape2D_y7now")
 
 [node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
-position = Vector2(-11, -163)
+position = Vector2(-116, -219)
 scale = Vector2(0.15, 0.15)
 
 [node name="UpgradeShopUI" parent="." instance=ExtResource("7_y7now")]
@@ -158,7 +158,7 @@ emitting = false
 texture = ExtResource("7_pn5pk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-58, 41)
+position = Vector2(-191.235, 40)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_2lp3j")
 
