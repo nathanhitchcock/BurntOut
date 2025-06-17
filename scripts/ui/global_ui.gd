@@ -10,8 +10,9 @@ var interact_prompt: Label = null
 var volume_slider: HSlider = null
 var volume_label: Label = null
 var health_bar: ProgressBar = null
-var burnout_label: Label = null
 var shield_bar: ProgressBar = null
+var burnout_flames: Array = []
+var burnout_flame_nodes: Array = []
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
@@ -30,7 +31,6 @@ func _ready():
 	volume_slider = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeSlider")
 	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
-	burnout_label = get_node_or_null("CanvasLayer/Control/BurnoutLabel")
 	shield_bar = get_node_or_null("CanvasLayer/Control/ShieldBar")
 	# Always show the sprint points label
 	if sprint_points_label:
@@ -66,8 +66,7 @@ func _ready():
 		shield_bar.value = 100
 		shield_bar.visible = false
 	_update_shield_bar()
-	if burnout_label:
-		_update_burnout_label()
+	_update_burnout_flames()
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -143,7 +142,7 @@ func _process(_delta):
 	update_sprint_points_display()
 	_update_health_bar()
 	_update_shield_bar()
-	_update_burnout_label()
+	_update_burnout_flames()
 
 func _update_health_bar():
 	if health_bar:
@@ -160,13 +159,16 @@ func _update_shield_bar():
 		shield_bar.value = shield
 		shield_bar.visible = shield > 0
 
-func _update_burnout_label():
-	if burnout_label and has_node("/root/player_data"):
+func _update_burnout_flames():
+	if has_node("/root/player_data"):
 		var pd = get_node("/root/player_data")
-		var burnout = 0
-		if "burnout_level" in pd:
-			burnout = pd.burnout_level
-		burnout_label.text = "Burnout Lvl: %d" % burnout
+		var level = pd.burnout_level
+		for i in range(5):
+			if i < level:
+				burnout_flame_nodes[i].texture = burnout_flames[min(i, burnout_flames.size()-1)]
+				burnout_flame_nodes[i].visible = true
+			else:
+				burnout_flame_nodes[i].visible = false
 
 func get_interact_prompt():
 	# Try direct path first
