@@ -1,5 +1,0 @@
-[node name="FailSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_fail")
-
-[node name="SuccessSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_success")

@@ -8,7 +8,6 @@ var burnout_level: int = 0 # 0 = no burnout, 1-5 = burnout stages
 @onready var player_data = get_node_or_null("/root/player_data")
 @onready var burnout_label = $BurnoutLabel if has_node("BurnoutLabel") else null
 @onready var camera: Camera2D = $Camera2D if has_node("Camera2D") else null
-@onready var shield_bar: ProgressBar = null
 
 var camera_zoom_in := Vector2(1.5, 1.5)
 var camera_zoom_out := Vector2(2.5, 2.5)
@@ -30,11 +29,6 @@ func _ready():
 	if camera:
 		camera.make_current()
 		camera.zoom = camera_zoom_out
-	shield_bar = null
-	if has_node("/root/GlobalUI"):
-		var global_ui = get_node("/root/GlobalUI")
-		if global_ui.has_node("CanvasLayer/Control/ShieldBar"):
-			shield_bar = global_ui.get_node("CanvasLayer/Control/ShieldBar")
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
@@ -104,15 +98,6 @@ func _process(delta):
 	if burnout_label:
 		burnout_label.text = "Burnout: %d" % burnout_level
 
-func _update_shield_bar():
-	if shield_bar:
-		if player_data and player_data.shield_hp > 0:
-			shield_bar.value = player_data.shield_hp
-			shield_bar.visible = true
-		else:
-			shield_bar.value = 0
-			shield_bar.visible = false
-
 func show_floating_feedback(text: String, color: Color, offset := Vector2.ZERO):
 	var label = Label.new()
 	label.text = text
@@ -147,7 +132,8 @@ func take_damage(amount: int) -> void:
 			player_data.shield_hp -= absorbed
 			amount -= absorbed
 			show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2))
-			_update_shield_bar()
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI")._update_shield_bar()
 			if player_data.shield_hp <= 0:
 				player_data.shield_hp = 0
 				# Shift 'Shield Broken!' text down by 20 pixels to avoid overlap

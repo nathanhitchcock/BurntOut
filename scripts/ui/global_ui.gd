@@ -10,16 +10,17 @@ var interact_prompt: Label = null
 var volume_slider: HSlider = null
 var volume_label: Label = null
 var health_bar: ProgressBar = null
-var shield_bar: ProgressBar = null
 var burnout_flames: Array = []
 var burnout_flame_nodes: Array = []
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
 
+var shield_icon: TextureRect = null
+var shield_images: Array = []
+
 func _ready():
 	set_process_input(true)
-	print("GlobalUI loaded!")
 	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
 	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
 	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
@@ -31,7 +32,37 @@ func _ready():
 	volume_slider = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeSlider")
 	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
-	shield_bar = get_node_or_null("CanvasLayer/Control/ShieldBar")
+	# Removed all shield_bar ProgressBar code
+
+	# Find the parent node for UI elements
+	var parent = get_node_or_null("CanvasLayer/Control")
+
+	# Add a TextureRect for the shield icon
+	var shield_icon = TextureRect.new()
+	shield_icon.name = "ShieldIcon"
+	shield_icon.anchor_left = 0
+	shield_icon.anchor_top = 0
+	shield_icon.anchor_right = 0
+	shield_icon.anchor_bottom = 0
+	shield_icon.position = Vector2(-475, -200) # Adjust as needed for UI placement
+	shield_icon.custom_minimum_size = Vector2(48, 48)
+	shield_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	if parent:
+		parent.add_child(shield_icon)
+
+	# Preload shield images for 1-5
+	var shield_images = [
+		load("res://assets/images/ui/hud/shields/shield1.png"), # not purchased
+		load("res://assets/images/ui/hud/shields/shield2.png"), # 25%
+		load("res://assets/images/ui/hud/shields/shield3.png"), # 50%
+		load("res://assets/images/ui/hud/shields/shield4.png"), # 75%
+		load("res://assets/images/ui/hud/shields/shield5.png")  # 100%
+	]
+
+	# Store for later updates
+	self.shield_icon = shield_icon
+	self.shield_images = shield_images
+
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -46,15 +77,14 @@ func _ready():
 		_set_buttons_pausable(pause_menu)
 	# Debug: print when pause menu is shown and connect button signals
 	if pause_menu:
-		print("[DEBUG] Pause menu node found and ready.")
-	if resume_button:
-		resume_button.pressed.connect(_on_resume_button_pressed)
-	if quit_button:
-		quit_button.pressed.connect(_on_quit_pressed)
-	if restart_button:
-		restart_button.pressed.connect(_on_restart_button_pressed)
-	if pause_menu:
-		pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
+		if resume_button:
+			resume_button.pressed.connect(_on_resume_button_pressed)
+		if quit_button:
+			quit_button.pressed.connect(_on_quit_pressed)
+		if restart_button:
+			restart_button.pressed.connect(_on_restart_button_pressed)
+		if pause_menu:
+			pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
 	if volume_slider:
 		volume_slider.value = 0.5
 		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
@@ -62,10 +92,7 @@ func _ready():
 	if health_bar:
 		health_bar.value = 100
 		_update_health_bar()
-	if shield_bar:
-		shield_bar.value = 100
-		shield_bar.visible = false
-	_update_shield_bar()
+	# Removed all shield_bar ProgressBar code
 	# Load flame textures for burnout levels 1-5
 	burnout_flames = []
 	for i in range(1, 6):
@@ -73,7 +100,6 @@ func _ready():
 		if tex:
 			burnout_flames.append(tex)
 	# Create flame nodes (hidden by default)
-	var parent = get_node_or_null("CanvasLayer/Control")
 	burnout_flame_nodes = []
 	for i in range(5):
 		var sprite = TextureRect.new()
@@ -86,15 +112,13 @@ func _ready():
 		sprite.anchor_top = 0
 		sprite.anchor_right = 0
 		sprite.anchor_bottom = 0
-		# Gradually increase the size of each flame from left to right
-		var min_size = 32
-		var max_size = 48
-		var size = int(min_size + (max_size - min_size) * (i / 4.0))
+		# Set all flames to the same size as the shield icon
+		var size = 48
 		sprite.custom_minimum_size = Vector2(size, size)
-		# Adjust position so flames remain visually centered as they grow
-		var base_x = -375 + i * 32
-		var offset_x = -((size - 48) / 2)
-		sprite.position = Vector2(base_x + offset_x, -190 - ((size - 48) / 2))
+		# Position flames to the right of the shield icon, spaced evenly
+		var flame_spacing = 40 # horizontal space between flames
+		var base_x = -475 + 48 + 8 + i * flame_spacing # shield x + shield width + gap + index * spacing
+		sprite.position = Vector2(base_x, -200)
 		sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		parent.add_child(sprite)
 		burnout_flame_nodes.append(sprite)
@@ -194,6 +218,8 @@ func _ready():
 		'''
 		# --- END OPTIONAL PARTICLE EFFECTS ---
 	_update_burnout_flames()
+	# Force initial HUD visibility update for StartScreen/Skyline scenes
+	_process(0)
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -215,14 +241,6 @@ func toggle_pause():
 		var music_player = GlobalAudio.get_node_or_null("AmbientHum")
 		if music_player:
 			music_player.stream_paused = pause_menu.visible
-		print("[DEBUG] toggle_pause: pause_menu.visible=", pause_menu.visible, ", gameplay_enabled=", gameplay_enabled)
-		if pause_menu.visible:
-			pause_menu.move_to_front()
-			if resume_button:
-				resume_button.grab_focus()
-	else:
-		print("[GlobalUI] Warning: pause_menu or pause_bg is null!")
-
 func _on_quit_pressed():
 	get_tree().quit()
 
@@ -246,26 +264,38 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
-	# Hide sprint points, health bar, and burnout label on StartScreen
+	# Hide sprint points, health bar, and burnout label on StartScreen and SkylineWatch
 	var current_scene = get_tree().current_scene
-	if sprint_points_label:
-		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
-			sprint_points_label.visible = false
-			if health_bar:
-				health_bar.visible = false
+	var hide_hud = false
+	var scene_path = ""
+	if current_scene and "scene_file_path" in current_scene:
+		scene_path = current_scene.scene_file_path
+		hide_hud = scene_path.ends_with("StartScreen.tscn") or scene_path.ends_with("SkylineWatch.tscn")
+	var empty_tex = load("res://assets/images/ui/hud/empty.png")
+	if shield_icon:
+		if hide_hud:
+			shield_icon.texture = empty_tex
 		else:
-			sprint_points_label.visible = true
-			if health_bar:
-				health_bar.visible = true
-	if shield_bar:
-		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
-			shield_bar.visible = false
-		else:
-			shield_bar.visible = shield_bar.value > 0
+			_update_shield_bar()
+	for i in range(burnout_flame_nodes.size()):
+		var flame = burnout_flame_nodes[i]
+		if hide_hud and i == 0:
+			flame.texture = empty_tex
+		elif not hide_hud and burnout_flames.size() > i:
+			flame.texture = burnout_flames[i]
+		# Explicitly hide the first flame icon on Start Screen
+		if hide_hud and i == 0:
+			flame.visible = false
+		flame.visible = not hide_hud and flame.texture != null
 	update_sprint_points_display()
 	_update_health_bar()
-	_update_shield_bar()
-	_update_burnout_flames()
+	if not hide_hud:
+		_update_burnout_flames()
+	# After all other logic, ensure health bar and sprint points label are hidden on Start Screen
+	if health_bar:
+		health_bar.visible = not hide_hud
+	if sprint_points_label:
+		sprint_points_label.visible = not hide_hud
 
 func _update_health_bar():
 	if health_bar:
@@ -275,12 +305,28 @@ func _update_health_bar():
 		health_bar.value = health
 
 func _update_shield_bar():
-	if shield_bar:
-		var shield = 0
-		if has_node("/root/player_data"):
-			shield = get_node("/root/player_data").shield_hp
-		shield_bar.value = shield
-		shield_bar.visible = shield > 0
+	# Use shield_icon and shield_images instead of ProgressBar
+	if not ("shield_icon" in self and "shield_images" in self):
+		return
+	var shield_icon = self.shield_icon
+	var shield_images = self.shield_images
+	var shield = 0
+	if has_node("/root/player_data"):
+		shield = get_node("/root/player_data").shield_hp
+	# Determine which image to show
+	var idx = 0
+	if shield <= 0:
+		idx = 0 # not purchased or depleted
+	elif shield < 25:
+		idx = 1
+	elif shield < 50:
+		idx = 2
+	elif shield < 75:
+		idx = 3
+	else:
+		idx = 4
+	shield_icon.texture = shield_images[idx]
+	shield_icon.visible = (shield > 0 or idx == 0)
 
 func _update_burnout_flames():
 	# Show flames and their particle effects up to the current burnout level
@@ -340,7 +386,7 @@ func show_interact_popup_near_player(player: Node):
 	tween.finished.connect(label.queue_free)
 
 func _on_pause_menu_gui_input(event):
-	print("[DEBUG] Pause menu received input: ", event)
+	pass
 
 func _unhandled_input(event):
 	# Workaround: Forward mouse input to pause menu when paused so UI buttons work
@@ -357,3 +403,8 @@ func _on_volume_slider_changed(value):
 func _update_volume_label():
 	if volume_label and volume_slider:
 		volume_label.text = "Volume: %d%%" % int(volume_slider.value * 100)
+
+func give_test_sprint_points():
+	if has_node("/root/player_data"):
+		get_node("/root/player_data").sprint_points = 3
+		update_sprint_points_display()
