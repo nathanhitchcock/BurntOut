@@ -66,6 +66,133 @@ func _ready():
 		shield_bar.value = 100
 		shield_bar.visible = false
 	_update_shield_bar()
+	# Load flame textures for burnout levels 1-5
+	burnout_flames = []
+	for i in range(1, 6):
+		var tex = load("res://assets/images/ui/hud/burnout_level/flame%d.png" % i)
+		if tex:
+			burnout_flames.append(tex)
+	# Create flame nodes (hidden by default)
+	var parent = get_node_or_null("CanvasLayer/Control")
+	burnout_flame_nodes = []
+	for i in range(5):
+		var sprite = TextureRect.new()
+		if burnout_flames.size() > 0:
+			sprite.texture = burnout_flames[0]
+		else:
+			sprite.texture = null
+		sprite.visible = false
+		sprite.anchor_left = 0
+		sprite.anchor_top = 0
+		sprite.anchor_right = 0
+		sprite.anchor_bottom = 0
+		# Gradually increase the size of each flame from left to right
+		var min_size = 32
+		var max_size = 48
+		var size = int(min_size + (max_size - min_size) * (i / 4.0))
+		sprite.custom_minimum_size = Vector2(size, size)
+		# Adjust position so flames remain visually centered as they grow
+		var base_x = -375 + i * 32
+		var offset_x = -((size - 48) / 2)
+		sprite.position = Vector2(base_x + offset_x, -190 - ((size - 48) / 2))
+		sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		parent.add_child(sprite)
+		burnout_flame_nodes.append(sprite)
+		# --- BEGIN OPTIONAL PARTICLE EFFECTS FOR BURNOUT FLAMES 3, 4, 5 ---
+		# To re-enable, uncomment this block.
+		'''
+		if i == 2:
+			var particles3 = GPUParticles2D.new()
+			var material3 = ParticleProcessMaterial.new()
+			material3.gravity = Vector3(0, -8, 0)
+			material3.direction = Vector3(0, -1, 0)
+			material3.spread = 0.22 # narrower
+			material3.initial_velocity_min = 4
+			material3.initial_velocity_max = 7
+			material3.scale_min = 0.11 # smaller
+			material3.scale_max = 0.16 # smaller
+			material3.angle_min = -4
+			material3.angle_max = 4
+			material3.angular_velocity_min = -0.4
+			material3.angular_velocity_max = 0.4
+			material3.color = Color(0.949, 0.361, 0.220, 0.18) # lower alpha
+			var ramp3 = Gradient.new()
+			ramp3.colors = [Color(0.949, 0.361, 0.220, 0.22), Color(0.949, 0.361, 0.220, 0.10), Color(0.949, 0.361, 0.220, 0.0)]
+			ramp3.offsets = [0.0, 0.5, 1.0]
+			material3.color_ramp = ramp3
+			particles3.process_material = material3
+			particles3.amount = 2 # fewer particles
+			particles3.lifetime = 0.22 # shorter
+			particles3.texture = burnout_flames[2]
+			particles3.position = sprite.position + Vector2(18, 23)
+			particles3.scale = Vector2(0.95, 0.95) # smaller
+			particles3.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles3)
+			particles3.owner = parent
+			parent.move_child(particles3, 0)
+		if i == 3:
+			var particles4 = GPUParticles2D.new()
+			var material4 = ParticleProcessMaterial.new()
+			material4.gravity = Vector3(0, -8, 0)
+			material4.direction = Vector3(0, -1, 0)
+			material4.spread = 0.22
+			material4.initial_velocity_min = 5
+			material4.initial_velocity_max = 9
+			material4.scale_min = 0.10
+			material4.scale_max = 0.15
+			material4.angle_min = -5
+			material4.angle_max = 5
+			material4.angular_velocity_min = -0.5
+			material4.angular_velocity_max = 0.5
+			material4.color = Color(0.6, 0.25, 0.8, 0.14) # lower alpha
+			var ramp4 = Gradient.new()
+			ramp4.colors = [Color(0.7, 0.4, 1.0, 0.18), Color(0.6, 0.25, 0.8, 0.08), Color(0.6, 0.25, 0.8, 0.0)]
+			ramp4.offsets = [0.0, 0.5, 1.0]
+			material4.color_ramp = ramp4
+			particles4.process_material = material4
+			particles4.amount = 2
+			particles4.lifetime = 0.22
+			particles4.texture = burnout_flames[3]
+			particles4.position = sprite.position + Vector2(22, 25)
+			particles4.scale = Vector2(0.85, 0.85)
+			particles4.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles4)
+			particles4.owner = parent
+			parent.move_child(particles4, 0)
+		if i == 4:
+			var particles = GPUParticles2D.new()
+			var material = ParticleProcessMaterial.new()
+			material.gravity = Vector3(0, -8, 0)
+			material.direction = Vector3(0, -1, 0)
+			material.spread = 0.28
+			material.initial_velocity_min = 7
+			material.initial_velocity_max = 13
+			material.scale_min = 0.10
+			material.scale_max = 0.16
+			material.angle_min = -6
+			material.angle_max = 6
+			material.angular_velocity_min = -0.7
+			material.angular_velocity_max = 0.7
+			material.color = Color(0.7, 0.3, 1.0, 0.18) # lower alpha
+			var ramp = Gradient.new()
+			ramp.colors = [Color(0.85, 0.5, 1.0, 0.22), Color(0.7, 0.3, 1.0, 0.10), Color(0.7, 0.3, 1.0, 0.0)]
+			ramp.offsets = [0.0, 0.5, 1.0]
+			material.color_ramp = ramp
+			particles.process_material = material
+			particles.amount = 3
+			particles.lifetime = 0.26
+			particles.texture = burnout_flames[4]
+			particles.position = sprite.position + Vector2(27, 25)
+			particles.scale = Vector2(0.85, 0.85)
+			particles.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles)
+			particles.owner = parent
+			parent.move_child(particles, 0)
+		'''
+		# --- END OPTIONAL PARTICLE EFFECTS ---
 	_update_burnout_flames()
 
 func _set_buttons_pausable(node):
@@ -126,14 +253,10 @@ func _process(_delta):
 			sprint_points_label.visible = false
 			if health_bar:
 				health_bar.visible = false
-			if has_node("CanvasLayer/Control/BurnoutLabel"):
-				get_node("CanvasLayer/Control/BurnoutLabel").visible = false
 		else:
 			sprint_points_label.visible = true
 			if health_bar:
 				health_bar.visible = true
-			if has_node("CanvasLayer/Control/BurnoutLabel"):
-				get_node("CanvasLayer/Control/BurnoutLabel").visible = true
 	if shield_bar:
 		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
 			shield_bar.visible = false
@@ -160,15 +283,14 @@ func _update_shield_bar():
 		shield_bar.visible = shield > 0
 
 func _update_burnout_flames():
-	if has_node("/root/player_data"):
-		var pd = get_node("/root/player_data")
-		var level = pd.burnout_level
+	# Show flames and their particle effects up to the current burnout level
+	if burnout_flame_nodes.size() == 5 and burnout_flames.size() > 0:
+		var burnout_level = 0
+		if has_node("/root/player_data"):
+			burnout_level = get_node("/root/player_data").burnout_level
 		for i in range(5):
-			if i < level:
-				burnout_flame_nodes[i].texture = burnout_flames[min(i, burnout_flames.size()-1)]
-				burnout_flame_nodes[i].visible = true
-			else:
-				burnout_flame_nodes[i].visible = false
+			burnout_flame_nodes[i].texture = burnout_flames[min(i, burnout_flames.size()-1)]
+			burnout_flame_nodes[i].visible = i <= burnout_level # Only show up to current burnout level
 
 func get_interact_prompt():
 	# Try direct path first

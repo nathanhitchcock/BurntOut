@@ -126,16 +126,6 @@ offset_bottom = -110.5
 theme_override_font_sizes/font_size = 28
 text = "Sprint Pts: 0"
 
-[node name="BurnoutLabel" type="Label" parent="CanvasLayer/Control"]
-z_index = 1
-layout_mode = 1
-offset_left = -483.5
-offset_top = -115.5
-offset_right = -322.5
-offset_bottom = -81.5
-theme_override_font_sizes/font_size = 24
-text = "Burnout Lvl: 0"
-
 [node name="InteractPrompt" type="Label" parent="CanvasLayer/Control"]
 visible = false
 z_index = 1000
