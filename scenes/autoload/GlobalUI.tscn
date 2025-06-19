@@ -101,17 +101,18 @@ layout_mode = 0
 offset_left = -482.0
 offset_top = -229.0
 offset_right = -274.0
-offset_bottom = -190.0
+offset_bottom = -202.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_22ujj")
 value = 100.0
 
 [node name="ShieldBar" type="ProgressBar" parent="CanvasLayer/Control"]
+visible = false
 z_index = 1
 layout_mode = 0
 offset_left = -482.5
-offset_top = -186.5
+offset_top = -199.5
 offset_right = -365.5
-offset_bottom = -147.5
+offset_bottom = -183.5
 theme_override_constants/outline_size = 0
 theme_override_styles/fill = SubResource("StyleBoxFlat_wt3qt")
 value = 100.0
@@ -125,16 +126,6 @@ offset_right = -278.5
 offset_bottom = -110.5
 theme_override_font_sizes/font_size = 28
 text = "Sprint Pts: 0"
-
-[node name="BurnoutLabel" type="Label" parent="CanvasLayer/Control"]
-z_index = 1
-layout_mode = 1
-offset_left = -483.5
-offset_top = -115.5
-offset_right = -322.5
-offset_bottom = -81.5
-theme_override_font_sizes/font_size = 24
-text = "Burnout Lvl: 0"
 
 [node name="InteractPrompt" type="Label" parent="CanvasLayer/Control"]
 visible = false

@@ -10,15 +10,17 @@ var interact_prompt: Label = null
 var volume_slider: HSlider = null
 var volume_label: Label = null
 var health_bar: ProgressBar = null
-var burnout_label: Label = null
-var shield_bar: ProgressBar = null
+var burnout_flames: Array = []
+var burnout_flame_nodes: Array = []
 
 # Remove tree pausing, use a gameplay_enabled flag instead
 var gameplay_enabled := true
 
+var shield_icon: TextureRect = null
+var shield_images: Array = []
+
 func _ready():
 	set_process_input(true)
-	print("GlobalUI loaded!")
 	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
 	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
 	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
@@ -30,8 +32,37 @@ func _ready():
 	volume_slider = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeSlider")
 	volume_label = get_node_or_null("CanvasLayer/Control/VBoxContainer/VolumeLabel")
 	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
-	burnout_label = get_node_or_null("CanvasLayer/Control/BurnoutLabel")
-	shield_bar = get_node_or_null("CanvasLayer/Control/ShieldBar")
+	# Removed all shield_bar ProgressBar code
+
+	# Find the parent node for UI elements
+	var parent = get_node_or_null("CanvasLayer/Control")
+
+	# Add a TextureRect for the shield icon
+	var shield_icon = TextureRect.new()
+	shield_icon.name = "ShieldIcon"
+	shield_icon.anchor_left = 0
+	shield_icon.anchor_top = 0
+	shield_icon.anchor_right = 0
+	shield_icon.anchor_bottom = 0
+	shield_icon.position = Vector2(-475, -200) # Adjust as needed for UI placement
+	shield_icon.custom_minimum_size = Vector2(48, 48)
+	shield_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	if parent:
+		parent.add_child(shield_icon)
+
+	# Preload shield images for 1-5
+	var shield_images = [
+		load("res://assets/images/ui/hud/shields/shield1.png"), # not purchased
+		load("res://assets/images/ui/hud/shields/shield2.png"), # 25%
+		load("res://assets/images/ui/hud/shields/shield3.png"), # 50%
+		load("res://assets/images/ui/hud/shields/shield4.png"), # 75%
+		load("res://assets/images/ui/hud/shields/shield5.png")  # 100%
+	]
+
+	# Store for later updates
+	self.shield_icon = shield_icon
+	self.shield_images = shield_images
+
 	# Always show the sprint points label
 	if sprint_points_label:
 		sprint_points_label.visible = true
@@ -46,15 +77,14 @@ func _ready():
 		_set_buttons_pausable(pause_menu)
 	# Debug: print when pause menu is shown and connect button signals
 	if pause_menu:
-		print("[DEBUG] Pause menu node found and ready.")
-	if resume_button:
-		resume_button.pressed.connect(_on_resume_button_pressed)
-	if quit_button:
-		quit_button.pressed.connect(_on_quit_pressed)
-	if restart_button:
-		restart_button.pressed.connect(_on_restart_button_pressed)
-	if pause_menu:
-		pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
+		if resume_button:
+			resume_button.pressed.connect(_on_resume_button_pressed)
+		if quit_button:
+			quit_button.pressed.connect(_on_quit_pressed)
+		if restart_button:
+			restart_button.pressed.connect(_on_restart_button_pressed)
+		if pause_menu:
+			pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
 	if volume_slider:
 		volume_slider.value = 0.5
 		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
@@ -62,12 +92,134 @@ func _ready():
 	if health_bar:
 		health_bar.value = 100
 		_update_health_bar()
-	if shield_bar:
-		shield_bar.value = 100
-		shield_bar.visible = false
-	_update_shield_bar()
-	if burnout_label:
-		_update_burnout_label()
+	# Removed all shield_bar ProgressBar code
+	# Load flame textures for burnout levels 1-5
+	burnout_flames = []
+	for i in range(1, 6):
+		var tex = load("res://assets/images/ui/hud/burnout_level/flame%d.png" % i)
+		if tex:
+			burnout_flames.append(tex)
+	# Create flame nodes (hidden by default)
+	burnout_flame_nodes = []
+	for i in range(5):
+		var sprite = TextureRect.new()
+		if burnout_flames.size() > 0:
+			sprite.texture = burnout_flames[0]
+		else:
+			sprite.texture = null
+		sprite.visible = false
+		sprite.anchor_left = 0
+		sprite.anchor_top = 0
+		sprite.anchor_right = 0
+		sprite.anchor_bottom = 0
+		# Set all flames to the same size as the shield icon
+		var size = 48
+		sprite.custom_minimum_size = Vector2(size, size)
+		# Position flames to the right of the shield icon, spaced evenly
+		var flame_spacing = 40 # horizontal space between flames
+		var base_x = -475 + 48 + 8 + i * flame_spacing # shield x + shield width + gap + index * spacing
+		sprite.position = Vector2(base_x, -200)
+		sprite.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		parent.add_child(sprite)
+		burnout_flame_nodes.append(sprite)
+		# --- BEGIN OPTIONAL PARTICLE EFFECTS FOR BURNOUT FLAMES 3, 4, 5 ---
+		# To re-enable, uncomment this block.
+		'''
+		if i == 2:
+			var particles3 = GPUParticles2D.new()
+			var material3 = ParticleProcessMaterial.new()
+			material3.gravity = Vector3(0, -8, 0)
+			material3.direction = Vector3(0, -1, 0)
+			material3.spread = 0.22 # narrower
+			material3.initial_velocity_min = 4
+			material3.initial_velocity_max = 7
+			material3.scale_min = 0.11 # smaller
+			material3.scale_max = 0.16 # smaller
+			material3.angle_min = -4
+			material3.angle_max = 4
+			material3.angular_velocity_min = -0.4
+			material3.angular_velocity_max = 0.4
+			material3.color = Color(0.949, 0.361, 0.220, 0.18) # lower alpha
+			var ramp3 = Gradient.new()
+			ramp3.colors = [Color(0.949, 0.361, 0.220, 0.22), Color(0.949, 0.361, 0.220, 0.10), Color(0.949, 0.361, 0.220, 0.0)]
+			ramp3.offsets = [0.0, 0.5, 1.0]
+			material3.color_ramp = ramp3
+			particles3.process_material = material3
+			particles3.amount = 2 # fewer particles
+			particles3.lifetime = 0.22 # shorter
+			particles3.texture = burnout_flames[2]
+			particles3.position = sprite.position + Vector2(18, 23)
+			particles3.scale = Vector2(0.95, 0.95) # smaller
+			particles3.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles3)
+			particles3.owner = parent
+			parent.move_child(particles3, 0)
+		if i == 3:
+			var particles4 = GPUParticles2D.new()
+			var material4 = ParticleProcessMaterial.new()
+			material4.gravity = Vector3(0, -8, 0)
+			material4.direction = Vector3(0, -1, 0)
+			material4.spread = 0.22
+			material4.initial_velocity_min = 5
+			material4.initial_velocity_max = 9
+			material4.scale_min = 0.10
+			material4.scale_max = 0.15
+			material4.angle_min = -5
+			material4.angle_max = 5
+			material4.angular_velocity_min = -0.5
+			material4.angular_velocity_max = 0.5
+			material4.color = Color(0.6, 0.25, 0.8, 0.14) # lower alpha
+			var ramp4 = Gradient.new()
+			ramp4.colors = [Color(0.7, 0.4, 1.0, 0.18), Color(0.6, 0.25, 0.8, 0.08), Color(0.6, 0.25, 0.8, 0.0)]
+			ramp4.offsets = [0.0, 0.5, 1.0]
+			material4.color_ramp = ramp4
+			particles4.process_material = material4
+			particles4.amount = 2
+			particles4.lifetime = 0.22
+			particles4.texture = burnout_flames[3]
+			particles4.position = sprite.position + Vector2(22, 25)
+			particles4.scale = Vector2(0.85, 0.85)
+			particles4.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles4)
+			particles4.owner = parent
+			parent.move_child(particles4, 0)
+		if i == 4:
+			var particles = GPUParticles2D.new()
+			var material = ParticleProcessMaterial.new()
+			material.gravity = Vector3(0, -8, 0)
+			material.direction = Vector3(0, -1, 0)
+			material.spread = 0.28
+			material.initial_velocity_min = 7
+			material.initial_velocity_max = 13
+			material.scale_min = 0.10
+			material.scale_max = 0.16
+			material.angle_min = -6
+			material.angle_max = 6
+			material.angular_velocity_min = -0.7
+			material.angular_velocity_max = 0.7
+			material.color = Color(0.7, 0.3, 1.0, 0.18) # lower alpha
+			var ramp = Gradient.new()
+			ramp.colors = [Color(0.85, 0.5, 1.0, 0.22), Color(0.7, 0.3, 1.0, 0.10), Color(0.7, 0.3, 1.0, 0.0)]
+			ramp.offsets = [0.0, 0.5, 1.0]
+			material.color_ramp = ramp
+			particles.process_material = material
+			particles.amount = 3
+			particles.lifetime = 0.26
+			particles.texture = burnout_flames[4]
+			particles.position = sprite.position + Vector2(27, 25)
+			particles.scale = Vector2(0.85, 0.85)
+			particles.z_index = 2
+			sprite.z_index = 1
+			parent.add_child(particles)
+			particles.owner = parent
+			parent.move_child(particles, 0)
+		'''
+		# --- END OPTIONAL PARTICLE EFFECTS ---
+	_update_burnout_flames()
+	# Force initial HUD visibility update for StartScreen/Skyline scenes
+	_process(0)
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -89,14 +241,6 @@ func toggle_pause():
 		var music_player = GlobalAudio.get_node_or_null("AmbientHum")
 		if music_player:
 			music_player.stream_paused = pause_menu.visible
-		print("[DEBUG] toggle_pause: pause_menu.visible=", pause_menu.visible, ", gameplay_enabled=", gameplay_enabled)
-		if pause_menu.visible:
-			pause_menu.move_to_front()
-			if resume_button:
-				resume_button.grab_focus()
-	else:
-		print("[GlobalUI] Warning: pause_menu or pause_bg is null!")
-
 func _on_quit_pressed():
 	get_tree().quit()
 
@@ -120,30 +264,38 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
-	# Hide sprint points, health bar, and burnout label on StartScreen
+	# Hide sprint points, health bar, and burnout label on StartScreen and SkylineWatch
 	var current_scene = get_tree().current_scene
-	if sprint_points_label:
-		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
-			sprint_points_label.visible = false
-			if health_bar:
-				health_bar.visible = false
-			if has_node("CanvasLayer/Control/BurnoutLabel"):
-				get_node("CanvasLayer/Control/BurnoutLabel").visible = false
+	var hide_hud = false
+	var scene_path = ""
+	if current_scene and "scene_file_path" in current_scene:
+		scene_path = current_scene.scene_file_path
+		hide_hud = scene_path.ends_with("StartScreen.tscn") or scene_path.ends_with("SkylineWatch.tscn")
+	var empty_tex = load("res://assets/images/ui/hud/empty.png")
+	if shield_icon:
+		if hide_hud:
+			shield_icon.texture = empty_tex
 		else:
-			sprint_points_label.visible = true
-			if health_bar:
-				health_bar.visible = true
-			if has_node("CanvasLayer/Control/BurnoutLabel"):
-				get_node("CanvasLayer/Control/BurnoutLabel").visible = true
-	if shield_bar:
-		if current_scene and current_scene.scene_file_path.ends_with("StartScreen.tscn"):
-			shield_bar.visible = false
-		else:
-			shield_bar.visible = shield_bar.value > 0
+			_update_shield_bar()
+	for i in range(burnout_flame_nodes.size()):
+		var flame = burnout_flame_nodes[i]
+		if hide_hud and i == 0:
+			flame.texture = empty_tex
+		elif not hide_hud and burnout_flames.size() > i:
+			flame.texture = burnout_flames[i]
+		# Explicitly hide the first flame icon on Start Screen
+		if hide_hud and i == 0:
+			flame.visible = false
+		flame.visible = not hide_hud and flame.texture != null
 	update_sprint_points_display()
 	_update_health_bar()
-	_update_shield_bar()
-	_update_burnout_label()
+	if not hide_hud:
+		_update_burnout_flames()
+	# After all other logic, ensure health bar and sprint points label are hidden on Start Screen
+	if health_bar:
+		health_bar.visible = not hide_hud
+	if sprint_points_label:
+		sprint_points_label.visible = not hide_hud
 
 func _update_health_bar():
 	if health_bar:
@@ -153,20 +305,38 @@ func _update_health_bar():
 		health_bar.value = health
 
 func _update_shield_bar():
-	if shield_bar:
-		var shield = 0
-		if has_node("/root/player_data"):
-			shield = get_node("/root/player_data").shield_hp
-		shield_bar.value = shield
-		shield_bar.visible = shield > 0
+	# Use shield_icon and shield_images instead of ProgressBar
+	if not ("shield_icon" in self and "shield_images" in self):
+		return
+	var shield_icon = self.shield_icon
+	var shield_images = self.shield_images
+	var shield = 0
+	if has_node("/root/player_data"):
+		shield = get_node("/root/player_data").shield_hp
+	# Determine which image to show
+	var idx = 0
+	if shield <= 0:
+		idx = 0 # not purchased or depleted
+	elif shield < 25:
+		idx = 1
+	elif shield < 50:
+		idx = 2
+	elif shield < 75:
+		idx = 3
+	else:
+		idx = 4
+	shield_icon.texture = shield_images[idx]
+	shield_icon.visible = (shield > 0 or idx == 0)
 
-func _update_burnout_label():
-	if burnout_label and has_node("/root/player_data"):
-		var pd = get_node("/root/player_data")
-		var burnout = 0
-		if "burnout_level" in pd:
-			burnout = pd.burnout_level
-		burnout_label.text = "Burnout Lvl: %d" % burnout
+func _update_burnout_flames():
+	# Show flames and their particle effects up to the current burnout level
+	if burnout_flame_nodes.size() == 5 and burnout_flames.size() > 0:
+		var burnout_level = 0
+		if has_node("/root/player_data"):
+			burnout_level = get_node("/root/player_data").burnout_level
+		for i in range(5):
+			burnout_flame_nodes[i].texture = burnout_flames[min(i, burnout_flames.size()-1)]
+			burnout_flame_nodes[i].visible = i <= burnout_level # Only show up to current burnout level
 
 func get_interact_prompt():
 	# Try direct path first
@@ -216,7 +386,7 @@ func show_interact_popup_near_player(player: Node):
 	tween.finished.connect(label.queue_free)
 
 func _on_pause_menu_gui_input(event):
-	print("[DEBUG] Pause menu received input: ", event)
+	pass
 
 func _unhandled_input(event):
 	# Workaround: Forward mouse input to pause menu when paused so UI buttons work
@@ -233,3 +403,8 @@ func _on_volume_slider_changed(value):
 func _update_volume_label():
 	if volume_label and volume_slider:
 		volume_label.text = "Volume: %d%%" % int(volume_slider.value * 100)
+
+func give_test_sprint_points():
+	if has_node("/root/player_data"):
+		get_node("/root/player_data").sprint_points = 3
+		update_sprint_points_display()
