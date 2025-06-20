@@ -94,11 +94,15 @@ zoom = Vector2(0.25, 0.25)
 position_smoothing_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(1, 19)
 scale = Vector2(0.25, 0.25)
+offset = Vector2(26.28, -196)
 
 [node name="Hammer" parent="Player/Sprite2D" instance=ExtResource("3_6sfo6")]
-position = Vector2(250, -50)
+position = Vector2(232, -40)
 scale = Vector2(4, 4)
+swing_duration = 1.0
+swing_arc_degrees = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(-60, 8)

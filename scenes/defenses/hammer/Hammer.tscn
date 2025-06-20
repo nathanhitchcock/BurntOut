@@ -3,9 +3,6 @@
 [ext_resource type="Script" uid="uid://cye4g0vrbh2in" path="res://scenes/defenses/hammer/Hammer.gd" id="1_foa3q"]
 [ext_resource type="Texture2D" uid="uid://co0bseflnqhqf" path="res://assets/images/defenses/hammer/hammer.png" id="1_g5o1o"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g5o1o"]
-radius = 154.895
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_foa3q"]
 atlas = ExtResource("1_g5o1o")
 region = Rect2(61, 151, 365, 645)
@@ -39,19 +36,24 @@ animations = [{
 }],
 "loop": false,
 "name": &"swing",
-"speed": 5.0
+"speed": 10.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5o1o"]
+radius = 102.053
 
 [node name="Hammer" type="Area2D"]
 script = ExtResource("1_foa3q")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-50.7109, -17)
-scale = Vector2(0.25, 0.25)
-shape = SubResource("CircleShape2D_g5o1o")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(-60, 7)
+position = Vector2(-90.3781, 21.3365)
+rotation = 0.167552
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_mveao")
 animation = &"swing"
+offset = Vector2(117.245, -172.552)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-60, -17)
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CircleShape2D_g5o1o")
