@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://dhmfv2bet7f0y"]
+
+[ext_resource type="Script" uid="uid://cye4g0vrbh2in" path="res://scenes/defenses/hammer/Hammer.gd" id="1_foa3q"]
+[ext_resource type="Texture2D" uid="uid://co0bseflnqhqf" path="res://assets/images/defenses/hammer/hammer.png" id="1_g5o1o"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5o1o"]
+radius = 154.895
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_foa3q"]
+atlas = ExtResource("1_g5o1o")
+region = Rect2(61, 151, 365, 645)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jcnh"]
+atlas = ExtResource("1_g5o1o")
+region = Rect2(426, 151, 365, 645)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d75hc"]
+atlas = ExtResource("1_g5o1o")
+region = Rect2(791, 151, 365, 645)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irqu5"]
+atlas = ExtResource("1_g5o1o")
+region = Rect2(1156, 151, 365, 645)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mveao"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_foa3q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jcnh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d75hc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irqu5")
+}],
+"loop": false,
+"name": &"swing",
+"speed": 5.0
+}]
+
+[node name="Hammer" type="Area2D"]
+script = ExtResource("1_foa3q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-50.7109, -17)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CircleShape2D_g5o1o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-60, 7)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_mveao")
+animation = &"swing"
