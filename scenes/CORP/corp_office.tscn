@@ -1,8 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=31 format=3 uid="uid://docso1kx17qoj"]
 
 [ext_resource type="Texture2D" uid="uid://bpe8inotgbrx7" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
 [ext_resource type="Script" uid="uid://cfj4oe7wwdka7" path="res://scenes/CORP/upgrade_cafe.gd" id="3_2lp3j"]
-[ext_resource type="Texture2D" uid="uid://ds45jys4fat5o" path="res://assets/images/backgrounds/CORP office/scrum_cultists/sprint_board.png" id="3_r4m04"]
+[ext_resource type="Texture2D" uid="uid://bxpepqiawwu8r" path="res://scenes/CORP/board_togglepuzzle.png" id="3_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://bwh75m800ar48" path="res://assets/images/backgrounds/CORP office/upgrade_shop.png" id="4_r4m04"]
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="5_quye3"]
@@ -14,12 +14,26 @@
 [ext_resource type="PackedScene" uid="uid://dtdbv8x7l4gp8" path="res://scenes/CORP/productivity_machine.tscn" id="10_rifxr"]
 [ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="11_pn5pk"]
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
+[ext_resource type="Script" uid="uid://mltr5ovnq581" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
+[ext_resource type="Texture2D" uid="uid://ypvk5frlvuea" path="res://assets/images/backgrounds/CORP office/room_bugsmash/bugroom_board.png" id="16_nsujb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
-size = Vector2(619.375, 282.5)
+size = Vector2(614.688, 286.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
 size = Vector2(1099.16, 942.24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nsujb"]
+size = Vector2(1024.75, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lp3j"]
+size = Vector2(943, 24.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
+size = Vector2(33, 629.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5kmm"]
+size = Vector2(324.688, 286.25)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
 atlas = ExtResource("8_i65ii")
@@ -74,15 +88,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_2lp3j"]
 radius = 132.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nsujb"]
-size = Vector2(1024.75, 42)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lp3j"]
-size = Vector2(943, 24.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
-size = Vector2(33, 629.75)
-
 [node name="CORP_MainOffice" type="Node2D"]
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
@@ -103,10 +108,10 @@ script = ExtResource("5_2lp3j")
 [node name="Sprite2D" type="Sprite2D" parent="Scrum-DSUBoard"]
 position = Vector2(2117.5, 515)
 scale = Vector2(0.160015, 0.13614)
-texture = ExtResource("3_r4m04")
+texture = ExtResource("3_p5kmm")
 
 [node name="ScrumDSUBoardArea" type="Area2D" parent="Scrum-DSUBoard"]
-position = Vector2(1968, 638)
+position = Vector2(2067.5, 640)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scrum-DSUBoard/ScrumDSUBoardArea"]
@@ -137,34 +142,6 @@ script = ExtResource("6_i65ii")
 [node name="ProductivityMachine" parent="." instance=ExtResource("10_rifxr")]
 position = Vector2(-11, 6)
 scale = Vector2(0.15, 0.15)
-
-[node name="Player" type="CharacterBody2D" parent="."]
-process_mode = 3
-position = Vector2(46, -270)
-scale = Vector2(0.251, 0.25)
-script = ExtResource("5_quye3")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-scale = Vector2(0.25, 0.25)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
-position = Vector2(-60, 8)
-scale = Vector2(0.25, 0.25)
-sprite_frames = SubResource("SpriteFrames_hxnvt")
-animation = &"walk"
-
-[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
-emitting = false
-texture = ExtResource("7_pn5pk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-191.235, 40)
-scale = Vector2(0.25, 0.25)
-shape = SubResource("CircleShape2D_2lp3j")
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(2.5, 2.5)
-position_smoothing_enabled = true
 
 [node name="Walls" type="Node2D" parent="."]
 position = Vector2(-528, -320)
@@ -220,5 +197,52 @@ debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 [node name="Sprite2D" type="Sprite2D" parent="Walls/wall-right"]
 position = Vector2(53, -4)
 texture = ExtResource("12_r4m04")
+
+[node name="BugRoomBoard" type="Node2D" parent="."]
+position = Vector2(-578, -151)
+scale = Vector2(0.4, 0.4)
+script = ExtResource("15_p5kmm")
+
+[node name="Sprite2D" type="Sprite2D" parent="BugRoomBoard"]
+position = Vector2(2117.5, 515)
+scale = Vector2(0.160015, 0.13614)
+texture = ExtResource("16_nsujb")
+
+[node name="BugRoomBoardArea" type="Area2D" parent="BugRoomBoard"]
+position = Vector2(1968, 638)
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BugRoomBoard/BugRoomBoardArea"]
+position = Vector2(74.164, -61.9687)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_p5kmm")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+process_mode = 3
+position = Vector2(46, -270)
+scale = Vector2(0.251, 0.25)
+script = ExtResource("5_quye3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+scale = Vector2(0.25, 0.25)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-60, 8)
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_hxnvt")
+animation = &"walk"
+
+[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
+emitting = false
+texture = ExtResource("7_pn5pk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-191.235, 40)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CircleShape2D_2lp3j")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2.5, 2.5)
+position_smoothing_enabled = true
 
 [connection signal="body_entered" from="UpgradeCafe/Area2D" to="UpgradeCafe" method="_on_body_entered"]
