@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
-size = Vector2(619.375, 820.625)
+size = Vector2(619.375, 282.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
 size = Vector2(1099.16, 942.24)
@@ -110,7 +110,7 @@ position = Vector2(1968, 638)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scrum-DSUBoard/ScrumDSUBoardArea"]
-position = Vector2(41.0781, 7.32813)
+position = Vector2(39.7499, -62.4375)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
