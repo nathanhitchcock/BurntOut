@@ -22,13 +22,14 @@ func _ready():
 	# 	player_data.sprint_points = 20
 	# Apply speed multiplier (editable in Inspector)
 	speed *= speed_multiplier
+	
+	# Adjust camera zoom based on the current scene
+	setup_room_specific_zoom()
+	
 	load_from_player_data()
 	if burnout_label:
 		burnout_label.visible = true
 		burnout_label.text = "Burnout: %d" % burnout_level
-	if camera:
-		camera.make_current()
-		camera.zoom = camera_zoom_out
 
 func _physics_process(delta):
 	var input = Vector2.ZERO
@@ -177,6 +178,27 @@ func take_damage(amount: int) -> void:
 func heal(amount: int):
 	if player_data:
 		player_data.health = min(player_data.health + amount, 100)
+
+func setup_room_specific_zoom():
+	# Get the current scene name to determine appropriate zoom levels
+	var scene_file = get_tree().current_scene.scene_file_path
+	print("[PLAYER] Current scene: ", scene_file)
+	
+	if "bug_smash" in scene_file:
+		# Bug smash room needs less zoom since it's smaller
+		camera_zoom_in = Vector2(0.8, 0.8)
+		camera_zoom_out = Vector2(1.0, 1.0)
+		print("[PLAYER] Using bug smash room zoom settings")
+	else:
+		# Default zoom for larger rooms like corp office
+		camera_zoom_in = Vector2(1.5, 1.5)
+		camera_zoom_out = Vector2(2.5, 2.5)
+		print("[PLAYER] Using default zoom settings")
+	
+	# Set initial camera zoom
+	if camera:
+		camera.make_current()
+		camera.zoom = camera_zoom_out
 		save_to_player_data()
 		if has_node("/root/GlobalUI"):
 			get_node("/root/GlobalUI")._update_health_bar()
