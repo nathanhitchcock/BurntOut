@@ -23,6 +23,9 @@ var shield_images: Array = []
 var bug_counter_label: Label = null
 var bug_win_label: Label = null
 
+# Toggle puzzle level info
+var toggle_level_label: Label = null
+
 func _ready():
 	set_process_input(true)
 	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
@@ -98,6 +101,22 @@ func _ready():
 	bug_win_label.visible = false  # Hidden by default, shown only when puzzle complete
 	if parent:
 		parent.add_child(bug_win_label)
+
+	# Create toggle level label (center top of screen, for progressive toggle puzzle)
+	toggle_level_label = Label.new()
+	toggle_level_label.name = "ToggleLevelLabel"
+	toggle_level_label.text = "Level 1 - Worth 1 Point"
+	toggle_level_label.anchor_left = 0.5
+	toggle_level_label.anchor_right = 0.5
+	toggle_level_label.anchor_top = 0.0
+	toggle_level_label.anchor_bottom = 0.0
+	toggle_level_label.position = Vector2(-80, -250)  # Center top
+	toggle_level_label.add_theme_color_override("font_color", Color(0.2, 0.8, 1.0))  # Light blue
+	toggle_level_label.add_theme_font_size_override("font_size", 24)
+	toggle_level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	toggle_level_label.visible = false  # Hidden by default, shown only in toggle room
+	if parent:
+		parent.add_child(toggle_level_label)
 
 	# Always show the sprint points label
 	if sprint_points_label:
@@ -449,12 +468,23 @@ func update_bug_counter(smashed: int, total: int):
 func show_bug_win():
 	if bug_win_label:
 		bug_win_label.visible = true
-		print("[GLOBAL_UI] Bug win label shown")
 
 func hide_bug_win():
 	if bug_win_label:
 		bug_win_label.visible = false
-		print("[GLOBAL_UI] Bug win label hidden")
+
+# Toggle level info functions
+func show_toggle_level_info(level: int, points: int):
+	if toggle_level_label:
+		if level > 0:
+			toggle_level_label.text = "Level %d - Worth %d Points" % [level, points]
+			toggle_level_label.visible = true
+		else:
+			toggle_level_label.visible = false
+
+func hide_toggle_level_info():
+	if toggle_level_label:
+		toggle_level_label.visible = false
 
 func _on_volume_slider_changed(value):
 	# Set global audio volume using the Master bus
