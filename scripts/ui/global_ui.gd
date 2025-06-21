@@ -19,6 +19,10 @@ var gameplay_enabled := true
 var shield_icon: TextureRect = null
 var shield_images: Array = []
 
+# Bug smash counter
+var bug_counter_label: Label = null
+var bug_win_label: Label = null
+
 func _ready():
 	set_process_input(true)
 	# Assign UI nodes robustly for all scenes (fix: include CanvasLayer/Control in path)
@@ -62,6 +66,38 @@ func _ready():
 	# Store for later updates
 	self.shield_icon = shield_icon
 	self.shield_images = shield_images
+
+	# Create bug counter label (center top of screen)
+	bug_counter_label = Label.new()
+	bug_counter_label.name = "BugCounterLabel"
+	bug_counter_label.text = "Bugs: 0 / 0"
+	bug_counter_label.anchor_left = 0.5
+	bug_counter_label.anchor_right = 0.5
+	bug_counter_label.anchor_top = 0.0
+	bug_counter_label.anchor_bottom = 0.0
+	bug_counter_label.position = Vector2(-60, -250)  # Center top, moved up 200 pixels
+	bug_counter_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	bug_counter_label.add_theme_font_size_override("font_size", 24)
+	bug_counter_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bug_counter_label.visible = false  # Hidden by default, shown only in bug room
+	if parent:
+		parent.add_child(bug_counter_label)
+
+	# Create bug win label (underneath the counter)
+	bug_win_label = Label.new()
+	bug_win_label.name = "BugWinLabel"
+	bug_win_label.text = "You Win!"
+	bug_win_label.anchor_left = 0.5
+	bug_win_label.anchor_right = 0.5
+	bug_win_label.anchor_top = 0.0
+	bug_win_label.anchor_bottom = 0.0
+	bug_win_label.position = Vector2(-60, -220)  # Just underneath the bug counter
+	bug_win_label.add_theme_color_override("font_color", Color(1, 1, 0))  # Yellow color
+	bug_win_label.add_theme_font_size_override("font_size", 32)  # Larger font for celebration
+	bug_win_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bug_win_label.visible = false  # Hidden by default, shown only when puzzle complete
+	if parent:
+		parent.add_child(bug_win_label)
 
 	# Always show the sprint points label
 	if sprint_points_label:
@@ -393,6 +429,32 @@ func _unhandled_input(event):
 	if get_tree().paused and pause_menu and pause_menu.visible:
 		if event is InputEventMouseButton or event is InputEventMouseMotion:
 			pause_menu.propagate_call("gui_input", [event])
+
+# Bug counter functions
+func show_bug_counter():
+	if bug_counter_label:
+		bug_counter_label.visible = true
+		print("[GLOBAL_UI] Bug counter shown")
+
+func hide_bug_counter():
+	if bug_counter_label:
+		bug_counter_label.visible = false
+		print("[GLOBAL_UI] Bug counter hidden")
+
+func update_bug_counter(smashed: int, total: int):
+	if bug_counter_label:
+		bug_counter_label.text = "Bugs: %d / %d" % [smashed, total]
+		print("[GLOBAL_UI] Bug counter updated: %d / %d" % [smashed, total])
+
+func show_bug_win():
+	if bug_win_label:
+		bug_win_label.visible = true
+		print("[GLOBAL_UI] Bug win label shown")
+
+func hide_bug_win():
+	if bug_win_label:
+		bug_win_label.visible = false
+		print("[GLOBAL_UI] Bug win label hidden")
 
 func _on_volume_slider_changed(value):
 	# Set global audio volume using the Master bus

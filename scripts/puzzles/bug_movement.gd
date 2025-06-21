@@ -41,8 +41,10 @@ func _ready():
 	# Connect Area2D collision
 	if has_node("Area2D"):
 		$Area2D.collision_layer = 1
-		$Area2D.collision_mask = 1
+		$Area2D.collision_mask = 1  # Detect both Area2D (hammer) and CharacterBody2D (player)
 		$Area2D.connect("area_entered", Callable(self, "_on_area_entered"))
+		$Area2D.connect("body_entered", Callable(self, "_on_body_entered"))
+		print("[BUG] Connected collision signals for bug:", self)
 
 func _process(delta):
 	if not alive:
@@ -51,6 +53,7 @@ func _process(delta):
 	# Handle immunity countdown
 	if immunity_time > 0:
 		immunity_time -= delta
+		immunity_time = max(immunity_time, 0.0)  # Clamp to prevent negative values
 		if immunity_time <= 0:
 			print("[BUG] Immunity expired for bug:", self)
 	
@@ -102,13 +105,18 @@ func _on_area_entered(area):
 		alive = false
 		if has_node("Area2D/CollisionShape2D"):
 			get_node("Area2D/CollisionShape2D").disabled = true
-		# Spawn 3 small bugs if this is not already a small bug
+		
+		# Show squish effect and wait for it to complete
+		await show_squish_effect()
+		
+		# Spawn 0-3 small bugs if this is not already a small bug
 		if small_bug_scene and not self.has_meta("is_small_bug"):
-			print("[BUG] About to spawn small bugs. small_bug_scene:", small_bug_scene)
+			var small_bug_count = randi_range(0, 3)
+			print("[BUG] About to spawn", small_bug_count, "small bugs. small_bug_scene:", small_bug_scene)
 			# Delay spawning slightly to let hammer collision finish
 			await get_tree().create_timer(0.1).timeout
-			for i in range(3):
-				print("[BUG] Spawning small bug", i + 1)
+			for i in range(small_bug_count):
+				print("[BUG] Spawning small bug", i + 1, "of", small_bug_count)
 				var bug = small_bug_scene.instantiate()
 				print("[BUG] Instantiated bug:", bug)
 				print("[BUG] Bug script:", bug.get_script())
@@ -132,6 +140,8 @@ func _on_area_entered(area):
 					get_parent().register_bug(bug)
 				else:
 					print("[BUG] Warning: Could not find manager to register small bug")
+			if small_bug_count == 0:
+				print("[BUG] Random spawned 0 small bugs - bug completely eliminated!")
 		else:
 			print("[BUG] Not spawning small bugs. small_bug_scene:", small_bug_scene, " is_small_bug:", self.has_meta("is_small_bug"))
 		self.visible = false
@@ -141,3 +151,57 @@ func _on_area_entered(area):
 			get_parent().on_bug_smashed()
 	elif alive and area.name == "Hammer" and immunity_time > 0:
 		print("[BUG] Hammer hit but bug is immune! Immunity time remaining:", immunity_time)
+
+func _on_body_entered(body):
+	print("[BUG] body_entered! Collided with:", body, " name:", body.name)
+	print("[BUG] Immunity time remaining:", immunity_time)
+	
+	if alive and body.name == "Player" and immunity_time <= 0:
+		print("[BUG] Bug touched player! Dealing damage...")
+		
+		# Deal damage to player
+		var damage_amount = 5  # Base bug damage
+		if self.has_meta("is_small_bug"):
+			damage_amount = 2  # Small bugs do less damage
+		
+		if body.has_method("take_damage"):
+			body.take_damage(damage_amount)
+			print("[BUG] Dealt", damage_amount, "damage to player")
+		else:
+			print("[BUG] WARNING: Player doesn't have take_damage method!")
+		
+		# Add a brief immunity so the same bug doesn't spam damage
+		immunity_time = 0.5  # 0.5 second immunity after touching player
+		print("[BUG] Bug will be immune for", immunity_time, "seconds after player contact")
+	elif alive and body.name == "Player" and immunity_time > 0:
+		print("[BUG] Player contact but bug is immune! Immunity time remaining:", immunity_time)
+
+func show_squish_effect():
+	# Hide the normal bug sprite
+	if has_node("AnimatedSprite2D"):
+		$AnimatedSprite2D.visible = false
+	
+	# Create squish sprite
+	var squish_sprite = Sprite2D.new()
+	squish_sprite.texture = load("res://assets/images/sprites/bugs/bug_squish.png")
+	squish_sprite.position = Vector2(-60, 8)  # Match the AnimatedSprite2D position
+	
+	# Scale down for small bugs (50% of normal size)
+	if self.has_meta("is_small_bug"):
+		squish_sprite.scale = Vector2(0.125, 0.125)  # 50% of 0.25 = 0.125
+	else:
+		squish_sprite.scale = Vector2(0.25, 0.25)  # Normal size for big bugs
+	
+	add_child(squish_sprite)
+	
+	print("[BUG] Showing squish effect!")
+	
+	# Show the squish for 0.5 seconds, then fade it out
+	await get_tree().create_timer(0.5).timeout
+	
+	# Fade out the squish effect
+	var tween = create_tween()
+	tween.tween_property(squish_sprite, "modulate:a", 0.0, 0.2)
+	await tween.finished
+	
+	print("[BUG] Squish effect complete!")

@@ -6,16 +6,29 @@ extends Node2D
 @export var spawn_area_bottom_right := Vector2(1024, 768)
 var bugs := []
 var bugs_remaining := 0
-var win_label: Label = null
-var count_label: Label = null
 var bugs_smashed := 0
 var total_bugs := 0
+var initial_big_bugs := 0  # Track the initial number of big bugs for reward calculation
+var global_ui: CanvasLayer = null
 
 # Margin to keep bugs away from walls
 const BUG_SPAWN_MARGIN := 0
 const BUG_MIN_SPAWN_DISTANCE := 128.0 # Minimum distance between bugs
 
 func _ready():
+	# Get Global UI reference
+	global_ui = get_node_or_null("/root/GlobalUI")
+	if global_ui:
+		global_ui.show_bug_counter()
+		print("[BugSmashManager] Connected to Global UI")
+	else:
+		print("[BugSmashManager] WARNING: Could not find Global UI")
+	
+	# Randomize the number of bugs (2-10)
+	bug_count = randi_range(2, 10)
+	initial_big_bugs = bug_count  # Store for reward calculation
+	print("[BugSmashManager] Randomized bug count:", bug_count, " (initial big bugs for reward:", initial_big_bugs, ")")
+	
 	# Calculate safe spawn area based on wall positions and margin
 	var left = spawn_area_top_left.x + BUG_SPAWN_MARGIN
 	var right = spawn_area_bottom_right.x - BUG_SPAWN_MARGIN
@@ -53,21 +66,9 @@ func _ready():
 	if bugs_remaining == 0:
 		print("[BugSmashManager] No bugs found!")
 	
-	# Create a win label but keep it hidden
-	win_label = Label.new()
-	win_label.text = "You Win!"
-	win_label.visible = false
-	win_label.position = Vector2(200, 100)
-	win_label.add_theme_color_override("font_color", Color(1,1,0))
-	win_label.add_theme_font_size_override("font_size", 48)
-	add_child(win_label)
-	# Create a count label
-	count_label = Label.new()
-	count_label.text = "Bugs Smashed: %d / %d" % [bugs_smashed, total_bugs]
-	count_label.position = Vector2(200, 50)
-	count_label.add_theme_color_override("font_color", Color(1,1,1))
-	count_label.add_theme_font_size_override("font_size", 32)
-	add_child(count_label)
+	# Update Global UI bug counter instead of creating local labels
+	if global_ui:
+		global_ui.update_bug_counter(bugs_smashed, total_bugs)
 
 func register_bug(bug):
 	if bug and not bugs.has(bug):
@@ -75,24 +76,36 @@ func register_bug(bug):
 		total_bugs += 1
 		bugs_remaining += 1
 		print("[BugSmashManager] Registered bug. Total bugs: %d, Bugs remaining: %d" % [total_bugs, bugs_remaining])
-		if count_label:
-			count_label.text = "Bugs Smashed: %d / %d" % [bugs_smashed, total_bugs]
-			print("[BugSmashManager] Updated label to: %s" % count_label.text)
+		if global_ui:
+			global_ui.update_bug_counter(bugs_smashed, total_bugs)
+			print("[BugSmashManager] Updated Global UI bug counter")
 
 func on_bug_smashed():
 	bugs_remaining -= 1
 	bugs_smashed += 1
 	print("[BugSmashManager] Bug smashed! Bugs remaining: %d, Bugs smashed: %d / %d" % [bugs_remaining, bugs_smashed, total_bugs])
-	if count_label:
-		count_label.text = "Bugs Smashed: %d / %d" % [bugs_smashed, total_bugs]
-		print("[BugSmashManager] Updated label to: %s" % count_label.text)
+	if global_ui:
+		global_ui.update_bug_counter(bugs_smashed, total_bugs)
+		print("[BugSmashManager] Updated Global UI bug counter")
 	if bugs_remaining <= 0:
 		puzzle_complete()
 
 func puzzle_complete():
 	print("Puzzle complete! All bugs smashed!")
-	if win_label:
-		win_label.visible = true
-	# Reward player with a sprint point
+	if global_ui:
+		global_ui.show_bug_win()
+	# Reward player with sprint points equal to initial big bugs
 	if has_node("/root/player_data"):
-		get_node("/root/player_data").sprint_points += 1
+		get_node("/root/player_data").sprint_points += initial_big_bugs
+		print("[BugSmashManager] Rewarded", initial_big_bugs, "sprint points for completing puzzle!")
+
+# Called when player enters the bug room
+func _enter_tree():
+	if global_ui:
+		global_ui.show_bug_counter()
+
+# Called when player exits the bug room
+func _exit_tree():
+	if global_ui:
+		global_ui.hide_bug_counter()
+		global_ui.hide_bug_win()
