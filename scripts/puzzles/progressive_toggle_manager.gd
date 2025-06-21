@@ -17,7 +17,7 @@ var toggle_positions: Array = []
 
 # References
 @onready var toggle_button_scene = preload("res://scenes/CORP/toggle_room/ToggleButton.tscn")
-@onready var player = get_tree().get_first_node_in_group("player")
+@onready var player = $Player if has_node("Player") else null
 @onready var portal = $PortalToCorpOffice if has_node("PortalToCorpOffice") else null
 
 # Audio/UI
@@ -27,9 +27,6 @@ var toggle_positions: Array = []
 func _ready():
 	print("[ProgressiveToggle] Starting progressive toggle puzzle system")
 	
-	# Connect cleanup signal
-	get_tree().tree_exiting.connect(_on_tree_exiting)
-	
 	# Initialize toggle spawn positions in a grid pattern
 	_setup_toggle_positions()
 	
@@ -38,10 +35,10 @@ func _ready():
 
 func _setup_toggle_positions():
 	# Create a grid of positions where toggles can spawn
-	# Adjust these coordinates based on your room layout
+	# Adjust these coordinates based on the toggle room layout
 	var center_x = 0
-	var center_y = 0
-	var spacing = 120
+	var center_y = -100  # Move up a bit to be more centered in the room
+	var spacing = 150  # Increase spacing for better visibility
 	
 	# Create a 4x3 grid (enough for up to 12 toggles)
 	for row in range(3):
@@ -239,8 +236,8 @@ func _process(_delta):
 		GlobalUI.show_interact_prompt(near_any_toggle)
 
 # Functions for room management
-func _on_tree_exiting():
-	# Clean up UI when leaving the room
+func _exit_tree():
+	# Clean up UI when the node is removed from the scene tree
 	if GlobalUI and GlobalUI.has_method("hide_toggle_level_info"):
 		GlobalUI.hide_toggle_level_info()
 
