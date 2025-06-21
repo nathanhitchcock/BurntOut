@@ -1,17 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://lbrto7e61p4g"]
+[gd_scene load_steps=17 format=3 uid="uid://lbrto7e61p4g"]
 
-[ext_resource type="Script" uid="uid://bcwyuhuqcks7h" path="res://scripts/puzzles/toggle_puzzle_manager.gd" id="1_twdje"]
+[ext_resource type="Script" uid="uid://r663rngnjdii" path="res://scripts/puzzles/progressive_toggle_manager.gd" id="1_twdje"]
 [ext_resource type="Texture2D" uid="uid://geoxr8jwc15p" path="res://assets/images/backgrounds/CORP office/toggle_room/toggle_room.png" id="3_fail"]
+[ext_resource type="AudioStream" uid="uid://lxyjpbx1wcoh" path="res://assets/audio/sfx/ui-button-click-negative.mp3" id="4_6p8hy"]
+[ext_resource type="AudioStream" uid="uid://b4v1i7rtjbb5t" path="res://assets/audio/sfx/collect-points-190037.mp3" id="4_aoyeq"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="4_success"]
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
-[ext_resource type="AudioStream" uid="uid://cb5sfowa7h4k8" path="res://assets/audio/sfx/game-over-arcade-6435.mp3" id="7_6p8hy"]
-[ext_resource type="AudioStream" uid="uid://c8r05h6nnkpug" path="res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3" id="8_aoyeq"]
 [ext_resource type="PackedScene" uid="uid://cosrseguudkmd" path="res://scenes/CORP/portal_to_corp_office.tscn" id="9_aoyeq"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="9_vdwej"]
-[ext_resource type="PackedScene" uid="uid://06h15c8yyqj8" path="res://scenes/CORP/toggle_room/ToggleButton.tscn" id="toggle_button_scene"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vdwej"]
-radius = 161.097
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rifxr"]
 atlas = ExtResource("9_vdwej")
@@ -78,45 +74,6 @@ scale = Vector2(0.66276, 0.586914)
 texture = ExtResource("3_fail")
 metadata/_edit_lock_ = true
 
-[node name="ToggleButton1" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = -295.0
-offset_top = -270.0
-offset_right = -85.0
-offset_bottom = -49.0
-scale = Vector2(0.59, 0.59)
-
-[node name="Area2D" type="Area2D" parent="ToggleButton1"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton1/Area2D"]
-position = Vector2(100, 91.5254)
-shape = SubResource("CircleShape2D_vdwej")
-
-[node name="ToggleButton2" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = -97.0
-offset_top = -273.0
-offset_right = 113.0
-offset_bottom = -52.0
-scale = Vector2(0.61, 0.61)
-
-[node name="Area2D" type="Area2D" parent="ToggleButton2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton2/Area2D"]
-position = Vector2(100, 91.5254)
-shape = SubResource("CircleShape2D_vdwej")
-
-[node name="ToggleButton3" parent="." instance=ExtResource("toggle_button_scene")]
-offset_left = 92.0
-offset_top = -273.0
-offset_right = 302.0
-offset_bottom = -52.0
-scale = Vector2(0.6, 0.6)
-
-[node name="Area2D" type="Area2D" parent="ToggleButton3"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ToggleButton3/Area2D"]
-position = Vector2(100, 91.5254)
-shape = SubResource("CircleShape2D_vdwej")
-
 [node name="IncorrectLabel" type="Label" parent="."]
 visible = false
 offset_left = 4.0
@@ -134,10 +91,10 @@ offset_bottom = 87.0
 text = "Puzzle solved!"
 
 [node name="FailSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_6p8hy")
+stream = ExtResource("4_6p8hy")
 
 [node name="SuccessSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_aoyeq")
+stream = ExtResource("4_aoyeq")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 process_mode = 3

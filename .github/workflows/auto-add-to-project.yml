@@ -1,15 +1,17 @@
-name: Add issues to project
+name: Add issues and PRs to project
 
 on:
   issues:
+    types: [opened]
+  pull_request:
     types: [opened]
 
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
     steps:
-      - name: Add issue to project
-        uses: actions/add-to-project@v1
+      - name: Add issue or PR to project
+        uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/nathanhitchcock/projects/5
           github-token: ${{ secrets.GITHUB_TOKEN }}
