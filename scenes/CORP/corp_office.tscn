@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dtdbv8x7l4gp8" path="res://scenes/CORP/productivity_machine.tscn" id="10_rifxr"]
 [ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="11_pn5pk"]
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
-[ext_resource type="Script" uid="uid://mltr5ovnq581" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
+[ext_resource type="Script" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://ypvk5frlvuea" path="res://assets/images/backgrounds/CORP office/room_bugsmash/bugroom_board.png" id="16_nsujb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]

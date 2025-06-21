@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bkvxfkkrsoaed" path="res://assets/images/sprites/bugs/bug_basic.png" id="2_yxs4h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6sfo6"]
-radius = 148.862
+radius = 220.581
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6sfo6"]
 atlas = ExtResource("2_yxs4h")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dqfsgqdxi2sv6"]
+[gd_scene load_steps=22 format=3 uid="uid://dqfsgqdxi2sv6"]
 
 [ext_resource type="Texture2D" uid="uid://db2h2iauii8pp" path="res://assets/images/backgrounds/CORP office/room_bugsmash/puzzleroom-bugsmash.png" id="1_0wib2"]
 [ext_resource type="Script" uid="uid://2yuwlhw8bnd2" path="res://scripts/puzzles/bug_smash_manager.gd" id="1_3nfod"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dhmfv2bet7f0y" path="res://scenes/defenses/hammer/Hammer.tscn" id="3_6sfo6"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="3_oi8gi"]
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_6sfo6"]
+[ext_resource type="PackedScene" uid="uid://cosrseguudkmd" path="res://scenes/CORP/portal_to_corp_office.tscn" id="4_wwt1y"]
 [ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="8_axgo0"]
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="9_wwt1y"]
 
@@ -61,7 +62,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3nfod"]
-radius = 132.0
+radius = 212.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hdwo5"]
 size = Vector2(1024.75, 42)
@@ -82,6 +83,9 @@ spawn_area_bottom_right = Vector2(0, 0)
 
 [node name="Background" type="Sprite2D" parent="BackgroundWrapper"]
 texture = ExtResource("1_0wib2")
+
+[node name="PortalToCorpOffice" parent="." instance=ExtResource("4_wwt1y")]
+position = Vector2(-687, 39)
 
 [node name="Player" type="CharacterBody2D" parent="."]
 process_mode = 3
@@ -115,7 +119,7 @@ emitting = false
 texture = ExtResource("4_6sfo6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2(-62, 42)
+position = Vector2(-59, 23)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("CircleShape2D_3nfod")
 
