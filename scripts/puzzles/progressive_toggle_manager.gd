@@ -27,6 +27,11 @@ var toggle_positions: Array = []
 func _ready():
 	print("[ProgressiveToggle] Starting progressive toggle puzzle system")
 	
+	# Set player z-index to be in front of toggles
+	if player:
+		player.z_index = 10
+		print("[ProgressiveToggle] Set player z-index to 10")
+	
 	# Initialize toggle spawn positions in a grid pattern
 	_setup_toggle_positions()
 	
@@ -79,15 +84,24 @@ func _spawn_toggles(count: int):
 		toggle.position = toggle_positions[i]
 		toggle.toggle_index = i
 		toggle.name = "Toggle_" + str(i)
+		toggle.z_index = 0  # Set toggles to background layer
+		toggle.scale = Vector2(0.5, 0.5)  # Make toggles half size
+		
+		# Enable mouse interaction but prevent focus issues
+		toggle.mouse_filter = Control.MOUSE_FILTER_PASS
+		toggle.focus_mode = Control.FOCUS_NONE  # Prevent focus to avoid [E] key conflicts
 		
 		# Connect the toggle signal
 		toggle.connect("toggle_pressed", Callable(self, "_on_toggle_pressed"))
 		
-		# Add Area2D collision for player interaction
+		# Connect Area2D signals (Area2D is now built into the ToggleButton scene)
 		if toggle.has_node("Area2D"):
 			var area = toggle.get_node("Area2D")
 			area.body_entered.connect(_on_toggle_area_body_entered.bind(i, toggle))
 			area.body_exited.connect(_on_toggle_area_body_exited.bind(i, toggle))
+			print("[ProgressiveToggle] Connected Area2D signals for toggle", i)
+		else:
+			print("[ProgressiveToggle] Warning: No Area2D found in toggle", i)
 		
 		add_child(toggle)
 		active_toggles.append(toggle)
@@ -109,6 +123,14 @@ func _clear_toggles():
 		if is_instance_valid(toggle):
 			toggle.queue_free()
 	active_toggles.clear()
+
+func _reset_toggles():
+	# Reset all toggle button states to OFF without removing them
+	for toggle in active_toggles:
+		if is_instance_valid(toggle):
+			toggle.is_on = false
+			toggle.update_visual()
+	print("[ProgressiveToggle] Reset all toggle button states to OFF")
 
 func _on_toggle_pressed(toggle_index: int):
 	print("[ProgressiveToggle] Player pressed toggle:", toggle_index)
@@ -140,9 +162,11 @@ func _handle_failure():
 	if player and player.has_method("show_floating_feedback"):
 		player.show_floating_feedback("Wrong sequence!", Color(0.9, 0.2, 0.2, 1))
 	
-	# Reset current level
-	await get_tree().create_timer(1.0).timeout
-	_start_level(current_level)
+	# Reset the player sequence and toggle states, but keep the same level
+	player_sequence.clear()
+	_reset_toggles()
+	
+	print("[ProgressiveToggle] Incorrect sequence! Resetting button states but keeping level", current_level)
 
 func _handle_success():
 	print("[ProgressiveToggle] Level", current_level, "completed!")
@@ -206,24 +230,35 @@ func _on_toggle_area_body_entered(body, toggle_index, btn):
 		if not interact_prompt_shown.get(toggle_index, false):
 			if GlobalUI and GlobalUI.has_method("show_interact_popup_near_player"):
 				GlobalUI.show_interact_popup_near_player(player)
+				print("[ProgressiveToggle] Showing [E] prompt for toggle", toggle_index)
 			interact_prompt_shown[toggle_index] = true
 
 func _on_toggle_area_body_exited(body, toggle_index, btn):
 	if body.name == "Player":
 		player_near_toggle[toggle_index] = false
 		if interact_prompt_shown.get(toggle_index, false):
-			GlobalUI.show_interact_prompt(false)
+			if GlobalUI and GlobalUI.has_method("show_interact_prompt"):
+				GlobalUI.show_interact_prompt(false)
+				print("[ProgressiveToggle] Hiding [E] prompt for toggle", toggle_index)
 			interact_prompt_shown[toggle_index] = false
 
 func _process(_delta):
-	# Handle player interaction with toggles
+	# Handle player interaction with toggles via [E] key only
+	# Note: Mouse clicks are handled directly by the TextureButton
 	if Input.is_action_just_pressed("ui_accept"):
+		# Find which toggle the player is currently near
+		var nearest_toggle_index = -1
 		for toggle_index in player_near_toggle:
 			if player_near_toggle[toggle_index]:
-				var toggle = active_toggles[toggle_index] if toggle_index < active_toggles.size() else null
-				if toggle:
-					toggle._on_pressed()
-					break
+				nearest_toggle_index = toggle_index
+				break
+		
+		# Only activate if player is actually near a toggle
+		if nearest_toggle_index != -1 and nearest_toggle_index < active_toggles.size():
+			var toggle = active_toggles[nearest_toggle_index]
+			if toggle and is_instance_valid(toggle):
+				print("[ProgressiveToggle] [E] key pressed near toggle", nearest_toggle_index)
+				toggle._on_pressed()
 	
 	# Show interact prompt when near any toggle
 	var near_any_toggle = false
