@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cosrseguudkmd"]
+
+[ext_resource type="Script" uid="uid://d0y0kdsd8eb42" path="res://scripts/puzzles/portal_to_corp_office.gd" id="1_6n260"]
+[ext_resource type="Texture2D" uid="uid://dl8pcsj3tvb3o" path="res://assets/images/ui/return_to_corp_portal.png" id="2_5h4sj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6p8hy"]
+radius = 92.0
+
+[node name="PortalToCorpOffice" type="Area2D"]
+script = ExtResource("1_6n260")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(705, -406)
+shape = SubResource("CircleShape2D_6p8hy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(678, -427)
+scale = Vector2(0.282962, 0.249939)
+texture = ExtResource("2_5h4sj")
