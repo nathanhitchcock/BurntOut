@@ -159,7 +159,6 @@ scale = Vector2(1.32, 1.32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-left"]
 position = Vector2(41.6667, 57.5758)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_irmtq")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 

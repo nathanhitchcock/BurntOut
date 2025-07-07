@@ -49,20 +49,22 @@ func _physics_process(delta):
 			animated_sprite.play("walk")
 		if fire_trail:
 			fire_trail.emitting = true
-		if camera and not _is_zoomed_in:
-			_is_zoomed_in = true
-			var tween = create_tween()
-			tween.tween_property(camera, "zoom", camera_zoom_in, camera_zoom_duration)
+		# Camera zoom disabled for tutorial section
+		# if camera and not _is_zoomed_in:
+		# 	_is_zoomed_in = true
+		# 	var tween = create_tween()
+		# 	tween.tween_property(camera, "zoom", camera_zoom_in, camera_zoom_duration)
 	else:
 		velocity = Vector2.ZERO
 		if animated_sprite:
 			animated_sprite.stop()
 		if fire_trail:
 			fire_trail.emitting = false
-		if camera and _is_zoomed_in:
-			_is_zoomed_in = false
-			var tween = create_tween()
-			tween.tween_property(camera, "zoom", camera_zoom_out, camera_zoom_duration)
+		# Camera zoom disabled for tutorial section
+		# if camera and _is_zoomed_in:
+		# 	_is_zoomed_in = false
+		# 	var tween = create_tween()
+		# 	tween.tween_property(camera, "zoom", camera_zoom_out, camera_zoom_duration)
 	move_and_slide()
 	# No code-based clamping; rely on collision shapes for movement boundaries
 
@@ -184,7 +186,12 @@ func setup_room_specific_zoom():
 	var scene_file = get_tree().current_scene.scene_file_path
 	print("[PLAYER] Current scene: ", scene_file)
 	
-	if "bug_smash" in scene_file:
+	if "tutorial" in scene_file:
+		# Tutorial section uses fixed zoom of 5x
+		camera_zoom_in = Vector2(5.0, 5.0)
+		camera_zoom_out = Vector2(5.0, 5.0)
+		print("[PLAYER] Using tutorial zoom settings (fixed at 5x)")
+	elif "bug_smash" in scene_file:
 		# Bug smash room needs less zoom since it's smaller
 		camera_zoom_in = Vector2(0.8, 0.8)
 		camera_zoom_out = Vector2(1.0, 1.0)
