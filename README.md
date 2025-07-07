@@ -49,20 +49,84 @@ Visit our **[comprehensive documentation](https://nathanhitchcock.github.io/Burn
 - 🤝 **[Contributing](https://nathanhitchcock.github.io/BurntOut/CONTRIBUTING/)** - How to contribute
 - ❓ **[FAQ](https://nathanhitchcock.github.io/BurntOut/faq/)** - Common questions
 
+## 🔧 Technical Architecture
+
+### **Core Autoloads (Global Systems)**
+- **`GlobalUI`** - Master UI controller for pause menu, health bars, and interaction prompts
+- **`GlobalAudio`** - Centralized audio management with volume controls and SFX coordination  
+- **`player_data`** - Persistent data singleton for health, position, sprint points, and progress
+
+### **Key Function Highlights**
+- **`progressive_toggle_manager._spawn_toggles()`** - Dynamic puzzle generation with grid positioning
+- **`bug_movement.show_squish_effect()`** - Physics-based visual feedback with proper scaling
+- **`global_ui._on_volume_slider_changed()`** - Real-time audio control via AudioServer Master bus
+- **`overworld_player.setup_room_specific_zoom()`** - Adaptive camera system for different areas
+- **`bug_smash_manager.register_bug()`** - Dynamic bug tracking with reward calculations
+
+> **📋 For detailed API documentation, function signatures, and implementation details, see our [complete documentation site](https://nathanhitchcock.github.io/BurntOut/autoloads/).**
+
 ## 🎯 Current Features
 
 ### ✅ Completed Systems
-- **Progressive Toggle Puzzle System** - Dynamic difficulty scaling (1-10 toggles)
-- **Bug Smash Room** - Physics-based debugging mini-game with squish effects
-- **Global UI Management** - Pause menu, health bar, interaction prompts
-- **Audio System** - Background music, SFX, and global volume control
-- **Player Movement** - Smooth character controller with animations
-- **Room-Specific Camera** - Adaptive zoom levels for different areas
+
+#### 🧩 **Progressive Toggle Puzzle System** 
+Dynamic difficulty scaling (1-10 toggles) with sophisticated gameplay mechanics:
+- **Progressive Difficulty**: `progressive_toggle_manager.gd` - Starts with 1 toggle, scales to 10
+- **Dual Interaction**: Mouse clicks + `[E]` key proximity interaction via Area2D
+- **Smart Spawning**: Grid-based positioning with collision detection
+- **Reward Scaling**: Points awarded equal to level (Level 5 = 5 points)
+- **Audio Feedback**: Success/fail sounds with visual effects
+
+#### 🐛 **Bug Smash Physics Mini-Game**
+Interactive debugging simulation with satisfying feedback:
+- **Dynamic Bug System**: `bug_movement.gd` - AI movement with burst patterns and collision
+- **Squish Effects**: Visual feedback with properly scaled sprites for small/large bugs  
+- **Split Mechanics**: Large bugs spawn 0-3 smaller bugs when smashed
+- **Damage System**: Bugs deal damage to player with immunity frames
+- **Reward System**: `bug_smash_manager.gd` - Sprint points scaled to difficulty
+
+#### 🎮 **Global UI Management System**
+Comprehensive interface system managing all game UI:
+- **Pause System**: `global_ui.gd` - ESC menu with volume control and game state
+- **Health/Status**: Dynamic health bar, burnout flames, shield indicators
+- **Interaction Prompts**: Floating `[E]` prompts and proximity-based UI
+- **Audio Control**: Master bus volume slider with real-time dB mapping
+- **Cross-Scene UI**: Bug counters, level info, persistent status displays
+
+#### 🔊 **Audio System Architecture**
+Centralized audio management with global controls:
+- **Global Volume**: `AudioServer` integration with Master bus control
+- **Dynamic SFX**: Context-aware sound effects (success, fail, interaction)
+- **Background Music**: `GlobalAudio` autoload with pause/resume functionality
+- **Audio Feedback**: Hammer swings, bug squishing, button clicks, UI interactions
+
+#### 🎯 **Player Movement & Camera System**
+Smooth character controller with adaptive behavior:
+- **Movement**: `overworld_player.gd` - WASD/Arrow key input with normalized velocity
+- **Animation System**: Walking animations with fire trail particle effects
+- **Room-Specific Camera**: Adaptive zoom levels (tutorial: 5x, bug smash: 1x, default: 2.5x)
+- **Camera Controls**: Optional dynamic zoom disabled for tutorial sections
+- **State Persistence**: `player_data.gd` autoload for cross-scene data
+
+#### ⚙️ **Defense & Tower Systems**
+Strategic placement and management mechanics:
+- **Coffee Machines**: `productivity_machine.gd` - Upgrade system with sprint point economy
+- **Defense Placement**: Click-to-place tower defense mechanics
+- **Resource Management**: Leadership points and strategic decision making
+- **Visual Effects**: Screen flicker effects, floating feedback labels
 
 ### 🚧 In Development
-- **Tutorial System** - Interactive intro section (current feature branch)
-- **Defense Towers** - Coffee machine and other corporate defenses
-- **Expanded Office Areas** - More rooms and interactive elements
+
+#### 📚 **Tutorial System** *(Current Branch)*
+Interactive intro section with custom camera settings:
+- **Tutorial Assets**: Custom backgrounds, tilemap, and coffee machine sprites
+- **Fixed Camera**: 5x zoom lock for consistent tutorial experience  
+- **Progressive Learning**: Step-by-step introduction to game mechanics
+
+#### 🏢 **Expanded Office Areas**
+Additional rooms and interactive corporate environments:
+- **New Environments**: Meeting rooms, break areas, executive floors
+- **Interactive Elements**: More puzzle types and environmental storytelling
 
 ## 🏗️ Project Structure
 
