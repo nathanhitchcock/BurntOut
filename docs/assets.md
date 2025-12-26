@@ -54,38 +54,36 @@ Additional background files present:
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/images/sprites/bugs/bug_basic.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/music/drift-away-lofi-ambient-music-356058.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/sprites/bugs/bug_squish.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/sprites/main character/Animated Walking Flame Character Sprite.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/sprites/main character/player_walking_frames.tres` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/sprites/productivity_machine/candle_flame.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/sprites/productivity_machine/machine_base.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/collect-points-190037.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/sprites/productivity_machine/screen_overlay.png` | AI-generated (ChatGPT) | Internal placeholder |
-
+| `assets/audio/sfx/diabolic-laugh-202978.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 ## Images — UI
-
+| `assets/audio/sfx/game-over-arcade-6435.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | File | Source | License |
-| --- | --- | --- |
+| `assets/audio/sfx/heal-sound.wav` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/BPG_icon.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/ai-graphic-click-to-revive.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/health-pickup-6860.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/return_to_corp_portal.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/start-button.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/hire_poof.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/start-screen.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/toggle_button/toggle_off.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/hurt_sound.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/toggle_button/toggle_off_1.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/toggle_button/toggle_on.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/mouse-click-290204.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/upgrade_shop/coffee.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/empty.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/short_circuit_01.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/hud/burnout_levels.xcf` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/burnout_level/flame0.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/short_circuit_01.wav` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/hud/burnout_level/flame1.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/burnout_level/flame2.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/success-fanfare-trumpets-6185.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/hud/burnout_level/flame3.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/burnout_level/flame4.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/audio/sfx/ui-button-click-negative.mp3` | Pixabay — creator TBD ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/images/ui/hud/burnout_level/flame5.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/shields/shield1.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/shields/shield2.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/hud/shields/shield3.png` | AI-generated (ChatGPT) | Internal placeholder |
+ - Remaining audio items previously marked `TBD` are now classified as Pixabay-sourced; please provide exact track links and creators when available.
 | `assets/images/ui/hud/shields/shield4.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/ui/hud/shields/shield5.png` | AI-generated (ChatGPT) | Internal placeholder |
 
