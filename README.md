@@ -166,6 +166,12 @@ We welcome contributions! Please see our [Contributing Guide](https://nathanhitc
 
 Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand expected behavior in all project spaces.
 
+## 💬 Community
+
+Join the conversation and help shape the game:
+- **Discussions**: https://github.com/nathanhitchcock/BurntOut/discussions
+- **Issues**: https://github.com/nathanhitchcock/BurntOut/issues
+
 ## 📜 Asset Credits
 
 See [docs/assets.md](docs/assets.md) for third-party asset sources and licenses. Ensure any new assets include clear attribution.

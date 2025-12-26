@@ -1,0 +1,54 @@
+name: Setup Branch Protection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  protect:
+    if: ${{ secrets.ADMIN_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure branch protection on main
+        env:
+          GH_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+          OWNER_LOGIN: ${{ github.repository_owner }}
+        run: |
+          cat > protection.json << 'JSON'
+          {
+            "required_status_checks": null,
+            "enforce_admins": true,
+            "required_pull_request_reviews": {
+              "dismiss_stale_reviews": true,
+              "require_code_owner_reviews": false,
+              "required_approving_review_count": 0
+            },
+            "restrictions": null,
+            "required_linear_history": true,
+            "allow_force_pushes": false,
+            "allow_deletions": false,
+            "block_creations": false,
+            "required_conversation_resolution": true
+          }
+          JSON
+
+          # Apply protection via JSON to include restrictions
+          gh api \
+            -X PUT \
+            repos/$OWNER/$REPO/branches/main/protection \
+            -H "Accept: application/vnd.github+json" \
+            --input protection.json
+
+  note-if-missing:
+    if: ${{ secrets.ADMIN_TOKEN == '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain setup
+        run: |
+          echo "ADMIN_TOKEN secret not set."
+          echo "Create a fine-grained PAT with admin permissions on this repo,"
+          echo "add it as 'ADMIN_TOKEN' in Repository Secrets, then re-run this workflow."

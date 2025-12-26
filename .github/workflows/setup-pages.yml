@@ -1,0 +1,35 @@
+name: Setup GitHub Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  configure-pages:
+    if: ${{ secrets.ADMIN_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages to use gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          gh api \
+            -X PUT \
+            repos/$OWNER/$REPO/pages \
+            -H "Accept: application/vnd.github+json" \
+            -F source.branch=gh-pages \
+            -F source.path=/
+
+  note-if-missing:
+    if: ${{ secrets.ADMIN_TOKEN == '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain setup
+        run: |
+          echo "ADMIN_TOKEN secret not set."
+          echo "Create a fine-grained PAT with admin permissions on this repo,"
+          echo "add it as 'ADMIN_TOKEN' in Repository Secrets, then re-run this workflow."
