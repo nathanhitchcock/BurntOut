@@ -46,6 +46,7 @@ nav:
   - Contributing: CONTRIBUTING.md
   - FAQ: faq.md
   - Assets: assets.md
+  - Credits: credits.md
   - Game Design: game_design.md
 
 extra_css:
