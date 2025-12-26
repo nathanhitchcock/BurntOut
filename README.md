@@ -7,7 +7,7 @@
 [![Documentation](https://img.shields.io/badge/docs-online-brightgreen.svg)](https://nathanhitchcock.github.io/BurntOut/)
 
 > Navigate the treacherous waters of corporate life while managing your stress levels and fighting off literal bugs in the system!
-
+  
 ## 🎮 About
 
 **Burnt Out** is a unique blend of puzzle-solving, tower defense, and stress management. Play as an overworked employee navigating office politics, debugging systems, and trying to maintain your sanity in a corporate environment where burnout can literally kill you.
