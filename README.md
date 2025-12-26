@@ -162,6 +162,14 @@ We welcome contributions! Please see our [Contributing Guide](https://nathanhitc
 - **[MkDocs Material](https://squidfunk.github.io/mkdocs-material/)** - Documentation
 - **[GitHub Actions](https://github.com/features/actions)** - CI/CD and project automation
 
+## 🧭 Code of Conduct
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand expected behavior in all project spaces.
+
+## 📜 Asset Credits
+
+See [docs/assets.md](docs/assets.md) for third-party asset sources and licenses. Ensure any new assets include clear attribution.
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
