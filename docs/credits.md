@@ -11,3 +11,6 @@ Summary:
 - License: Code under MIT — see repository [LICENSE](../LICENSE).
 
 If you add or replace assets, please update both pages above to keep credits current.
+
+Note:
+- Many audio assets were discovered ad‑hoc while coding by browsing Pixabay. Exact track URLs and creator names are being finalized and will be added to the attribution log and assets table over time. All current audio marked “Pixabay” follows the Pixabay License; we’ll include creator attribution when available.
