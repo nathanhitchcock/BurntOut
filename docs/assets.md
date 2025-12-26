@@ -38,10 +38,10 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/images/backgrounds/CORP office/upgrade_shop.png` | TBD | TBD |
-| `assets/images/backgrounds/overworld/CORP_office1.png` | TBD | TBD |
-| `assets/images/backgrounds/tutorial/tutorial_tilemap.png` | TBD | TBD |
-| `assets/images/backgrounds/tutorial/welcome_sign.png` | TBD | TBD |
+| `assets/images/backgrounds/CORP office/upgrade_shop.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/backgrounds/overworld/CORP_office1.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/backgrounds/tutorial/tutorial_tilemap.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/backgrounds/tutorial/welcome_sign.png` | AI-generated (ChatGPT) | Internal placeholder |
 
 Additional background files present:
 - `assets/images/backgrounds/CORP office/CORP_upgrade shop_inside_2.png`
@@ -54,49 +54,49 @@ Additional background files present:
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/images/sprites/bugs/bug_basic.png` | TBD | TBD |
-| `assets/images/sprites/bugs/bug_squish.png` | TBD | TBD |
-| `assets/images/sprites/main character/Animated Walking Flame Character Sprite.png` | TBD | TBD |
-| `assets/images/sprites/main character/player_walking_frames.tres` | TBD | TBD |
-| `assets/images/sprites/productivity_machine/candle_flame.png` | TBD | TBD |
-| `assets/images/sprites/productivity_machine/machine_base.png` | TBD | TBD |
-| `assets/images/sprites/productivity_machine/screen_overlay.png` | TBD | TBD |
+| `assets/images/sprites/bugs/bug_basic.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/bugs/bug_squish.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/main character/Animated Walking Flame Character Sprite.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/main character/player_walking_frames.tres` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/productivity_machine/candle_flame.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/productivity_machine/machine_base.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/sprites/productivity_machine/screen_overlay.png` | AI-generated (ChatGPT) | Internal placeholder |
 
 ## Images — UI
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/images/ui/BPG_icon.png` | TBD | TBD |
+| `assets/images/ui/BPG_icon.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/ui/ai-graphic-click-to-revive.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/ui/return_to_corp_portal.png` | TBD | TBD |
-| `assets/images/ui/start-button.png` | TBD | TBD |
-| `assets/images/ui/start-screen.png` | TBD | TBD |
-| `assets/images/ui/toggle_button/toggle_off.png` | TBD | TBD |
-| `assets/images/ui/toggle_button/toggle_off_1.png` | TBD | TBD |
-| `assets/images/ui/toggle_button/toggle_on.png` | TBD | TBD |
-| `assets/images/ui/upgrade_shop/coffee.png` | TBD | TBD |
-| `assets/images/ui/hud/empty.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_levels.xcf` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame0.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame1.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame2.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame3.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame4.png` | TBD | TBD |
-| `assets/images/ui/hud/burnout_level/flame5.png` | TBD | TBD |
-| `assets/images/ui/hud/shields/shield1.png` | TBD | TBD |
-| `assets/images/ui/hud/shields/shield2.png` | TBD | TBD |
-| `assets/images/ui/hud/shields/shield3.png` | TBD | TBD |
-| `assets/images/ui/hud/shields/shield4.png` | TBD | TBD |
-| `assets/images/ui/hud/shields/shield5.png` | TBD | TBD |
+| `assets/images/ui/return_to_corp_portal.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/start-button.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/start-screen.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/toggle_button/toggle_off.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/toggle_button/toggle_off_1.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/toggle_button/toggle_on.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/upgrade_shop/coffee.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/empty.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_levels.xcf` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame0.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame1.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame2.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame3.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame4.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/burnout_level/flame5.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/shields/shield1.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/shields/shield2.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/shields/shield3.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/shields/shield4.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/ui/hud/shields/shield5.png` | AI-generated (ChatGPT) | Internal placeholder |
 
 ## Images — Defenses
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/images/defenses/coffee_machine.png` | TBD | TBD |
-| `assets/images/defenses/desk_icon.png` | TBD | TBD |
-| `assets/images/defenses/hammer/hammer.png` | TBD | TBD |
-| `assets/images/defenses/machine_shield.png` | TBD | TBD |
+| `assets/images/defenses/coffee_machine.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/defenses/desk_icon.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/defenses/hammer/hammer.png` | AI-generated (ChatGPT) | Internal placeholder |
+| `assets/images/defenses/machine_shield.png` | AI-generated (ChatGPT) | Internal placeholder |
 
 ## Notes
 
@@ -105,3 +105,4 @@ Additional background files present:
 - For assets created by the Burnt Potato Games team, mark Source as `Internal` and License as `Copyright Burnt Potato Games (MIT-compatible)`.
 - Pixabay License: Free for commercial use, no attribution required — see [license summary](https://pixabay.com/service/license-summary/).
 - Electric Zap / Static Pop attribution: likely maps to `short_circuit_01.*` by fronbondi_skegs (Pixabay) — please confirm the exact track link.
+ - All images under `assets/images/` are AI-generated via ChatGPT per project notes; update any exceptions explicitly.
