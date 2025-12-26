@@ -30,7 +30,7 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 | `assets/audio/sfx/revive_sound.mp3` | Pixabay — “Charming Twinkle Sound” ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/audio/sfx/short_circuit_01.mp3` | TBD | TBD |
 | `assets/audio/sfx/short_circuit_01.wav` | TBD | TBD |
-| `assets/audio/sfx/short_circuit_02.mp3.m4a` | TBD | TBD |
+| `assets/audio/sfx/short_circuit_02.mp3.m4a` | Pixabay — freesound_community ([license summary](https://pixabay.com/service/license-summary/)) — to confirm exact track | Pixabay License |
 | `assets/audio/sfx/success-fanfare-trumpets-6185.mp3` | TBD | TBD |
 | `assets/audio/sfx/ui-button-click-negative.mp3` | TBD | TBD |
 
@@ -103,4 +103,5 @@ Additional background files present:
 - Replace `TBD` entries with the exact source URL, creator name, and license.
 - Ensure any `.xcf` or `.tres` files derived from third-party sources have licenses compatible with MIT.
 - For assets created by the Burnt Potato Games team, mark Source as `Internal` and License as `Copyright Burnt Potato Games (MIT-compatible)`.
- - Pixabay License: Free for commercial use, no attribution required — see [license summary](https://pixabay.com/service/license-summary/).
+- Pixabay License: Free for commercial use, no attribution required — see [license summary](https://pixabay.com/service/license-summary/).
+- Electric Zap / Static Pop attribution: likely maps to `short_circuit_01.*` by fronbondi_skegs (Pixabay) — please confirm the exact track link.
