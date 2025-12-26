@@ -6,8 +6,8 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/audio/music/background_low-hum-14645.mp3` | TBD | TBD |
-| `assets/audio/music/background_music.mp3` | TBD | TBD |
+| `assets/audio/music/background_low-hum-14645.mp3` | Pixabay — freesound_community ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
+| `assets/audio/music/background_music.mp3` | Pixabay — annoyedCactus, “8-bit Game Music” ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/audio/music/bgm_skyline.m4a` | TBD | TBD |
 | `assets/audio/music/bgm_skyline.mp3` | TBD | TBD |
 | `assets/audio/music/drift-away-lofi-ambient-music-356058.mp3` | TBD | TBD |
@@ -16,9 +16,9 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 
 | File | Source | License |
 | --- | --- | --- |
-| `assets/audio/sfx/big-thunder-clap-99753.mp3` | TBD | TBD |
-| `assets/audio/sfx/breaker-switch-45684.mp3` | TBD | TBD |
-| `assets/audio/sfx/coffee_place_drop.mp3` | TBD | TBD |
+| `assets/audio/sfx/big-thunder-clap-99753.mp3` | Pixabay — “Big Thunder Clap” ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
+| `assets/audio/sfx/breaker-switch-45684.mp3` | Pixabay — InspectorJ ([track page](https://pixabay.com/sound-effects/breaker-switch-45684/), [license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
+| `assets/audio/sfx/coffee_place_drop.mp3` | Pixabay — 28beetpro ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/audio/sfx/collect-points-190037.mp3` | TBD | TBD |
 | `assets/audio/sfx/diabolic-laugh-202978.mp3` | TBD | TBD |
 | `assets/audio/sfx/game-over-arcade-6435.mp3` | TBD | TBD |
@@ -27,7 +27,7 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 | `assets/audio/sfx/hire_poof.mp3` | TBD | TBD |
 | `assets/audio/sfx/hurt_sound.mp3` | TBD | TBD |
 | `assets/audio/sfx/mouse-click-290204.mp3` | TBD | TBD |
-| `assets/audio/sfx/revive_sound.mp3` | TBD | TBD |
+| `assets/audio/sfx/revive_sound.mp3` | Pixabay — “Charming Twinkle Sound” ([license summary](https://pixabay.com/service/license-summary/)) | Pixabay License |
 | `assets/audio/sfx/short_circuit_01.mp3` | TBD | TBD |
 | `assets/audio/sfx/short_circuit_01.wav` | TBD | TBD |
 | `assets/audio/sfx/short_circuit_02.mp3.m4a` | TBD | TBD |
@@ -67,7 +67,7 @@ Additional background files present:
 | File | Source | License |
 | --- | --- | --- |
 | `assets/images/ui/BPG_icon.png` | TBD | TBD |
-| `assets/images/ui/ai-graphic-click-to-revive.png` | TBD | TBD |
+| `assets/images/ui/ai-graphic-click-to-revive.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/ui/return_to_corp_portal.png` | TBD | TBD |
 | `assets/images/ui/start-button.png` | TBD | TBD |
 | `assets/images/ui/start-screen.png` | TBD | TBD |
@@ -103,3 +103,4 @@ Additional background files present:
 - Replace `TBD` entries with the exact source URL, creator name, and license.
 - Ensure any `.xcf` or `.tres` files derived from third-party sources have licenses compatible with MIT.
 - For assets created by the Burnt Potato Games team, mark Source as `Internal` and License as `Copyright Burnt Potato Games (MIT-compatible)`.
+ - Pixabay License: Free for commercial use, no attribution required — see [license summary](https://pixabay.com/service/license-summary/).
