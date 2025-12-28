@@ -7,22 +7,18 @@ env:
   ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Setup Pages workflow triggered."
-
   configure-pages:
-    if: ${{ env.ADMIN_TOKEN != '' }}
     runs-on: ubuntu-latest
-    needs: validate
     steps:
+      - name: Start
+        run: echo "Setup Pages workflow triggered."
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Configure Pages to use gh-pages
+        if: ${{ env.ADMIN_TOKEN != '' }}
         env:
-          GH_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          GH_TOKEN: ${{ env.ADMIN_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
         run: |
@@ -38,12 +34,8 @@ jobs:
             "https://api.github.com/repos/$OWNER/$REPO/pages" \
             --data-binary @pages.json
 
-  note-if-missing:
-    if: ${{ env.ADMIN_TOKEN == '' }}
-    runs-on: ubuntu-latest
-    needs: validate
-    steps:
       - name: Explain setup
+        if: ${{ env.ADMIN_TOKEN == '' }}
         run: |
           echo "ADMIN_TOKEN secret not set."
           echo "Create a fine-grained PAT with admin permissions on this repo,"
