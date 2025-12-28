@@ -2,6 +2,9 @@ name: Setup Branch Protection
 
 on:
   workflow_dispatch:
+ 
+env:
+  ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
 
 jobs:
   validate:
@@ -10,7 +13,7 @@ jobs:
       - run: echo "Setup Branch Protection workflow triggered."
 
   protect:
-    if: ${{ secrets.ADMIN_TOKEN != null && secrets.ADMIN_TOKEN != '' }}
+    if: ${{ env.ADMIN_TOKEN != '' }}
     runs-on: ubuntu-latest
     needs: validate
     steps:
@@ -49,7 +52,7 @@ jobs:
             --data-binary @protection.json
 
   note-if-missing:
-    if: ${{ secrets.ADMIN_TOKEN == null || secrets.ADMIN_TOKEN == '' }}
+    if: ${{ env.ADMIN_TOKEN == '' }}
     runs-on: ubuntu-latest
     needs: validate
     steps:
