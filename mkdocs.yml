@@ -1,5 +1,4 @@
 site_name: Burnt Out
-site_url: https://nathanhitchcock.github.io/BurntOut/
 
 # Use Material for MkDocs theme
 repo_url: https://github.com/nathanhitchcock/BurntOut
@@ -47,7 +46,6 @@ nav:
   - Contributing: CONTRIBUTING.md
   - FAQ: faq.md
   - Assets: assets.md
-  - Credits: credits.md
   - Game Design: game_design.md
 
 extra_css:

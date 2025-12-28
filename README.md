@@ -104,8 +104,7 @@ Centralized audio management with global controls:
 Smooth character controller with adaptive behavior:
 - **Movement**: `overworld_player.gd` - WASD/Arrow key input with normalized velocity
 - **Animation System**: Walking animations with fire trail particle effects
-- **Room-Specific Camera**: Adaptive zoom levels (tutorial: 5x, bug smash: 1x, default: 2.5x)
-- **Camera Controls**: Optional dynamic zoom disabled for tutorial sections
+- **Room-Specific Camera**: Adaptive zoom levels (bug smash: 1x, default: 2.5x)
 - **State Persistence**: `player_data.gd` autoload for cross-scene data
 
 #### ⚙️ **Defense & Tower Systems**
@@ -117,11 +116,7 @@ Strategic placement and management mechanics:
 
 ### 🚧 In Development
 
-#### 📚 **Tutorial System** *(Current Branch)*
-Interactive intro section with custom camera settings:
-- **Tutorial Assets**: Custom backgrounds, tilemap, and coffee machine sprites
-- **Fixed Camera**: 5x zoom lock for consistent tutorial experience  
-- **Progressive Learning**: Step-by-step introduction to game mechanics
+
 
 #### 🏢 **Expanded Office Areas**
 Additional rooms and interactive corporate environments:

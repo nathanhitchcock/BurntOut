@@ -1,8 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=38 format=3 uid="uid://docso1kx17qoj"]
 
-[ext_resource type="Texture2D" uid="uid://bpe8inotgbrx7" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
+[ext_resource type="Texture2D" uid="uid://dcmeboplqvvku" path="res://assets/images/backgrounds/CORP office/backgrounds/corp_office_tilemap.png" id="1_nsujb"]
 [ext_resource type="Script" uid="uid://cfj4oe7wwdka7" path="res://scenes/CORP/upgrade_cafe.gd" id="3_2lp3j"]
 [ext_resource type="Texture2D" uid="uid://bxpepqiawwu8r" path="res://scenes/CORP/board_togglepuzzle.png" id="3_p5kmm"]
+[ext_resource type="Texture2D" uid="uid://dq6jmwh6shmx1" path="res://assets/images/defenses/coffee_machine.png" id="4_32h3d"]
 [ext_resource type="Texture2D" uid="uid://bwh75m800ar48" path="res://assets/images/backgrounds/CORP office/upgrade_shop.png" id="4_r4m04"]
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="5_quye3"]
@@ -11,26 +12,44 @@
 [ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
+[ext_resource type="Texture2D" uid="uid://bj8441q4w6bq" path="res://assets/images/defenses/machine_shield.png" id="8_m7xrd"]
 [ext_resource type="PackedScene" uid="uid://dtdbv8x7l4gp8" path="res://scenes/CORP/productivity_machine.tscn" id="10_rifxr"]
-[ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="11_pn5pk"]
-[ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
-[ext_resource type="Script" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
+[ext_resource type="Texture2D" uid="uid://udigjqe8t04o" path="res://assets/images/backgrounds/CORP office/backgrounds/welcome_sign.png" id="13_32h3d"]
+[ext_resource type="Script" uid="uid://mltr5ovnq581" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://ypvk5frlvuea" path="res://assets/images/backgrounds/CORP office/room_bugsmash/bugroom_board.png" id="16_nsujb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
 size = Vector2(614.688, 286.25)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li2nm"]
+size = Vector2(1125, 580)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2vkn"]
+size = Vector2(1600, 854.286)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7now"]
-size = Vector2(1099.16, 942.24)
+size = Vector2(1096.44, 942.24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nsujb"]
 size = Vector2(1024.75, 42)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lp3j"]
-size = Vector2(943, 24.5)
+size = Vector2(943, 127.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
-size = Vector2(33, 629.75)
+size = Vector2(71.25, 547.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3a3va"]
+size = Vector2(93.625, 165.969)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32h3d"]
+size = Vector2(133.812, 58.9844)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7xrd"]
+size = Vector2(145, 174.492)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jgha"]
+size = Vector2(86.8125, 114.984)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5kmm"]
 size = Vector2(324.688, 286.25)
@@ -97,17 +116,17 @@ position = Vector2(-528, -306)
 modulate = Color(0.697578, 0.697578, 0.697578, 1)
 position = Vector2(515.688, 291.906)
 scale = Vector2(0.668376, 0.597839)
-texture = ExtResource("1_rifxr")
+texture = ExtResource("1_nsujb")
 metadata/_edit_lock_ = true
 
 [node name="Scrum-DSUBoard" type="Node2D" parent="."]
-position = Vector2(-579, -283)
+position = Vector2(-611, -303)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("5_2lp3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scrum-DSUBoard"]
 position = Vector2(2117.5, 515)
-scale = Vector2(0.160015, 0.13614)
+scale = Vector2(0.190334, 0.175595)
 texture = ExtResource("3_p5kmm")
 
 [node name="ScrumDSUBoardArea" type="Area2D" parent="Scrum-DSUBoard"]
@@ -119,8 +138,30 @@ position = Vector2(39.7499, -62.4375)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
+[node name="CoffeeMachine" type="Sprite2D" parent="."]
+position = Vector2(-236, -35)
+scale = Vector2(0.0586958, 0.0535229)
+texture = ExtResource("4_32h3d")
+
+[node name="Area2D" type="Area2D" parent="CoffeeMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoffeeMachine/Area2D"]
+position = Vector2(-235.94, 190)
+shape = SubResource("RectangleShape2D_li2nm")
+
+[node name="ShieldMachine" type="Sprite2D" parent="."]
+position = Vector2(-291, -36)
+scale = Vector2(0.0409319, 0.0315913)
+texture = ExtResource("8_m7xrd")
+
+[node name="Area2D" type="Area2D" parent="ShieldMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShieldMachine/Area2D"]
+position = Vector2(57.1429, 287.143)
+shape = SubResource("RectangleShape2D_u2vkn")
+
 [node name="UpgradeCafe" type="Sprite2D" parent="."]
-position = Vector2(-273, -85)
+position = Vector2(-257, -105)
 scale = Vector2(0.205614, 0.170977)
 texture = ExtResource("4_r4m04")
 script = ExtResource("3_2lp3j")
@@ -129,19 +170,15 @@ script = ExtResource("3_2lp3j")
 scale = Vector2(0.595864, 0.939178)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeCafe/Area2D"]
-position = Vector2(130.593, 444.324)
+position = Vector2(104.746, 336.286)
 shape = SubResource("RectangleShape2D_y7now")
-
-[node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
-position = Vector2(-116, -219)
-scale = Vector2(0.15, 0.15)
 
 [node name="UpgradeShopUI" parent="." instance=ExtResource("7_y7now")]
 script = ExtResource("6_i65ii")
 
 [node name="ProductivityMachine" parent="." instance=ExtResource("10_rifxr")]
-position = Vector2(-11, 6)
-scale = Vector2(0.15, 0.15)
+position = Vector2(-7, 86)
+scale = Vector2(0.139845, 0.145001)
 
 [node name="Walls" type="Node2D" parent="."]
 position = Vector2(-528, -320)
@@ -149,10 +186,6 @@ metadata/_edit_lock_ = true
 
 [node name="wall-top" type="StaticBody2D" parent="Walls"]
 metadata/_edit_lock_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-top"]
-position = Vector2(534, 13)
-texture = ExtResource("11_pn5pk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-top"]
 position = Vector2(516, 15)
@@ -164,48 +197,86 @@ position = Vector2(14, 502)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-bottom"]
-position = Vector2(506, 96.25)
+position = Vector2(501, 78)
 shape = SubResource("RectangleShape2D_2lp3j")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Walls/wall-bottom"]
-position = Vector2(554, 98)
-texture = ExtResource("11_pn5pk")
 
 [node name="wall-left" type="StaticBody2D" parent="Walls"]
 position = Vector2(-26, 237)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-left"]
-position = Vector2(55, 60.875)
+position = Vector2(209.25, 74)
 shape = SubResource("RectangleShape2D_rifxr")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-left"]
-position = Vector2(53, -4)
-texture = ExtResource("12_r4m04")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/wall-left"]
+position = Vector2(273, -121)
+shape = SubResource("RectangleShape2D_3a3va")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls/wall-left"]
+position = Vector2(289, 192.984)
+shape = SubResource("RectangleShape2D_3a3va")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls/wall-left"]
+position = Vector2(372, -168)
+shape = SubResource("RectangleShape2D_32h3d")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Walls/wall-left"]
+position = Vector2(378, 193)
+scale = Vector2(0.658993, 1.03404)
+shape = SubResource("RectangleShape2D_m7xrd")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
 [node name="wall-right" type="StaticBody2D" parent="Walls"]
 position = Vector2(945, 236)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-right"]
-position = Vector2(61, 73)
+position = Vector2(-97.625, 70)
 shape = SubResource("RectangleShape2D_rifxr")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-right"]
-position = Vector2(53, -4)
-texture = ExtResource("12_r4m04")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls/wall-right"]
+position = Vector2(-178, 193)
+shape = SubResource("RectangleShape2D_3a3va")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls/wall-right"]
+position = Vector2(-178.594, -101.492)
+shape = SubResource("RectangleShape2D_5jgha")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="Walls/wall-right"]
+position = Vector2(-284, 195)
+shape = SubResource("RectangleShape2D_m7xrd")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls/wall-right"]
+position = Vector2(-290, -169)
+shape = SubResource("RectangleShape2D_32h3d")
+debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
+
+[node name="WelcomeSign" type="Sprite2D" parent="."]
+position = Vector2(-64, -259)
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("13_32h3d")
+
+[node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
+position = Vector2(51, -257)
+scale = Vector2(0.15, 0.15)
 
 [node name="BugRoomBoard" type="Node2D" parent="."]
-position = Vector2(-578, -151)
+position = Vector2(-594, -211)
 scale = Vector2(0.4, 0.4)
 script = ExtResource("15_p5kmm")
 
 [node name="Sprite2D" type="Sprite2D" parent="BugRoomBoard"]
 position = Vector2(2117.5, 515)
-scale = Vector2(0.160015, 0.13614)
+scale = Vector2(0.244653, 0.189885)
 texture = ExtResource("16_nsujb")
 
 [node name="BugRoomBoardArea" type="Area2D" parent="BugRoomBoard"]

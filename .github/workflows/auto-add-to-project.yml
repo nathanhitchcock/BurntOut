@@ -9,10 +9,9 @@ on:
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
-    if: ${{ secrets.PROJECTS_TOKEN != '' }}
     steps:
       - name: Add issue or PR to project
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/nathanhitchcock/projects/5
-          github-token: ${{ secrets.PROJECTS_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
