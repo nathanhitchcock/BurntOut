@@ -4,9 +4,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  protect:
-    if: ${{ secrets.ADMIN_TOKEN != '' }}
+  validate:
     runs-on: ubuntu-latest
+    steps:
+      - run: echo "Setup Branch Protection workflow triggered."
+
+  protect:
+    if: ${{ secrets.ADMIN_TOKEN != null && secrets.ADMIN_TOKEN != '' }}
+    runs-on: ubuntu-latest
+    needs: validate
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,7 +22,6 @@ jobs:
           GH_TOKEN: ${{ secrets.ADMIN_TOKEN }}
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
-          OWNER_LOGIN: ${{ github.repository_owner }}
         run: |
           cat > protection.json << 'JSON'
           {
@@ -36,16 +41,17 @@ jobs:
           }
           JSON
 
-          # Apply protection via JSON to include restrictions
-          gh api \
-            -X PUT \
-            repos/$OWNER/$REPO/branches/main/protection \
+          # Apply protection via REST API using curl
+          curl -sS -X PUT \
+            -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
-            --input protection.json
+            "https://api.github.com/repos/$OWNER/$REPO/branches/main/protection" \
+            --data-binary @protection.json
 
   note-if-missing:
-    if: ${{ secrets.ADMIN_TOKEN == '' }}
+    if: ${{ secrets.ADMIN_TOKEN == null || secrets.ADMIN_TOKEN == '' }}
     runs-on: ubuntu-latest
+    needs: validate
     steps:
       - name: Explain setup
         run: |
