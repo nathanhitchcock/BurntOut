@@ -7,7 +7,6 @@ Welcome to the Burnt Out codebase! This documentation provides an overview of th
 ## Project Structure
 
 - `assets/` — Game assets (audio, images, music, sfx, sprites, backgrounds, vfx, ui, etc.)
-- `archive/` — Unused or legacy assets and scenes, kept for reference or possible reuse.
 - `docs/` — Project documentation, FAQ, and style guides.
 - `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, defenses).
 - `scenes/autoload/` — Scenes used as autoloads (singletons) for global systems.
@@ -44,7 +43,7 @@ See `docs/autoloads.md` for a full API reference of all global singletons.
 ## Best Practices
 
 - **Organize assets and scripts** by feature and type.
-- **Archive, don’t delete**: Move unused assets/scenes to `archive/`.
+  
 - **Use snake_case for scripts** and PascalCase for scenes.
 - **Document all autoloads** and update `docs/autoloads.md` when globals change.
 - **Keep `.DS_Store` and temp files out of git** (see `.gitignore`).

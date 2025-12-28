@@ -131,7 +131,6 @@ BurntOut/
 ├── docs/           # MkDocs documentation
 ├── scenes/         # Godot scenes organized by area
 ├── scripts/        # GDScript files organized by feature
-├── archive/        # Legacy/unused assets (preserved)
 └── .github/        # GitHub Actions and project automation
 ```
 
