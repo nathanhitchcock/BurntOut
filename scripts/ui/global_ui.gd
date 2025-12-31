@@ -25,6 +25,9 @@ var bug_win_label: Label = null
 
 # Toggle puzzle level info
 var toggle_level_label: Label = null
+var end_screen: Control = null
+var end_message_label: Label = null
+var end_shown: bool = false
 
 func _ready():
 	set_process_input(true)
@@ -43,6 +46,38 @@ func _ready():
 
 	# Find the parent node for UI elements
 	var parent = get_node_or_null("CanvasLayer/Control")
+
+	# Build a hidden end screen overlay (simple message)
+	end_screen = Control.new()
+	end_screen.name = "EndScreen"
+	end_screen.visible = false
+	end_screen.mouse_filter = Control.MOUSE_FILTER_STOP
+	end_screen.anchor_left = 0
+	end_screen.anchor_top = 0
+	end_screen.anchor_right = 1
+	end_screen.anchor_bottom = 1
+	var bg = ColorRect.new()
+	bg.color = Color(0, 0, 0, 0.7)
+	bg.anchor_left = 0
+	bg.anchor_top = 0
+	bg.anchor_right = 1
+	bg.anchor_bottom = 1
+	end_screen.add_child(bg)
+	end_message_label = Label.new()
+	end_message_label.name = "EndMessageLabel"
+	end_message_label.text = "Great work! Next sprint, we’re targeting 120%!!"
+	end_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	end_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	end_message_label.add_theme_font_size_override("font_size", 36)
+	end_message_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	end_message_label.anchor_left = 0.5
+	end_message_label.anchor_top = 0.5
+	end_message_label.anchor_right = 0.5
+	end_message_label.anchor_bottom = 0.5
+	end_message_label.position = Vector2(0, 0)
+	end_screen.add_child(end_message_label)
+	if parent:
+		parent.add_child(end_screen)
 
 	# Add a TextureRect for the shield icon
 	var shield_icon = TextureRect.new()
@@ -448,6 +483,26 @@ func _unhandled_input(event):
 	if get_tree().paused and pause_menu and pause_menu.visible:
 		if event is InputEventMouseButton or event is InputEventMouseMotion:
 			pause_menu.propagate_call("gui_input", [event])
+
+# End screen control
+func show_end_screen(message: String = "Great work! Next sprint, we’re targeting 120%!!"):
+	if end_shown:
+		return
+	end_shown = true
+	gameplay_enabled = false
+	if end_message_label:
+		end_message_label.text = message
+	if end_screen:
+		end_screen.visible = true
+	# Optionally pause ambient audio
+	var music_player = GlobalAudio.get_node_or_null("AmbientHum")
+	if music_player:
+		music_player.stream_paused = true
+
+func hide_end_screen():
+	if end_screen:
+		end_screen.visible = false
+	gameplay_enabled = true
 
 # Bug counter functions
 func show_bug_counter():
