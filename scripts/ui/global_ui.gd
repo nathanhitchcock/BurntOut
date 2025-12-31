@@ -494,9 +494,9 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 		end_message_label.text = message
 	# Position the message near the player's screen position if available
 	var player = get_tree().current_scene.get_node_or_null("Player")
-	var cam = get_viewport().get_camera_2d()
-	if player and cam and end_message_label:
-		var screen_pos: Vector2 = cam.world_to_screen(player.global_position)
+	if player and end_message_label:
+		# Convert player's world position to screen/canvas coordinates
+		var screen_pos: Vector2 = player.get_global_transform_with_canvas().origin
 		var viewport_size: Vector2 = get_viewport().size
 		# With centered anchors, offset from screen center to reach target
 		end_message_label.position = screen_pos - (viewport_size * 0.5)
