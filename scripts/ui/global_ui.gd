@@ -539,12 +539,17 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	gameplay_enabled = false
 	if end_message_label:
 		end_message_label.text = message
-	# Position the message near the player's screen position if available
-	var player = get_tree().current_scene.get_node_or_null("Player")
-	if player and end_message_label:
-		# Convert player's world position to screen/canvas coordinates
-		var screen_pos: Vector2 = player.get_global_transform_with_canvas().origin
-		var viewport_size: Vector2 = get_viewport().size
+	# Position the message near the ProductivityMachine (fallback to player)
+	var viewport_size: Vector2 = get_viewport().size
+	var screen_pos: Vector2 = viewport_size * 0.5
+	var machine = get_tree().current_scene.get_node_or_null("ProductivityMachine")
+	if machine:
+		screen_pos = machine.get_global_transform_with_canvas().origin
+	else:
+		var player = get_tree().current_scene.get_node_or_null("Player")
+		if player:
+			screen_pos = player.get_global_transform_with_canvas().origin
+	if end_message_label:
 		# With centered anchors, offset from screen center to reach target
 		end_message_label.position = screen_pos - (viewport_size * 0.5)
 	# Show the main pause menu (no special handling, keep Resume/Restart/Quit usable)
