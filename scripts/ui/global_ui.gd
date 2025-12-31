@@ -343,6 +343,8 @@ func _on_restart_button_pressed() -> void:
 	if pause_bg:
 		pause_bg.visible = false
 	gameplay_enabled = true
+	# Ensure game unpauses before reload
+	get_tree().paused = false
 	await get_tree().create_timer(0.3).timeout
 	get_tree().reload_current_scene()
 
@@ -500,6 +502,22 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 		var viewport_size: Vector2 = get_viewport().size
 		# With centered anchors, offset from screen center to reach target
 		end_message_label.position = screen_pos - (viewport_size * 0.5)
+	# Show pause overlay and restrict actions
+	if pause_menu:
+		pause_menu.visible = true
+	if pause_bg:
+		pause_bg.visible = true
+	if resume_button:
+		resume_button.visible = false
+		resume_button.disabled = true
+	if restart_button:
+		restart_button.visible = true
+		restart_button.disabled = false
+	if quit_button:
+		quit_button.visible = true
+		quit_button.disabled = false
+	# Hard-pause the scene tree to freeze gameplay while keeping UI responsive
+	get_tree().paused = true
 	if end_screen:
 		end_screen.visible = true
 	# Optionally pause ambient audio
@@ -511,6 +529,15 @@ func hide_end_screen():
 	if end_screen:
 		end_screen.visible = false
 	gameplay_enabled = true
+	# Restore pause UI and unpause the game
+	if resume_button:
+		resume_button.visible = true
+		resume_button.disabled = false
+	if pause_menu:
+		pause_menu.visible = false
+	if pause_bg:
+		pause_bg.visible = false
+	get_tree().paused = false
 
 # Bug counter functions
 func show_bug_counter():
