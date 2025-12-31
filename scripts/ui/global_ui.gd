@@ -57,7 +57,7 @@ func _ready():
 	end_screen.anchor_right = 1
 	end_screen.anchor_bottom = 1
 	var bg = ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.7)
+	bg.color = Color(0, 0, 0, 0.85)
 	bg.anchor_left = 0
 	bg.anchor_top = 0
 	bg.anchor_right = 1
@@ -492,6 +492,14 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	gameplay_enabled = false
 	if end_message_label:
 		end_message_label.text = message
+	# Position the message near the player's screen position if available
+	var player = get_tree().current_scene.get_node_or_null("Player")
+	var cam = get_viewport().get_camera_2d()
+	if player and cam and end_message_label:
+		var screen_pos: Vector2 = cam.world_to_screen(player.global_position)
+		var viewport_size: Vector2 = get_viewport().size
+		# With centered anchors, offset from screen center to reach target
+		end_message_label.position = screen_pos - (viewport_size * 0.5)
 	if end_screen:
 		end_screen.visible = true
 	# Optionally pause ambient audio
