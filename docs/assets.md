@@ -39,14 +39,10 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 | File | Source | License |
 | --- | --- | --- |
 | `assets/images/backgrounds/CORP office/upgrade_shop.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/overworld/CORP_office1.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/tutorial/tutorial_tilemap.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/tutorial/welcome_sign.png` | AI-generated (ChatGPT) | Internal placeholder |
+<!-- Removed tutorial/overworld placeholders no longer present in repo -->
 
 Additional background files present:
-- `assets/images/backgrounds/CORP office/CORP_upgrade shop_inside_2.png`
-- `assets/images/backgrounds/tutorial/ChatGPT Image Jun 21, 2025, 08_34_49 PM.png`
-- `assets/images/backgrounds/tutorial/ChatGPT Image Jun 21, 2025, 08_48_39 PM.png`
+<!-- Removed additional tutorial/upgrade background placeholders no longer present in repo -->
 - `assets/images/backgrounds/ai-background-3wide.xcf`
 - `assets/images/backgrounds/ai-background-3wide_blackend.xcf`
 
@@ -87,14 +83,8 @@ Additional background files present:
 | `assets/images/ui/hud/shields/shield4.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/ui/hud/shields/shield5.png` | AI-generated (ChatGPT) | Internal placeholder |
 
-## Images — Defenses
-
-| File | Source | License |
-| --- | --- | --- |
-| `assets/images/defenses/coffee_machine.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/desk_icon.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/hammer/hammer.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/machine_shield.png` | AI-generated (ChatGPT) | Internal placeholder |
+<!-- Removed: Images — Defenses (feature deprecated) -->
+<!-- All defense-related images were removed alongside the deprecation of defenses. -->
 
 ## Notes
 

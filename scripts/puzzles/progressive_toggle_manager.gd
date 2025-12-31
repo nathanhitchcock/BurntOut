@@ -11,6 +11,7 @@ var max_level: int = 10  # Can be adjusted based on room size/balance
 var solution: Array = []
 var player_sequence: Array = []
 var active_toggles: Array = []  # Array of active toggle nodes
+var is_level_active: bool = false  # Lock input during transitions
 
 # Toggle spawning positions (predefined grid)
 var toggle_positions: Array = []
@@ -58,6 +59,7 @@ func _setup_toggle_positions():
 
 func _start_level(level: int):
 	print("[ProgressiveToggle] Starting level", level, "with", level, "toggles")
+	is_level_active = true
 	
 	# Clear any existing toggles
 	_clear_toggles()
@@ -86,6 +88,9 @@ func _spawn_toggles(count: int):
 		toggle.name = "Toggle_" + str(i)
 		toggle.z_index = 0  # Set toggles to background layer
 		toggle.scale = Vector2(0.5, 0.5)  # Make toggles half size
+		# Ensure input is enabled for a new level
+		if "disabled" in toggle:
+			toggle.disabled = false
 		
 		# Enable mouse interaction but prevent focus issues
 		toggle.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -134,10 +139,14 @@ func _reset_toggles():
 
 func _on_toggle_pressed(toggle_index: int):
 	print("[ProgressiveToggle] Player pressed toggle:", toggle_index)
+	# Ignore input when level is transitioning to the next set
+	if not is_level_active or solution.size() == 0:
+		return
 	player_sequence.append(toggle_index)
-	
-	# Check if the player's input matches the solution so far
-	for i in player_sequence.size():
+
+	# Check if the player's input matches the solution so far (guard array bounds)
+	var upto: int = min(player_sequence.size(), solution.size())
+	for i in upto:
 		if player_sequence[i] != solution[i]:
 			print("[ProgressiveToggle] Incorrect sequence! Resetting level.")
 			_handle_failure()
@@ -155,12 +164,13 @@ func _handle_failure():
 		print("[ProgressiveToggle] Player took", damage, "damage for incorrect sequence")
 	
 	# Play fail sound
-	if fail_sound:
+	if fail_sound and fail_sound.is_inside_tree():
 		fail_sound.play()
 	
 	# Show feedback
 	if player and player.has_method("show_floating_feedback"):
-		player.show_floating_feedback("Wrong sequence!", Color(0.9, 0.2, 0.2, 1))
+		# Offset further upward to avoid overlapping shield/damage labels
+		player.show_floating_feedback("Wrong sequence!", Color(0.9, 0.2, 0.2, 1), Vector2(0, -40))
 	
 	# Reset the player sequence and toggle states, but keep the same level
 	player_sequence.clear()
@@ -170,9 +180,15 @@ func _handle_failure():
 
 func _handle_success():
 	print("[ProgressiveToggle] Level", current_level, "completed!")
+	# Lock input while we transition to the next level
+	is_level_active = false
+	# Disable existing toggles to prevent further presses
+	for t in active_toggles:
+		if is_instance_valid(t) and ("disabled" in t):
+			t.disabled = true
 	
 	# Play success sound
-	if success_sound:
+	if success_sound and success_sound.is_inside_tree():
 		success_sound.play()
 	
 	# Award points equal to the current level
@@ -243,6 +259,9 @@ func _on_toggle_area_body_exited(body, toggle_index, btn):
 			interact_prompt_shown[toggle_index] = false
 
 func _process(_delta):
+	# Block interaction via [E] during transitions or after solve
+	if not is_level_active:
+		return
 	# Handle player interaction with toggles via [E] key only
 	# Note: Mouse clicks are handled directly by the TextureButton
 	if Input.is_action_just_pressed("ui_accept"):
@@ -257,6 +276,9 @@ func _process(_delta):
 		if nearest_toggle_index != -1 and nearest_toggle_index < active_toggles.size():
 			var toggle = active_toggles[nearest_toggle_index]
 			if toggle and is_instance_valid(toggle):
+				# Respect disabled state; do not press programmatically if disabled
+				if ("disabled" in toggle) and toggle.disabled:
+					return
 				print("[ProgressiveToggle] [E] key pressed near toggle", nearest_toggle_index)
 				toggle._on_pressed()
 	

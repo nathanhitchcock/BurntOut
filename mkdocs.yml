@@ -1,4 +1,5 @@
 site_name: Burnt Out
+site_url: https://nathanhitchcock.github.io/BurntOut/
 
 # Use Material for MkDocs theme
 repo_url: https://github.com/nathanhitchcock/BurntOut
@@ -19,7 +20,7 @@ extra:
 theme:
   name: material
   logo: logo.png
-  favicon: favicon.png
+  favicon: favicon.ico
   palette:
     - scheme: slate
       primary: orange
@@ -48,6 +49,13 @@ nav:
   - Assets: assets.md
   - Credits: credits.md
   - Game Design: game_design.md
+  - Code Overview: code-overview.md
+  - Mechanics: mechanics.md
+  - Features: features.md
+  - Asset Attribution Log: asset_attribution_log.md
+  - Overworld Setup: overworld-setup.md
+  - Open Source Checklist: open_source_checklist.md
+  - Portal Spawn Logic: PORTAL_SPAWN_LOGIC.md
 
 extra_css:
   - extra.css

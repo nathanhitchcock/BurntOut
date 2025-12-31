@@ -7,9 +7,9 @@ Welcome to the Burnt Out codebase! This documentation provides an overview of th
 ## Project Structure
 
 - `assets/` — Game assets (audio, images, music, sfx, sprites, backgrounds, vfx, ui, etc.)
-- `archive/` — Unused or legacy assets and scenes, kept for reference or possible reuse.
+- (No long-lived `archive/`) Remove unused assets and scenes. Only retain files referenced by active scenes or documented as part of current features.
 - `docs/` — Project documentation, FAQ, and style guides.
-- `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, defenses).
+- `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, corp office).
 - `scenes/autoload/` — Scenes used as autoloads (singletons) for global systems.
 - `scripts/` — All GDScript files, organized by feature (ui, puzzles, player, autoload).
 - `scripts/autoload/` — Scripts used as autoloads (singletons).
@@ -36,15 +36,21 @@ See `docs/autoloads.md` for a full API reference of all global singletons.
 - Stores persistent player state (health, position, sprint points).
 
 ### Puzzles
-- Toggle puzzle logic in `scripts/puzzles/toggle_puzzle_manager.gd`.
-- Toggle buttons are instanced from `scenes/CORP/toggle_room/ToggleButton.tscn`.
+- Progressive toggle puzzle logic in `scripts/puzzles/progressive_toggle_manager.gd`.
+ - Toggle buttons are instanced from `scenes/CORP/toggle_room/ToggleButton.tscn`.
+
+### End Overlay
+- Completing the Productivity Machine displays a top-centered victory overlay via `GlobalUI.show_end_screen()`.
+
+### Burnout Flow
+- At 0 health, the game auto-pauses and shows the Skyline Watch burnout screen. Continue restores health and returns to the corp office.
 
 ---
 
 ## Best Practices
 
 - **Organize assets and scripts** by feature and type.
-- **Archive, don’t delete**: Move unused assets/scenes to `archive/`.
+- **Remove unused assets**: Prefer deleting unused assets and scenes; only retain files referenced by active scenes or documented as part of current features.
 - **Use snake_case for scripts** and PascalCase for scenes.
 - **Document all autoloads** and update `docs/autoloads.md` when globals change.
 - **Keep `.DS_Store` and temp files out of git** (see `.gitignore`).
@@ -88,4 +94,4 @@ func _on_volume_slider_changed(value):
 
 _Tip: For best results, ensure all your AudioStreamPlayers are routed to the Master bus (or a child bus you control similarly)._
 
-_Last updated: June 9, 2025_
+_Last updated: December 31, 2025_

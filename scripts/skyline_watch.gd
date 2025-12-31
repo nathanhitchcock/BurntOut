@@ -24,6 +24,9 @@ func _ready():
 	if continue_button:
 		continue_button.visible = true
 		continue_button.pressed.connect(_on_continue_pressed)
+	# Show the main pause menu so the player can Restart or Quit
+	if has_node("/root/GlobalUI"):
+		get_node("/root/GlobalUI").toggle_pause()
 
 func _on_continue_pressed():
 	# Restore player health and teleport to the main office (corp_office.tscn)

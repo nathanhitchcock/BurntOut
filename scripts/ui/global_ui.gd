@@ -25,6 +25,14 @@ var bug_win_label: Label = null
 
 # Toggle puzzle level info
 var toggle_level_label: Label = null
+var end_screen: Control = null
+var end_message_label: Label = null
+var end_shown: bool = false
+var last_scene: Node = null
+var end_sound: AudioStreamPlayer = null
+@export var end_overlay_alpha: float = 0.4
+@export var end_fade_duration: float = 0.5
+@export var end_pop_duration: float = 0.35
 
 func _ready():
 	set_process_input(true)
@@ -43,6 +51,52 @@ func _ready():
 
 	# Find the parent node for UI elements
 	var parent = get_node_or_null("CanvasLayer/Control")
+
+	# Build a hidden end screen overlay (simple message)
+	end_screen = Control.new()
+	end_screen.name = "EndScreen"
+	end_screen.visible = false
+	# Allow clicks to pass through overlay so pause menu remains clickable
+	end_screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	end_screen.anchor_left = 0
+	end_screen.anchor_top = 0
+	end_screen.anchor_right = 1
+	end_screen.anchor_bottom = 1
+	var bg = ColorRect.new()
+	bg.color = Color(0, 0, 0, end_overlay_alpha)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.anchor_left = 0
+	bg.anchor_top = 0
+	bg.anchor_right = 1
+	bg.anchor_bottom = 1
+	bg.z_index = 0
+	end_screen.add_child(bg)
+	end_message_label = Label.new()
+	end_message_label.name = "EndMessageLabel"
+	end_message_label.text = "Great work! Next sprint, we’re targeting 120%!!"
+	end_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	end_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	end_message_label.add_theme_font_size_override("font_size", 36)
+	end_message_label.add_theme_color_override("font_color", Color(1, 1, 1))
+	# Use top-left anchors and absolute positioning within the overlay
+	end_message_label.anchor_left = 0.0
+	end_message_label.anchor_top = 0.0
+	end_message_label.anchor_right = 0.0
+	end_message_label.anchor_bottom = 0.0
+	end_message_label.position = Vector2(0, 0)
+	# Ensure message renders above dim background but below pause menu
+	end_message_label.z_index = 900
+	end_screen.add_child(end_message_label)
+	# Success sound
+	end_sound = AudioStreamPlayer.new()
+	end_sound.name = "EndSound"
+	end_sound.stream = load("res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3")
+	end_sound.autoplay = false
+	end_screen.add_child(end_sound)
+	# Add overlay to the CanvasLayer root so it spans the full viewport
+	# Lower z-index than pause menu so buttons remain on top
+	end_screen.z_index = 0
+	add_child(end_screen)
 
 	# Add a TextureRect for the shield icon
 	var shield_icon = TextureRect.new()
@@ -128,8 +182,12 @@ func _ready():
 		pause_bg.visible = false
 	# Ensure pause menu and its buttons process input when paused (recursively)
 	if pause_menu:
-		pause_menu.process_mode = 1
+		# Use normal processing during gameplay; we'll switch to WHEN_PAUSED only for end screen
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
+		pause_menu.z_index = 2000
 		_set_buttons_pausable(pause_menu)
+	if pause_bg:
+		pause_bg.z_index = 1950
 	# Debug: print when pause menu is shown and connect button signals
 	if pause_menu:
 		if resume_button:
@@ -141,8 +199,10 @@ func _ready():
 		if pause_menu:
 			pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
 	if volume_slider:
-		volume_slider.value = 0.5
+		var saved_volume = _load_volume()
+		volume_slider.value = saved_volume
 		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
+		_on_volume_slider_changed(volume_slider.value)
 		_update_volume_label()
 	if health_bar:
 		health_bar.value = 100
@@ -275,11 +335,33 @@ func _ready():
 	_update_burnout_flames()
 	# Force initial HUD visibility update for StartScreen/Skyline scenes
 	_process(0)
+	# Track current scene for UI rebind on changes
+	last_scene = _get_current_scene()
+
+func _rebind_pause_ui_for_scene():
+	# Re-acquire UI nodes and reconnect button handlers for the new scene
+	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
+	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
+	restart_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/RestartButton")
+	sprint_points_label = get_node_or_null("CanvasLayer/Control/SprintPointsLabel")
+	pause_menu = get_node_or_null("CanvasLayer/Control/VBoxContainer")
+	pause_bg = get_node_or_null("CanvasLayer/Control/PauseBackground")
+	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
+	if pause_menu:
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
+		_set_buttons_pausable(pause_menu)
+	if resume_button:
+		resume_button.pressed.connect(_on_resume_button_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
+	if restart_button:
+		restart_button.pressed.connect(_on_restart_button_pressed)
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
 		if child is Button:
-			child.process_mode = 1
+			# Default to normal processing during gameplay
+			child.process_mode = Node.PROCESS_MODE_INHERIT
 		if child.get_child_count() > 0:
 			_set_buttons_pausable(child)
 
@@ -303,13 +385,21 @@ func _on_resume_button_pressed() -> void:
 	toggle_pause()
 
 func _on_restart_button_pressed() -> void:
+	# Ensure any end overlay and pause UI are cleared
+	hide_end_screen()
 	if pause_menu:
 		pause_menu.visible = false
 	if pause_bg:
 		pause_bg.visible = false
 	gameplay_enabled = true
+	# Ensure game unpauses before reload
+	get_tree().paused = false
 	await get_tree().create_timer(0.3).timeout
-	get_tree().reload_current_scene()
+	# Reset player data to initial defaults
+	if has_node("/root/player_data"):
+		get_node("/root/player_data").reset()
+	# Jump back to StartScreen for a full game reset
+	get_tree().change_scene_to_file("res://scenes/StartScreen.tscn")
 
 func update_sprint_points_display():
 	if sprint_points_label:
@@ -319,11 +409,16 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
+	# Detect scene changes to rebind pause UI
+	var cs = _get_current_scene()
+	if cs and cs != last_scene:
+		last_scene = cs
+		_rebind_pause_ui_for_scene()
 	# Hide sprint points, health bar, and burnout label on StartScreen and SkylineWatch
-	var current_scene = get_tree().current_scene
+	var current_scene = _get_current_scene()
 	var hide_hud = false
 	var scene_path = ""
-	if current_scene and "scene_file_path" in current_scene:
+	if current_scene:
 		scene_path = current_scene.scene_file_path
 		hide_hud = scene_path.ends_with("StartScreen.tscn") or scene_path.ends_with("SkylineWatch.tscn")
 	var empty_tex = load("res://assets/images/ui/hud/empty.png")
@@ -434,7 +529,9 @@ func show_interact_popup_near_player(player: Node):
 	label.global_position = player.global_position + Vector2(0, -60)
 	label.z_index = 1000
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var cs_popup = _get_current_scene()
+	if cs_popup:
+		cs_popup.add_child(label)
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.0)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.0)
@@ -448,6 +545,73 @@ func _unhandled_input(event):
 	if get_tree().paused and pause_menu and pause_menu.visible:
 		if event is InputEventMouseButton or event is InputEventMouseMotion:
 			pause_menu.propagate_call("gui_input", [event])
+
+# Viewport helpers
+func _is_in_view(p: Vector2, viewport_size: Vector2) -> bool:
+	return p.x >= 0.0 and p.x <= viewport_size.x and p.y >= 0.0 and p.y <= viewport_size.y
+
+# Safe SceneTree helpers
+func _get_current_scene() -> Node:
+	var tree := get_tree()
+	if tree:
+		return tree.current_scene
+	return null
+
+# End screen control
+func show_end_screen(message: String = "Great work! Next sprint, we’re targeting 120%!!"):
+	if end_shown:
+		return
+	end_shown = true
+	gameplay_enabled = false
+	if end_message_label:
+		end_message_label.text = message
+	# Place the message centered at the top of the viewport to avoid cutoff
+	var viewport_size: Vector2 = get_viewport().size
+	var top_margin := 32.0
+	if end_message_label:
+		# Make the label span the viewport width and center its text
+		end_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		end_message_label.anchor_left = 0.0
+		end_message_label.anchor_right = 0.0
+		end_message_label.anchor_top = 0.0
+		end_message_label.anchor_bottom = 0.0
+		end_message_label.custom_minimum_size = Vector2(viewport_size.x, 0.0)
+		end_message_label.position = Vector2(0.0, top_margin)
+	# Show the main pause menu (no special handling, keep Resume/Restart/Quit usable)
+	toggle_pause()
+	if end_screen:
+		end_screen.visible = true
+		end_screen.modulate.a = 0.0
+		var tween = create_tween()
+		tween.tween_property(end_screen, "modulate:a", 1.0, end_fade_duration)
+		# Pop the message slightly
+		end_message_label.scale = Vector2(0.92, 0.92)
+		tween.tween_property(end_message_label, "scale", Vector2(1, 1), end_pop_duration)
+	# Optionally pause ambient audio
+	var music_player = GlobalAudio.get_node_or_null("AmbientHum")
+	if music_player:
+		music_player.stream_paused = true
+	# Play success sound
+	if end_sound and end_sound.stream:
+		end_sound.play()
+
+func hide_end_screen():
+	if end_screen:
+		end_screen.visible = false
+	gameplay_enabled = true
+	end_shown = false
+	if end_message_label:
+		end_message_label.text = ""
+	# Reset overlay alpha and stop sound
+	if end_screen:
+		end_screen.modulate.a = 0.0
+	if end_sound:
+		end_sound.stop()
+	# Restore pause UI if visible
+	if pause_menu:
+		pause_menu.visible = false
+	if pause_bg:
+		pause_bg.visible = false
 
 # Bug counter functions
 func show_bug_counter():
@@ -491,6 +655,7 @@ func _on_volume_slider_changed(value):
 	var db = lerp(-40, 0, value)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
 	_update_volume_label()
+	_save_volume(value)
 
 func _update_volume_label():
 	if volume_label and volume_slider:
@@ -500,3 +665,17 @@ func give_test_sprint_points():
 	if has_node("/root/player_data"):
 		get_node("/root/player_data").sprint_points = 3
 		update_sprint_points_display()
+
+func _load_volume() -> float:
+	var cfg = ConfigFile.new()
+	var err = cfg.load("user://settings.cfg")
+	if err == OK:
+		var v = cfg.get_value("audio", "volume", 0.2)
+		return clamp(float(v), 0.0, 1.0)
+	return 0.2
+
+func _save_volume(value: float):
+	var cfg = ConfigFile.new()
+	var err = cfg.load("user://settings.cfg")
+	cfg.set_value("audio", "volume", clamp(value, 0.0, 1.0))
+	cfg.save("user://settings.cfg")

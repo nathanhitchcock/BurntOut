@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://lxyjpbx1wcoh" path="res://assets/audio/sfx/ui-button-click-negative.mp3" id="4_6p8hy"]
 [ext_resource type="AudioStream" uid="uid://b4v1i7rtjbb5t" path="res://assets/audio/sfx/collect-points-190037.mp3" id="4_aoyeq"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="4_success"]
-[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_twdje"]
+ 
 [ext_resource type="PackedScene" uid="uid://cosrseguudkmd" path="res://scenes/CORP/portal_to_corp_office.tscn" id="9_aoyeq"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="9_vdwej"]
 
@@ -111,9 +111,7 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_g2535")
 animation = &"walk"
 
-[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
-emitting = false
-texture = ExtResource("4_twdje")
+ 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-62, 42)

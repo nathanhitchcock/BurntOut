@@ -8,7 +8,7 @@ This page consolidates asset attribution and licensing details for Burnt Out.
 Summary:
 - Audio: Primarily sourced from Pixabay under the Pixabay License (free for commercial use, no attribution required). Specific track pages will be linked in the attribution log as available.
 - Images: All images under `assets/images/` are AI-generated via ChatGPT and marked as internal placeholders.
-- License: Code under MIT — see repository [LICENSE](../LICENSE).
+- License: Code under MIT — see repository [LICENSE](https://github.com/nathanhitchcock/BurntOut/blob/main/LICENSE).
 
 If you add or replace assets, please update both pages above to keep credits current.
 

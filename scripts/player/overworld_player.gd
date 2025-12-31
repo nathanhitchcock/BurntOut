@@ -4,7 +4,6 @@ var speed := 220.0 # Comfortable walk speed
 var burnout_level: int = 0 # 0 = no burnout, 1-5 = burnout stages
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
-@onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
 @onready var player_data = get_node_or_null("/root/player_data")
 @onready var burnout_label = $BurnoutLabel if has_node("BurnoutLabel") else null
 @onready var camera: Camera2D = $Camera2D if has_node("Camera2D") else null
@@ -47,24 +46,12 @@ func _physics_process(delta):
 		velocity = input * speed
 		if animated_sprite:
 			animated_sprite.play("walk")
-		if fire_trail:
-			fire_trail.emitting = true
-		# Camera zoom disabled for tutorial section
-		# if camera and not _is_zoomed_in:
-		# 	_is_zoomed_in = true
-		# 	var tween = create_tween()
-		# 	tween.tween_property(camera, "zoom", camera_zoom_in, camera_zoom_duration)
+		
 	else:
 		velocity = Vector2.ZERO
 		if animated_sprite:
 			animated_sprite.stop()
-		if fire_trail:
-			fire_trail.emitting = false
-		# Camera zoom disabled for tutorial section
-		# if camera and _is_zoomed_in:
-		# 	_is_zoomed_in = false
-		# 	var tween = create_tween()
-		# 	tween.tween_property(camera, "zoom", camera_zoom_out, camera_zoom_duration)
+		
 	move_and_slide()
 	# No code-based clamping; rely on collision shapes for movement boundaries
 
@@ -108,7 +95,16 @@ func show_floating_feedback(text: String, color: Color, offset := Vector2.ZERO):
 	label.global_position = global_position + Vector2(0, -60) + offset
 	label.z_index = 100
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var parent_node: Node = null
+	if get_tree() and get_tree().current_scene:
+		parent_node = get_tree().current_scene
+	else:
+		parent_node = get_parent()
+	if parent_node:
+		parent_node.add_child(label)
+	else:
+		# Not inside a scene tree; avoid errors and free the label
+		label.queue_free()
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.2)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
@@ -121,7 +117,15 @@ func show_damage_popup(amount: int):
 	label.global_position = global_position + Vector2(0, -60)
 	label.z_index = 100
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var parent_node2: Node = null
+	if get_tree() and get_tree().current_scene:
+		parent_node2 = get_tree().current_scene
+	else:
+		parent_node2 = get_parent()
+	if parent_node2:
+		parent_node2.add_child(label)
+	else:
+		label.queue_free()
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.2)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
@@ -129,25 +133,48 @@ func show_damage_popup(amount: int):
 
 func take_damage(amount: int) -> void:
 	if player_data:
+		var had_absorption := false
 		# Shield acts as temporary HP
 		if player_data.shield_hp > 0:
 			var absorbed = min(amount, player_data.shield_hp)
 			player_data.shield_hp -= absorbed
 			amount -= absorbed
-			show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2))
+			had_absorption = absorbed > 0
+			# Offset up slightly to avoid overlap with damage numbers
+			show_floating_feedback("Shield Absorbed %d!" % absorbed, Color(1,1,0.2), Vector2(0, -20))
 			if has_node("/root/GlobalUI"):
 				get_node("/root/GlobalUI")._update_shield_bar()
 			if player_data.shield_hp <= 0:
 				player_data.shield_hp = 0
-				# Shift 'Shield Broken!' text down by 20 pixels to avoid overlap
-				show_floating_feedback("Shield Broken!", Color(1,0.5,0.2), Vector2(0, 20))
+				# Shift 'Shield Broken!' further down to avoid damage label overlap
+				show_floating_feedback("Shield Broken!", Color(1,0.5,0.2), Vector2(0, 40))
 			if amount <= 0:
 				return
 		player_data.health = max(player_data.health - amount, 0)
 		save_to_player_data()
 		if has_node("/root/GlobalUI"):
 			get_node("/root/GlobalUI")._update_health_bar()
-		show_damage_popup(amount)
+		# Render damage label with a small downward offset if shield absorbed some damage
+		var damage_offset := Vector2(0, 20) if had_absorption else Vector2.ZERO
+		var dmg_label = Label.new()
+		dmg_label.text = "-" + str(amount)
+		dmg_label.modulate = Color("f24646")
+		dmg_label.global_position = global_position + Vector2(0, -60) + damage_offset
+		dmg_label.z_index = 100
+		dmg_label.add_theme_font_size_override("font_size", 24)
+		var parent_node3: Node = null
+		if get_tree() and get_tree().current_scene:
+			parent_node3 = get_tree().current_scene
+		else:
+			parent_node3 = get_parent()
+		if parent_node3:
+			parent_node3.add_child(dmg_label)
+		else:
+			dmg_label.queue_free()
+		var tween2 = create_tween()
+		tween2.tween_property(dmg_label, "modulate:a", 0, 1.2)
+		tween2.tween_property(dmg_label, "position:y", dmg_label.position.y - 20, 1.2)
+		tween2.finished.connect(dmg_label.queue_free)
 		if has_node("/root/GlobalAudio/Player/PlayerDamageSound"):
 			var sfx = get_node("/root/GlobalAudio/Player/PlayerDamageSound")
 			sfx.stop()

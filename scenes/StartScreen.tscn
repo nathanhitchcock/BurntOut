@@ -85,10 +85,11 @@ texture = ExtResource("2_a0vbq")
 
 [node name="BeginSprint" type="Button" parent="."]
 layout_mode = 0
-offset_left = 410.0
-offset_top = 488.0
-offset_right = 656.0
-offset_bottom = 590.0
+offset_left = 345.0
+offset_top = 435.0
+offset_right = 591.0
+offset_bottom = 552.0
+scale = Vector2(1.5, 1.5)
 icon = ExtResource("3_nj7f0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
