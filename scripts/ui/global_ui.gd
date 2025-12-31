@@ -341,6 +341,8 @@ func _on_resume_button_pressed() -> void:
 	toggle_pause()
 
 func _on_restart_button_pressed() -> void:
+	# Ensure any end overlay and pause UI are cleared
+	hide_end_screen()
 	if pause_menu:
 		pause_menu.visible = false
 	if pause_bg:
@@ -536,6 +538,9 @@ func hide_end_screen():
 	if end_screen:
 		end_screen.visible = false
 	gameplay_enabled = true
+	end_shown = false
+	if end_message_label:
+		end_message_label.text = ""
 	# Restore pause UI and unpause the game
 	if resume_button:
 		resume_button.visible = true
