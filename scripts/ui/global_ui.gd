@@ -30,7 +30,9 @@ var end_message_label: Label = null
 var end_shown: bool = false
 var last_scene: Node = null
 var end_sound: AudioStreamPlayer = null
-@export var end_overlay_alpha: float = 0.9
+@export var end_overlay_alpha: float = 0.4
+@export var end_fade_duration: float = 0.5
+@export var end_pop_duration: float = 0.35
 
 func _ready():
 	set_process_input(true)
@@ -67,6 +69,7 @@ func _ready():
 	bg.anchor_top = 0
 	bg.anchor_right = 1
 	bg.anchor_bottom = 1
+	bg.z_index = 0
 	end_screen.add_child(bg)
 	end_message_label = Label.new()
 	end_message_label.name = "EndMessageLabel"
@@ -75,11 +78,14 @@ func _ready():
 	end_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	end_message_label.add_theme_font_size_override("font_size", 36)
 	end_message_label.add_theme_color_override("font_color", Color(1, 1, 1))
-	end_message_label.anchor_left = 0.5
-	end_message_label.anchor_top = 0.5
-	end_message_label.anchor_right = 0.5
-	end_message_label.anchor_bottom = 0.5
+	# Use top-left anchors and absolute positioning within the overlay
+	end_message_label.anchor_left = 0.0
+	end_message_label.anchor_top = 0.0
+	end_message_label.anchor_right = 0.0
+	end_message_label.anchor_bottom = 0.0
 	end_message_label.position = Vector2(0, 0)
+	# Ensure message renders above dim background but below pause menu
+	end_message_label.z_index = 900
 	end_screen.add_child(end_message_label)
 	# Success sound
 	end_sound = AudioStreamPlayer.new()
@@ -87,8 +93,10 @@ func _ready():
 	end_sound.stream = load("res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3")
 	end_sound.autoplay = false
 	end_screen.add_child(end_sound)
-	if parent:
-		parent.add_child(end_screen)
+	# Add overlay to the CanvasLayer root so it spans the full viewport
+	# Lower z-index than pause menu so buttons remain on top
+	end_screen.z_index = 0
+	add_child(end_screen)
 
 	# Add a TextureRect for the shield icon
 	var shield_icon = TextureRect.new()
@@ -176,8 +184,10 @@ func _ready():
 	if pause_menu:
 		# Use normal processing during gameplay; we'll switch to WHEN_PAUSED only for end screen
 		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
-		pause_menu.z_index = 1000
+		pause_menu.z_index = 2000
 		_set_buttons_pausable(pause_menu)
+	if pause_bg:
+		pause_bg.z_index = 1950
 	# Debug: print when pause menu is shown and connect button signals
 	if pause_menu:
 		if resume_button:
@@ -532,6 +542,10 @@ func _unhandled_input(event):
 		if event is InputEventMouseButton or event is InputEventMouseMotion:
 			pause_menu.propagate_call("gui_input", [event])
 
+# Viewport helpers
+func _is_in_view(p: Vector2, viewport_size: Vector2) -> bool:
+	return p.x >= 0.0 and p.x <= viewport_size.x and p.y >= 0.0 and p.y <= viewport_size.y
+
 # End screen control
 func show_end_screen(message: String = "Great work! Next sprint, we’re targeting 120%!!"):
 	if end_shown:
@@ -540,31 +554,49 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	gameplay_enabled = false
 	if end_message_label:
 		end_message_label.text = message
-	# Position the message near the ProductivityMachine (fallback to player)
+	# Position the message near the ProductivityMachine if visible; otherwise keep within viewport
 	var viewport_size: Vector2 = get_viewport().size
 	var screen_pos: Vector2 = viewport_size * 0.5
+	var margin := Vector2(32, 32)
 	var machine = get_tree().current_scene.get_node_or_null("ProductivityMachine")
+	var player = get_tree().current_scene.get_node_or_null("Player")
 	if machine:
-		screen_pos = machine.get_global_transform_with_canvas().origin
-		screen_pos.y -= 250 # Offset above machine
-		screen_pos.x -= 100 # Offset left of machine
-	else:
-		var player = get_tree().current_scene.get_node_or_null("Player")
-		if player:
-			screen_pos = player.get_global_transform_with_canvas().origin
+		var mp = machine.get_global_transform_with_canvas().origin
+		if _is_in_view(mp, viewport_size):
+			screen_pos = mp
+			screen_pos.y -= 120 # slight offset above machine when visible
+		else:
+			# Not in view; prefer top-of-viewport
+			screen_pos = Vector2(viewport_size.x * 0.5, margin.y)
+	elif player:
+		var pp = player.get_global_transform_with_canvas().origin
+		if _is_in_view(pp, viewport_size):
+			screen_pos = pp
+		else:
+			# Neither machine nor player in view; place at top center
+			screen_pos = Vector2(viewport_size.x * 0.5, margin.y)
+	# Nudge message left by ~150px for readability
+	screen_pos.x -= 150
+	# Move text up by ~40px
+	screen_pos.y -= 140
+	# Clamp to viewport bounds so text stays in view
+	screen_pos = Vector2(
+		clamp(screen_pos.x, margin.x, viewport_size.x - margin.x),
+		clamp(screen_pos.y, margin.y, viewport_size.y - margin.y)
+	)
 	if end_message_label:
-		# With centered anchors, offset from screen center to reach target
-		end_message_label.position = screen_pos - (viewport_size * 0.5)
+		# Absolute positioning within overlay (top-left anchors)
+		end_message_label.position = screen_pos
 	# Show the main pause menu (no special handling, keep Resume/Restart/Quit usable)
 	toggle_pause()
 	if end_screen:
 		end_screen.visible = true
 		end_screen.modulate.a = 0.0
 		var tween = create_tween()
-		tween.tween_property(end_screen, "modulate:a", 1.0, 0.4)
+		tween.tween_property(end_screen, "modulate:a", 1.0, end_fade_duration)
 		# Pop the message slightly
 		end_message_label.scale = Vector2(0.92, 0.92)
-		tween.tween_property(end_message_label, "scale", Vector2(1, 1), 0.35)
+		tween.tween_property(end_message_label, "scale", Vector2(1, 1), end_pop_duration)
 	# Optionally pause ambient audio
 	var music_player = GlobalAudio.get_node_or_null("AmbientHum")
 	if music_player:

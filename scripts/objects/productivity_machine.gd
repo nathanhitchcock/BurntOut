@@ -152,7 +152,7 @@ func _show_random_quote():
 	label.text = quote
 	label.modulate = Color(1, 1, 1, 0.95)
 	label.add_theme_font_size_override("font_size", 128) # Increased font size
-	label.position = Vector2(0, 180) # bottom right of the machine
+	label.position = Vector2(-450, 480) # moved down by 100px for readability
 	label.z_index = 100
 	add_child(label)
 	# Fade and float up, then free
