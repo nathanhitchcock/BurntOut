@@ -169,8 +169,8 @@ func _handle_failure():
 	
 	# Show feedback
 	if player and player.has_method("show_floating_feedback"):
-		# Offset upward to avoid overlapping the damage number popup
-		player.show_floating_feedback("Wrong sequence!", Color(0.9, 0.2, 0.2, 1), Vector2(0, -20))
+		# Offset further upward to avoid overlapping shield/damage labels
+		player.show_floating_feedback("Wrong sequence!", Color(0.9, 0.2, 0.2, 1), Vector2(0, -40))
 	
 	# Reset the player sequence and toggle states, but keep the same level
 	player_sequence.clear()

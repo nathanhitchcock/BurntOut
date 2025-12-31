@@ -565,40 +565,18 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	gameplay_enabled = false
 	if end_message_label:
 		end_message_label.text = message
-	# Position the message near the ProductivityMachine if visible; otherwise keep within viewport
+	# Place the message centered at the top of the viewport to avoid cutoff
 	var viewport_size: Vector2 = get_viewport().size
-	var screen_pos: Vector2 = viewport_size * 0.5
-	var margin := Vector2(32, 32)
-	var cs2 = _get_current_scene()
-	var machine = cs2.get_node_or_null("ProductivityMachine") if cs2 else null
-	var player = cs2.get_node_or_null("Player") if cs2 else null
-	if machine:
-		var mp = machine.get_global_transform_with_canvas().origin
-		if _is_in_view(mp, viewport_size):
-			screen_pos = mp
-			screen_pos.y -= 120 # slight offset above machine when visible
-		else:
-			# Not in view; prefer top-of-viewport
-			screen_pos = Vector2(viewport_size.x * 0.5, margin.y)
-	elif player:
-		var pp = player.get_global_transform_with_canvas().origin
-		if _is_in_view(pp, viewport_size):
-			screen_pos = pp
-		else:
-			# Neither machine nor player in view; place at top center
-			screen_pos = Vector2(viewport_size.x * 0.5, margin.y)
-	# Nudge message left by ~150px for readability
-	screen_pos.x -= 150
-	# Move text up by ~40px
-	screen_pos.y -= 140
-	# Clamp to viewport bounds so text stays in view
-	screen_pos = Vector2(
-		clamp(screen_pos.x, margin.x, viewport_size.x - margin.x),
-		clamp(screen_pos.y, margin.y, viewport_size.y - margin.y)
-	)
+	var top_margin := 32.0
 	if end_message_label:
-		# Absolute positioning within overlay (top-left anchors)
-		end_message_label.position = screen_pos
+		# Make the label span the viewport width and center its text
+		end_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		end_message_label.anchor_left = 0.0
+		end_message_label.anchor_right = 0.0
+		end_message_label.anchor_top = 0.0
+		end_message_label.anchor_bottom = 0.0
+		end_message_label.custom_minimum_size = Vector2(viewport_size.x, 0.0)
+		end_message_label.position = Vector2(0.0, top_margin)
 	# Show the main pause menu (no special handling, keep Resume/Restart/Quit usable)
 	toggle_pause()
 	if end_screen:
