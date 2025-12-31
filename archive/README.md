@@ -73,3 +73,14 @@ Moved from `scenes/CORP/tutorial/` to `archive/legacy/tutorial/` on 2025-12-31.
 - archive/legacy/tutorial/tutorial.tscn
 
 Rationale: superseded by the Corp Office onboarding; kept for reference only.
+
+### Defenses (Archived)
+
+Moved from `scenes/defenses/` to `archive/` on 2025-12-31.
+
+- archive/CoffeeMachine.tscn
+- archive/Coffee_machine.tscn
+- archive/StandingDesk.tscn
+- archive/Standing_desk.tscn
+
+Rationale: early defense prototypes not used in current flow.
