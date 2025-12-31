@@ -9,7 +9,7 @@ Use this checklist on the `public-prep` branch to prepare BurntOut for a public 
 - [ ] Review `docs/` content for internal-only references; mark anything intentionally omitted.
 - [ ] Confirm `CONTRIBUTING.md` is current and aligned with public contributions (PR flow, coding style, issues).
 - [ ] Add a Code of Conduct (e.g., Contributor Covenant) if desired: `CODE_OF_CONDUCT.md`.
-- [ ] Ensure Godot project loads cleanly without private dependencies; test scenes in `scenes/` and trim non-essential `archive/` content if needed.
+- [ ] Ensure Godot project loads cleanly without private dependencies; test scenes in `scenes/` and remove any non-essential legacy content.
 - [ ] Add asset credits section in `README.md` or `docs/assets.md` with sources and licenses.
 - [ ] Configure repository visibility steps in GitHub (owner action) once checklist is complete.
 

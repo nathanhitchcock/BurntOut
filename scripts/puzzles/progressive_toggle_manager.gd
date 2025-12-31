@@ -11,6 +11,7 @@ var max_level: int = 10  # Can be adjusted based on room size/balance
 var solution: Array = []
 var player_sequence: Array = []
 var active_toggles: Array = []  # Array of active toggle nodes
+var is_level_active: bool = false  # Lock input during transitions
 
 # Toggle spawning positions (predefined grid)
 var toggle_positions: Array = []
@@ -58,6 +59,7 @@ func _setup_toggle_positions():
 
 func _start_level(level: int):
 	print("[ProgressiveToggle] Starting level", level, "with", level, "toggles")
+	is_level_active = true
 	
 	# Clear any existing toggles
 	_clear_toggles()
@@ -86,6 +88,9 @@ func _spawn_toggles(count: int):
 		toggle.name = "Toggle_" + str(i)
 		toggle.z_index = 0  # Set toggles to background layer
 		toggle.scale = Vector2(0.5, 0.5)  # Make toggles half size
+		# Ensure input is enabled for a new level
+		if "disabled" in toggle:
+			toggle.disabled = false
 		
 		# Enable mouse interaction but prevent focus issues
 		toggle.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -134,10 +139,14 @@ func _reset_toggles():
 
 func _on_toggle_pressed(toggle_index: int):
 	print("[ProgressiveToggle] Player pressed toggle:", toggle_index)
+	# Ignore input when level is transitioning to the next set
+	if not is_level_active or solution.size() == 0:
+		return
 	player_sequence.append(toggle_index)
-	
-	# Check if the player's input matches the solution so far
-	for i in player_sequence.size():
+
+	# Check if the player's input matches the solution so far (guard array bounds)
+	var upto: int = min(player_sequence.size(), solution.size())
+	for i in upto:
 		if player_sequence[i] != solution[i]:
 			print("[ProgressiveToggle] Incorrect sequence! Resetting level.")
 			_handle_failure()
@@ -170,6 +179,12 @@ func _handle_failure():
 
 func _handle_success():
 	print("[ProgressiveToggle] Level", current_level, "completed!")
+	# Lock input while we transition to the next level
+	is_level_active = false
+	# Disable existing toggles to prevent further presses
+	for t in active_toggles:
+		if is_instance_valid(t) and ("disabled" in t):
+			t.disabled = true
 	
 	# Play success sound
 	if success_sound and success_sound.is_inside_tree():

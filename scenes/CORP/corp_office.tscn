@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=33 format=3 uid="uid://docso1kx17qoj"]
 
 [ext_resource type="Texture2D" uid="uid://bpe8inotgbrx7" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
 [ext_resource type="Script" uid="uid://cfj4oe7wwdka7" path="res://scenes/CORP/upgrade_cafe.gd" id="3_2lp3j"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bwh75m800ar48" path="res://assets/images/backgrounds/CORP office/upgrade_shop.png" id="4_r4m04"]
 [ext_resource type="Script" uid="uid://dvah6u7s48dnb" path="res://scenes/CORP/scrum_dsu_board.gd" id="5_2lp3j"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="5_quye3"]
+[ext_resource type="Texture2D" uid="uid://dq6jmwh6shmx1" path="res://assets/images/defenses/coffee_machine.png" id="6_3a3va"]
 [ext_resource type="PackedScene" uid="uid://b0cwvulf0qu4d" path="res://scenes/CORP/focus_pod.tscn" id="6_23ju4"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
+[ext_resource type="Texture2D" uid="uid://bj8441q4w6bq" path="res://assets/images/defenses/machine_shield.png" id="7_32h3d"]
 [ext_resource type="Texture2D" uid="uid://dkemprpsoo30k" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
@@ -131,6 +133,16 @@ scale = Vector2(0.595864, 0.939178)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpgradeCafe/Area2D"]
 position = Vector2(130.593, 444.324)
 shape = SubResource("RectangleShape2D_y7now")
+
+[node name="Sprite2D" type="Sprite2D" parent="UpgradeCafe"]
+position = Vector2(-141.041, 280.74)
+scale = Vector2(0.339915, 0.339187)
+texture = ExtResource("6_3a3va")
+
+[node name="Sprite2D2" type="Sprite2D" parent="UpgradeCafe"]
+position = Vector2(-126.451, 672.605)
+scale = Vector2(0.262159, 0.230504)
+texture = ExtResource("7_32h3d")
 
 [node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
 position = Vector2(-116, -219)

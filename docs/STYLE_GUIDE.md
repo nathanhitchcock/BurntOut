@@ -8,7 +8,7 @@
 
 ## Project Structure
 - Organize by feature and type (see `docs/README.md` for structure).
-- Use `archive/` for unused or legacy files.
+- Keep a curated `archive/` for future-intent or legacy assets referenced by active scenes or explicitly documented; remove prototypes that never shipped.
 
 ## GDScript Conventions
 - Use 4 spaces for indentation.
@@ -27,7 +27,7 @@
 ## Asset Management
 - Place images, audio, and other assets in the correct subfolder.
 - Remove `.DS_Store` and temp files from git.
-- Archive unused assets instead of deleting.
+- Curate the `archive/` folder: retain only referenced or documented future assets; remove unreferenced items.
 
 ## Documentation
 - Update `docs/autoloads.md` for any global/singleton changes.
@@ -36,4 +36,4 @@
 
 ---
 
-_Last updated: June 9, 2025_
+_Last updated: December 31, 2025_

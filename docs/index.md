@@ -7,7 +7,7 @@ Welcome to the Burnt Out codebase! This documentation provides an overview of th
 ## Project Structure
 
 - `assets/` — Game assets (audio, images, music, sfx, sprites, backgrounds, vfx, ui, etc.)
-- `archive/` — Unused or legacy assets and scenes, kept for reference or possible reuse.
+- `archive/` — Curated future-intent or legacy assets. Only keep items referenced by active scenes or explicitly documented for future use.
 - `docs/` — Project documentation, FAQ, and style guides.
 - `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, defenses).
 - `scenes/autoload/` — Scenes used as autoloads (singletons) for global systems.
@@ -44,7 +44,7 @@ See `docs/autoloads.md` for a full API reference of all global singletons.
 ## Best Practices
 
 - **Organize assets and scripts** by feature and type.
-- **Archive, don’t delete**: Move unused assets/scenes to `archive/`.
+- **Curate `archive/`**: Keep only assets referenced by active scenes or documented for future usage. Remove prototypes and files that never shipped.
 - **Use snake_case for scripts** and PascalCase for scenes.
 - **Document all autoloads** and update `docs/autoloads.md` when globals change.
 - **Keep `.DS_Store` and temp files out of git** (see `.gitignore`).
@@ -88,4 +88,4 @@ func _on_volume_slider_changed(value):
 
 _Tip: For best results, ensure all your AudioStreamPlayers are routed to the Master bus (or a child bus you control similarly)._
 
-_Last updated: June 9, 2025_
+_Last updated: December 31, 2025_
