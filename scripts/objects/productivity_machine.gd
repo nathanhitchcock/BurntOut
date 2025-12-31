@@ -3,6 +3,7 @@ extends Sprite2D
 @onready var screen_flicker = $ScreenFlicker
 @onready var candle = $Candle
 @onready var progress_bar = $ProgressBar if has_node("ProgressBar") else null
+var _end_triggered: bool = false
 
 # Flicker parameters
 var flicker_timer := 0.0
@@ -58,6 +59,7 @@ func _ready():
 		candle_base_scale = candle.scale
 	if progress_bar:
 		progress_bar.max_value = max_machine_points
+		progress_bar.value_changed.connect(_on_progress_value_changed)
 	if area2d:
 		area2d.body_entered.connect(_on_area2d_body_entered)
 	# Connect SpendButton if present
@@ -67,6 +69,7 @@ func _ready():
 	# Set progress bar from persistent machine_points
 	if progress_bar and player_data:
 		progress_bar.value = clamp(player_data.machine_points, progress_bar.min_value, progress_bar.max_value)
+		_check_end_condition()
 
 func _process(delta):
 	# CRT screen flicker: randomize modulate.a and color slightly
@@ -91,6 +94,7 @@ func _process(delta):
 	# Update ProgressBar from persistent machine_points
 	if progress_bar and player_data:
 		progress_bar.value = clamp(player_data.machine_points, progress_bar.min_value, progress_bar.max_value)
+		_check_end_condition()
 
 func _on_area2d_body_entered(body):
 	if body.name == "Player":
@@ -174,3 +178,16 @@ func _show_upgrade_shop_label():
 
 func _on_spend_button_pressed():
 	_spend_sprint_point()
+
+func _on_progress_value_changed(_value):
+	_check_end_condition()
+
+func _check_end_condition():
+	if _end_triggered:
+		return
+	if progress_bar and progress_bar.max_value > 0:
+		var percent := (float(progress_bar.value) / float(progress_bar.max_value)) * 100.0
+		if percent >= 100.0:
+			_end_triggered = true
+			if has_node("/root/GlobalUI"):
+				get_node("/root/GlobalUI").show_end_screen("Great work! Next sprint, we’re targeting 120%!!")
