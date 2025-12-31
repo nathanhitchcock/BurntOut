@@ -108,7 +108,16 @@ func show_floating_feedback(text: String, color: Color, offset := Vector2.ZERO):
 	label.global_position = global_position + Vector2(0, -60) + offset
 	label.z_index = 100
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var parent_node: Node = null
+	if get_tree() and get_tree().current_scene:
+		parent_node = get_tree().current_scene
+	else:
+		parent_node = get_parent()
+	if parent_node:
+		parent_node.add_child(label)
+	else:
+		# Not inside a scene tree; avoid errors and free the label
+		label.queue_free()
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.2)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)
@@ -121,7 +130,15 @@ func show_damage_popup(amount: int):
 	label.global_position = global_position + Vector2(0, -60)
 	label.z_index = 100
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var parent_node2: Node = null
+	if get_tree() and get_tree().current_scene:
+		parent_node2 = get_tree().current_scene
+	else:
+		parent_node2 = get_parent()
+	if parent_node2:
+		parent_node2.add_child(label)
+	else:
+		label.queue_free()
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.2)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.2)

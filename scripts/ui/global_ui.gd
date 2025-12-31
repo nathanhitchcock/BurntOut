@@ -334,7 +334,7 @@ func _ready():
 	# Force initial HUD visibility update for StartScreen/Skyline scenes
 	_process(0)
 	# Track current scene for UI rebind on changes
-	last_scene = get_tree().current_scene
+	last_scene = _get_current_scene()
 
 func _rebind_pause_ui_for_scene():
 	# Re-acquire UI nodes and reconnect button handlers for the new scene
@@ -408,15 +408,15 @@ func update_sprint_points_display():
 
 func _process(_delta):
 	# Detect scene changes to rebind pause UI
-	var cs = get_tree().current_scene
+	var cs = _get_current_scene()
 	if cs and cs != last_scene:
 		last_scene = cs
 		_rebind_pause_ui_for_scene()
 	# Hide sprint points, health bar, and burnout label on StartScreen and SkylineWatch
-	var current_scene = get_tree().current_scene
+	var current_scene = _get_current_scene()
 	var hide_hud = false
 	var scene_path = ""
-	if current_scene and "scene_file_path" in current_scene:
+	if current_scene:
 		scene_path = current_scene.scene_file_path
 		hide_hud = scene_path.ends_with("StartScreen.tscn") or scene_path.ends_with("SkylineWatch.tscn")
 	var empty_tex = load("res://assets/images/ui/hud/empty.png")
@@ -527,7 +527,9 @@ func show_interact_popup_near_player(player: Node):
 	label.global_position = player.global_position + Vector2(0, -60)
 	label.z_index = 1000
 	label.add_theme_font_size_override("font_size", 24)
-	get_tree().current_scene.add_child(label)
+	var cs_popup = _get_current_scene()
+	if cs_popup:
+		cs_popup.add_child(label)
 	var tween = create_tween()
 	tween.tween_property(label, "modulate:a", 0, 1.0)
 	tween.tween_property(label, "position:y", label.position.y - 20, 1.0)
@@ -546,6 +548,13 @@ func _unhandled_input(event):
 func _is_in_view(p: Vector2, viewport_size: Vector2) -> bool:
 	return p.x >= 0.0 and p.x <= viewport_size.x and p.y >= 0.0 and p.y <= viewport_size.y
 
+# Safe SceneTree helpers
+func _get_current_scene() -> Node:
+	var tree := get_tree()
+	if tree:
+		return tree.current_scene
+	return null
+
 # End screen control
 func show_end_screen(message: String = "Great work! Next sprint, we’re targeting 120%!!"):
 	if end_shown:
@@ -558,8 +567,9 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	var viewport_size: Vector2 = get_viewport().size
 	var screen_pos: Vector2 = viewport_size * 0.5
 	var margin := Vector2(32, 32)
-	var machine = get_tree().current_scene.get_node_or_null("ProductivityMachine")
-	var player = get_tree().current_scene.get_node_or_null("Player")
+	var cs2 = _get_current_scene()
+	var machine = cs2.get_node_or_null("ProductivityMachine") if cs2 else null
+	var player = cs2.get_node_or_null("Player") if cs2 else null
 	if machine:
 		var mp = machine.get_global_transform_with_canvas().origin
 		if _is_in_view(mp, viewport_size):

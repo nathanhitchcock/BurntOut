@@ -155,7 +155,7 @@ func _handle_failure():
 		print("[ProgressiveToggle] Player took", damage, "damage for incorrect sequence")
 	
 	# Play fail sound
-	if fail_sound:
+	if fail_sound and fail_sound.is_inside_tree():
 		fail_sound.play()
 	
 	# Show feedback
@@ -172,7 +172,7 @@ func _handle_success():
 	print("[ProgressiveToggle] Level", current_level, "completed!")
 	
 	# Play success sound
-	if success_sound:
+	if success_sound and success_sound.is_inside_tree():
 		success_sound.play()
 	
 	# Award points equal to the current level
