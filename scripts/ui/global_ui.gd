@@ -199,8 +199,9 @@ func _ready():
 		if pause_menu:
 			pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
 	if volume_slider:
-		volume_slider.value = 0.5
+		volume_slider.value = 0.2
 		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
+		_on_volume_slider_changed(volume_slider.value)
 		_update_volume_label()
 	if health_bar:
 		health_bar.value = 100
