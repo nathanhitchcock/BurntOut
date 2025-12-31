@@ -5,7 +5,7 @@ var health: int = 100 # Add this line for persistent health
 var inventory: Array = []
 var gold: int = 0
 var loop_progression: int = 0
-var sprint_points: int = 20 # Sprint points persist across all scenes (set to 20 for testing)
+var sprint_points: int = 0 # Sprint points persist across all scenes (set to 20 for testing)
 var machine_points: int = 0 # Persistent machine points for ProductivityMachine
 var portal_to_corp_used: bool = false # Set true when using portal, checked on load
 var burnout_level: int = 0 # Persistent burnout tracker (0-5)
@@ -23,7 +23,7 @@ func reset() -> void:
 	inventory = []
 	gold = 0
 	loop_progression = 0
-	sprint_points = 3
+	sprint_points = 0
 	machine_points = 0
 	portal_to_corp_used = false
 	burnout_level = 0

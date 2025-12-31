@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../asset_attribution_log/">
+        <link rel="prev" href="../open_source_checklist/">
       
-      
-        <link rel="next" href="../open_source_checklist/">
       
       
       <link rel="icon" href="../favicon.ico">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Overworld Setup - Burnt Out</title>
+        <title>Portal Spawn Logic - Burnt Out</title>
       
     
     
@@ -74,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#overworld-walkable-map-next-steps" class="md-skip">
+        <a href="#portal-and-player-spawn-logic-refactor" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Overworld Setup
+              Portal Spawn Logic
             
           </span>
         </div>
@@ -446,11 +444,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../overworld-setup/" class="md-tabs__link">
         
   
   
@@ -486,9 +482,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../PORTAL_SPAWN_LOGIC/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -813,32 +811,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Overworld Setup
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../overworld-setup/" class="md-nav__link">
         
   
   
@@ -849,80 +825,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-add-visuals-for-areas" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Add Visuals for Areas
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-add-area2d-collision-shapes" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Add Area2D Collision Shapes
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-main-character" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Main Character
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-scene-switching" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Scene Switching
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-testing-ground" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Testing Ground
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-next" class="md-nav__link">
-    <span class="md-ellipsis">
-      What’s Next?
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -953,10 +855,32 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../PORTAL_SPAWN_LOGIC/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Portal Spawn Logic
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -967,6 +891,62 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commit-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Commit Message
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -998,54 +978,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-add-visuals-for-areas" class="md-nav__link">
+  <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Add Visuals for Areas
+      Summary
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-add-area2d-collision-shapes" class="md-nav__link">
+  <a href="#implementation" class="md-nav__link">
     <span class="md-ellipsis">
-      2. Add Area2D Collision Shapes
+      Implementation
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-main-character" class="md-nav__link">
+  <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
-      3. Main Character
+      Usage
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-scene-switching" class="md-nav__link">
+  <a href="#commit-message" class="md-nav__link">
     <span class="md-ellipsis">
-      4. Scene Switching
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-testing-ground" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Testing Ground
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#whats-next" class="md-nav__link">
-    <span class="md-ellipsis">
-      What’s Next?
+      Commit Message
     </span>
   </a>
   
@@ -1070,41 +1032,33 @@
   
 
 
-<h1 id="overworld-walkable-map-next-steps">Overworld Walkable Map: Next Steps</h1>
-<h2 id="1-add-visuals-for-areas">1. Add Visuals for Areas</h2>
+<h1 id="portal-and-player-spawn-logic-refactor">Portal and Player Spawn Logic Refactor</h1>
+<h2 id="summary">Summary</h2>
 <ul>
-<li>Add placeholder textures or labels to <code>MainGameArea</code> and <code>TestingGroundArea</code> in <code>Overworld.tscn</code> so they are visible and clickable.</li>
-<li>You can use Godot's built-in shapes or import simple PNGs for now.</li>
+<li>Player position is now saved to <code>player_data.position</code> when using a portal.</li>
+<li>On scene load, the player checks <code>player_data.position</code> and spawns at that location if set (and not coming from StartScreen).</li>
+<li>This enables flexible, robust portal and spawn logic for all scene transitions.</li>
 </ul>
-<h2 id="2-add-area2d-collision-shapes">2. Add Area2D Collision Shapes</h2>
+<h2 id="implementation">Implementation</h2>
 <ul>
-<li>Each Area2D (MainGameArea, TestingGroundArea) needs a <code>CollisionShape2D</code> (e.g., rectangle or circle) to detect clicks.</li>
+<li>Updated <code>portal_to_corp_office.gd</code> to save the player's global position to <code>player_data.position</code> before changing scenes.</li>
+<li>Updated <code>overworld_player.gd</code> to check and use <code>player_data.position</code> on <code>_ready()</code>, only if not loading from StartScreen.</li>
+<li>Resets <code>player_data.position</code> to <code>Vector2.ZERO</code> after use to avoid unintended reuse.</li>
 </ul>
-<h2 id="3-main-character">3. Main Character</h2>
+<h2 id="usage">Usage</h2>
 <ul>
-<li>The player can walk around using arrow keys/WASD.</li>
-<li>You can later add animations or a sprite for the player.</li>
+<li>Works for any portal/scene transition.</li>
+<li>First load from StartScreen uses the default position in the scene.</li>
+<li>No hardcoded flags or positions required for future portals.</li>
 </ul>
-<h2 id="4-scene-switching">4. Scene Switching</h2>
-<ul>
-<li>Clicking on an area will switch to the main game or testing ground.</li>
-</ul>
-<h2 id="5-testing-ground">5. Testing Ground</h2>
-<ul>
-<li>The <code>TestingGround.tscn</code> is a sandbox. You can add your main character, obstacles, or test objects here.</li>
-</ul>
-<hr />
-<h2 id="whats-next">What’s Next?</h2>
-<ul>
-<li>[ ] Add placeholder visuals and collision shapes to the overworld areas.</li>
-<li>[ ] Test scene switching in Godot.</li>
-<li>[ ] (Optional) Add a simple player sprite or animation.</li>
-</ul>
-<hr />
-<p><strong>You can now open <code>Overworld.tscn</code> in Godot and visually place sprites, labels, and collision shapes.</strong></p>
-<p>Would you like me to:
-- Add placeholder textures and collision shapes to the scene files for you?
-- Or provide a Godot Editor step-by-step for you to do it visually?</p>
+<h2 id="commit-message">Commit Message</h2>
+<pre><code>refactor: robust portal/player spawn logic using player_data.position
+
+- Player position is saved on portal use and loaded on scene entry
+- Only applies if not coming from StartScreen
+- Enables flexible, future-proof portal/scene transitions
+- Updated documentation
+</code></pre>
 
 
 
