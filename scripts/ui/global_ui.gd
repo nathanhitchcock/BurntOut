@@ -349,7 +349,11 @@ func _on_restart_button_pressed() -> void:
 	# Ensure game unpauses before reload
 	get_tree().paused = false
 	await get_tree().create_timer(0.3).timeout
-	get_tree().reload_current_scene()
+	# Reset player data to initial defaults
+	if has_node("/root/player_data"):
+		get_node("/root/player_data").reset()
+	# Jump back to StartScreen for a full game reset
+	get_tree().change_scene_to_file("res://scenes/StartScreen.tscn")
 
 func update_sprint_points_display():
 	if sprint_points_label:
