@@ -8,13 +8,13 @@
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="5_quye3"]
 [ext_resource type="PackedScene" uid="uid://b0cwvulf0qu4d" path="res://scenes/CORP/focus_pod.tscn" id="6_23ju4"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
-[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
+[ext_resource type="Texture2D" uid="uid://dkemprpsoo30k" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
 [ext_resource type="PackedScene" uid="uid://dtdbv8x7l4gp8" path="res://scenes/CORP/productivity_machine.tscn" id="10_rifxr"]
 [ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="11_pn5pk"]
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
-[ext_resource type="Script" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
+[ext_resource type="Script" uid="uid://mltr5ovnq581" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://ypvk5frlvuea" path="res://assets/images/backgrounds/CORP office/room_bugsmash/bugroom_board.png" id="16_nsujb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i65ii"]
@@ -140,7 +140,7 @@ scale = Vector2(0.15, 0.15)
 script = ExtResource("6_i65ii")
 
 [node name="ProductivityMachine" parent="." instance=ExtResource("10_rifxr")]
-position = Vector2(-11, 6)
+position = Vector2(-11, 2)
 scale = Vector2(0.15, 0.15)
 
 [node name="Walls" type="Node2D" parent="."]
