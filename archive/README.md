@@ -65,3 +65,11 @@ The following scenes were used in an early design and are no longer part of the 
 - archive/legacy/game_over/GameOver-CEOVictoryScreen.tscn
 
 Rationale: replaced by `SkylineWatch` + `GlobalUI` burnout and end overlays.
+
+### Tutorial (Archived)
+
+Moved from `scenes/CORP/tutorial/` to `archive/legacy/tutorial/` on 2025-12-31.
+
+- archive/legacy/tutorial/tutorial.tscn
+
+Rationale: superseded by the Corp Office onboarding; kept for reference only.
