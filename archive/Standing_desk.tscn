@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbsss8mp5wg6k"]
+
+[ext_resource type="Script" uid="uid://bm3rawaf66lgc" path="res://scripts/standing_desk.gd" id="1_81slg"]
+[ext_resource type="Texture2D" uid="uid://oe8ueojm0o5i" path="res://archive/coffee_icon.png" id="2_wdlss"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rjdkn"]
+radius = 171.237
+
+[node name="StandingDesk" type="Node2D"]
+script = ExtResource("1_81slg")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(-72, -69)
+scale = Vector2(0.132812, 0.127441)
+texture = ExtResource("2_wdlss")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-70, -62)
+shape = SubResource("CircleShape2D_rjdkn")
