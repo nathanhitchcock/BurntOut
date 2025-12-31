@@ -19,7 +19,7 @@ extra:
 theme:
   name: material
   logo: logo.png
-  favicon: favicon.png
+  favicon: logo.png
   palette:
     - scheme: slate
       primary: orange
