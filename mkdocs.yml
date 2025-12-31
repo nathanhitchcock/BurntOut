@@ -51,6 +51,10 @@ nav:
   - Code Overview: code-overview.md
   - Mechanics: mechanics.md
   - Features: features.md
+  - Asset Attribution Log: asset_attribution_log.md
+  - Overworld Setup: overworld-setup.md
+  - Open Source Checklist: open_source_checklist.md
+  - Portal Spawn Logic: PORTAL_SPAWN_LOGIC.md
 
 extra_css:
   - extra.css
