@@ -1,3 +1,7 @@
+## DEPRECATED: Not used in current game flow (2025-12-31)
+# This script is legacy from an early design that used a single `main.tscn`.
+# Active flows now live in SkylineWatch/Corp Office scenes with GlobalUI overlays.
+# Retained for reference; not loaded by any current scene.
 ## -- INIT --
 extends Node2D
 

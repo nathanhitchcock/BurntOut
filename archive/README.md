@@ -23,11 +23,11 @@ These files are retained because they are referenced by current scenes or are ne
     - scenes/CORP/bug_smash/bug_smash.tscn
 - game_over_burnout.png
   - Where used:
-    - scenes/Game Over/GameOver-Burnout.tscn
-    - scenes/Game Over/GameOver-Victory.tscn
+    - archive/legacy/game_over/GameOver-Burnout.tscn (legacy)
+    - archive/legacy/game_over/GameOver-Victory.tscn (legacy)
 - ChatGPT Image May 25, 2025, 10_03_18 PM.png
   - Where used:
-    - scenes/Game Over/GameOver-CEOVictoryScreen.tscn
+    - archive/legacy/game_over/GameOver-CEOVictoryScreen.tscn (legacy)
 
 Note: The corresponding `.import` files for the above assets are kept to preserve Godot import settings and ensure stable asset hashing.
 
@@ -55,3 +55,13 @@ ls -la archive/
 ```
 
 _Last updated: 2025-12-31_
+
+## Legacy Scenes (Archived)
+
+The following scenes were used in an early design and are no longer part of the active flow. They were moved from `scenes/Game Over/` to `archive/legacy/game_over/` on 2025-12-31.
+
+- archive/legacy/game_over/GameOver-Burnout.tscn
+- archive/legacy/game_over/GameOver-Victory.tscn
+- archive/legacy/game_over/GameOver-CEOVictoryScreen.tscn
+
+Rationale: replaced by `SkylineWatch` + `GlobalUI` burnout and end overlays.
