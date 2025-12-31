@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="2_lut5i"]
 [ext_resource type="PackedScene" uid="uid://dhmfv2bet7f0y" path="res://scenes/defenses/hammer/Hammer.tscn" id="3_6sfo6"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="3_oi8gi"]
-[ext_resource type="Texture2D" uid="uid://bhwy6p0nm10lt" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="4_6sfo6"]
+[ext_resource type="Texture2D" uid="uid://b50kagku4237a" path="res://assets/images/vfx/particle_spark.png" id="4_6sfo6"]
 [ext_resource type="PackedScene" uid="uid://cosrseguudkmd" path="res://scenes/CORP/portal_to_corp_office.tscn" id="4_wwt1y"]
 [ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="8_axgo0"]
 [ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="9_wwt1y"]
