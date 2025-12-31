@@ -29,6 +29,7 @@ var end_screen: Control = null
 var end_message_label: Label = null
 var end_shown: bool = false
 var last_scene: Node = null
+var end_sound: AudioStreamPlayer = null
 
 func _ready():
 	set_process_input(true)
@@ -79,6 +80,12 @@ func _ready():
 	end_message_label.anchor_bottom = 0.5
 	end_message_label.position = Vector2(0, 0)
 	end_screen.add_child(end_message_label)
+	# Success sound
+	end_sound = AudioStreamPlayer.new()
+	end_sound.name = "EndSound"
+	end_sound.stream = load("res://assets/audio/sfx/success-fanfare-trumpets-6185.mp3")
+	end_sound.autoplay = false
+	end_screen.add_child(end_sound)
 	if parent:
 		parent.add_child(end_screen)
 
@@ -544,10 +551,19 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	toggle_pause()
 	if end_screen:
 		end_screen.visible = true
+		end_screen.modulate.a = 0.0
+		var tween = create_tween()
+		tween.tween_property(end_screen, "modulate:a", 1.0, 0.4)
+		# Pop the message slightly
+		end_message_label.scale = Vector2(0.92, 0.92)
+		tween.tween_property(end_message_label, "scale", Vector2(1, 1), 0.35)
 	# Optionally pause ambient audio
 	var music_player = GlobalAudio.get_node_or_null("AmbientHum")
 	if music_player:
 		music_player.stream_paused = true
+	# Play success sound
+	if end_sound and end_sound.stream:
+		end_sound.play()
 
 func hide_end_screen():
 	if end_screen:
@@ -556,6 +572,11 @@ func hide_end_screen():
 	end_shown = false
 	if end_message_label:
 		end_message_label.text = ""
+	# Reset overlay alpha and stop sound
+	if end_screen:
+		end_screen.modulate.a = 0.0
+	if end_sound:
+		end_sound.stop()
 	# Restore pause UI if visible
 	if pause_menu:
 		pause_menu.visible = false
