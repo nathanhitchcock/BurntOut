@@ -4,7 +4,6 @@ var speed := 220.0 # Comfortable walk speed
 var burnout_level: int = 0 # 0 = no burnout, 1-5 = burnout stages
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
-@onready var fire_trail: GPUParticles2D = $FireTrail if has_node("FireTrail") else null
 @onready var player_data = get_node_or_null("/root/player_data")
 @onready var burnout_label = $BurnoutLabel if has_node("BurnoutLabel") else null
 @onready var camera: Camera2D = $Camera2D if has_node("Camera2D") else null
@@ -47,8 +46,7 @@ func _physics_process(delta):
 		velocity = input * speed
 		if animated_sprite:
 			animated_sprite.play("walk")
-		if fire_trail:
-			fire_trail.emitting = true
+        
 		# Camera zoom disabled for tutorial section
 		# if camera and not _is_zoomed_in:
 		# 	_is_zoomed_in = true
@@ -58,8 +56,7 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 		if animated_sprite:
 			animated_sprite.stop()
-		if fire_trail:
-			fire_trail.emitting = false
+        
 		# Camera zoom disabled for tutorial section
 		# if camera and _is_zoomed_in:
 		# 	_is_zoomed_in = false
