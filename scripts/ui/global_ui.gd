@@ -314,6 +314,28 @@ func _ready():
 	_update_burnout_flames()
 	# Force initial HUD visibility update for StartScreen/Skyline scenes
 	_process(0)
+	# Rebind UI nodes when the current scene changes (e.g., after Restart)
+	if not get_tree().is_connected("scene_changed", Callable(self, "_on_scene_changed")):
+		get_tree().scene_changed.connect(_on_scene_changed)
+
+func _on_scene_changed(_root: Node) -> void:
+	# Re-acquire UI nodes and reconnect button handlers for the new scene
+	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
+	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
+	restart_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/RestartButton")
+	sprint_points_label = get_node_or_null("CanvasLayer/Control/SprintPointsLabel")
+	pause_menu = get_node_or_null("CanvasLayer/Control/VBoxContainer")
+	pause_bg = get_node_or_null("CanvasLayer/Control/PauseBackground")
+	health_bar = get_node_or_null("CanvasLayer/Control/HealthBar")
+	if pause_menu:
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
+		_set_buttons_pausable(pause_menu)
+	if resume_button:
+		resume_button.pressed.connect(_on_resume_button_pressed)
+	if quit_button:
+		quit_button.pressed.connect(_on_quit_pressed)
+	if restart_button:
+		restart_button.pressed.connect(_on_restart_button_pressed)
 
 func _set_buttons_pausable(node):
 	for child in node.get_children():
@@ -513,27 +535,8 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 		var viewport_size: Vector2 = get_viewport().size
 		# With centered anchors, offset from screen center to reach target
 		end_message_label.position = screen_pos - (viewport_size * 0.5)
-	# Show pause overlay and restrict actions
-	if pause_menu:
-		pause_menu.visible = true
-		# While end screen is active and the tree is paused, make menu/buttons process
-		pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	if pause_bg:
-		pause_bg.visible = true
-	if resume_button:
-		resume_button.visible = false
-		resume_button.disabled = true
-		resume_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	if restart_button:
-		restart_button.visible = true
-		restart_button.disabled = false
-		restart_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	if quit_button:
-		quit_button.visible = true
-		quit_button.disabled = false
-		quit_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
-	# Hard-pause the scene tree to freeze gameplay while keeping UI responsive
-	get_tree().paused = true
+	# Show the main pause menu (no special handling, keep Resume/Restart/Quit usable)
+	toggle_pause()
 	if end_screen:
 		end_screen.visible = true
 	# Optionally pause ambient audio
@@ -548,17 +551,11 @@ func hide_end_screen():
 	end_shown = false
 	if end_message_label:
 		end_message_label.text = ""
-	# Restore pause UI and unpause the game
-	if resume_button:
-		resume_button.visible = true
-		resume_button.disabled = false
-		resume_button.process_mode = Node.PROCESS_MODE_INHERIT
+	# Restore pause UI if visible
 	if pause_menu:
 		pause_menu.visible = false
-		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
 	if pause_bg:
 		pause_bg.visible = false
-	get_tree().paused = false
 
 # Bug counter functions
 func show_bug_counter():
