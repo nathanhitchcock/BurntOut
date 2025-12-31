@@ -1,6 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://docso1kx17qoj"]
+[gd_scene load_steps=32 format=3 uid="uid://docso1kx17qoj"]
 
-[ext_resource type="Texture2D" uid="uid://bpe8inotgbrx7" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
+[ext_resource type="Texture2D" uid="uid://dvdyf73avec7m" path="res://assets/images/backgrounds/CORP office/backgrounds/CORP_tilemap.png" id="1_rifxr"]
 [ext_resource type="Script" uid="uid://cfj4oe7wwdka7" path="res://scenes/CORP/upgrade_cafe.gd" id="3_2lp3j"]
 [ext_resource type="Texture2D" uid="uid://bxpepqiawwu8r" path="res://scenes/CORP/board_togglepuzzle.png" id="3_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://bwh75m800ar48" path="res://assets/images/backgrounds/CORP office/upgrade_shop.png" id="4_r4m04"]
@@ -10,12 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://b0cwvulf0qu4d" path="res://scenes/CORP/focus_pod.tscn" id="6_23ju4"]
 [ext_resource type="Script" uid="uid://b5rqxvknibo5x" path="res://scripts/upgrade_shop.gd" id="6_i65ii"]
 [ext_resource type="Texture2D" uid="uid://bj8441q4w6bq" path="res://assets/images/defenses/machine_shield.png" id="7_32h3d"]
-[ext_resource type="Texture2D" uid="uid://dkemprpsoo30k" path="res://archive/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png" id="7_pn5pk"]
 [ext_resource type="PackedScene" uid="uid://r803moatffok" path="res://scenes/UpgradeShopUI.tscn" id="7_y7now"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="8_i65ii"]
+[ext_resource type="Texture2D" uid="uid://df8cddplvg16a" path="res://assets/images/backgrounds/CORP office/foucs_pod/focus_pod.png" id="9_nsujb"]
 [ext_resource type="PackedScene" uid="uid://dtdbv8x7l4gp8" path="res://scenes/CORP/productivity_machine.tscn" id="10_rifxr"]
-[ext_resource type="Texture2D" uid="uid://bn6dj1r0fkhpi" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-horizontal.png" id="11_pn5pk"]
-[ext_resource type="Texture2D" uid="uid://cgj2l4p11e2iy" path="res://assets/images/backgrounds/CORP office/backgrounds/wall-vertical.png" id="12_r4m04"]
 [ext_resource type="Script" uid="uid://mltr5ovnq581" path="res://scenes/CORP/bug_room_board.gd" id="15_p5kmm"]
 [ext_resource type="Texture2D" uid="uid://ypvk5frlvuea" path="res://assets/images/backgrounds/CORP office/room_bugsmash/bugroom_board.png" id="16_nsujb"]
 
@@ -26,13 +24,13 @@ size = Vector2(614.688, 286.25)
 size = Vector2(1099.16, 942.24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nsujb"]
-size = Vector2(1024.75, 42)
+size = Vector2(1024.75, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2lp3j"]
-size = Vector2(943, 24.5)
+size = Vector2(943, 223.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rifxr"]
-size = Vector2(33, 629.75)
+size = Vector2(201.5, 629.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5kmm"]
 size = Vector2(324.688, 286.25)
@@ -87,10 +85,14 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_p5kmm"]
+load_path = "res://.godot/imported/ChatGPT Image Jun 4, 2025 at 10_58_19 PM.png-ca16cd56117fdfd72f75170e89a6ac7d.ctex"
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_2lp3j"]
 radius = 132.0
 
 [node name="CORP_MainOffice" type="Node2D"]
+position = Vector2(8, 16)
 
 [node name="BackgroundWrapper" type="Node2D" parent="."]
 position = Vector2(-528, -306)
@@ -108,7 +110,7 @@ scale = Vector2(0.4, 0.4)
 script = ExtResource("5_2lp3j")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scrum-DSUBoard"]
-position = Vector2(2117.5, 515)
+position = Vector2(2035, 465)
 scale = Vector2(0.160015, 0.13614)
 texture = ExtResource("3_p5kmm")
 
@@ -117,12 +119,12 @@ position = Vector2(2067.5, 640)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scrum-DSUBoard/ScrumDSUBoardArea"]
-position = Vector2(39.7499, -62.4375)
+position = Vector2(-17.5, -87.5)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_i65ii")
 
 [node name="UpgradeCafe" type="Sprite2D" parent="."]
-position = Vector2(-273, -85)
+position = Vector2(-259, -120)
 scale = Vector2(0.205614, 0.170977)
 texture = ExtResource("4_r4m04")
 script = ExtResource("3_2lp3j")
@@ -145,8 +147,9 @@ scale = Vector2(0.262159, 0.230504)
 texture = ExtResource("7_32h3d")
 
 [node name="FocusPod" parent="." instance=ExtResource("6_23ju4")]
-position = Vector2(-116, -219)
-scale = Vector2(0.15, 0.15)
+position = Vector2(-13, -268)
+scale = Vector2(0.0902344, 0.0833984)
+texture = ExtResource("9_nsujb")
 
 [node name="UpgradeShopUI" parent="." instance=ExtResource("7_y7now")]
 script = ExtResource("6_i65ii")
@@ -162,12 +165,8 @@ metadata/_edit_lock_ = true
 [node name="wall-top" type="StaticBody2D" parent="Walls"]
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-top"]
-position = Vector2(534, 13)
-texture = ExtResource("11_pn5pk")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-top"]
-position = Vector2(516, 15)
+position = Vector2(516, 14.5)
 shape = SubResource("RectangleShape2D_nsujb")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
 
@@ -176,39 +175,27 @@ position = Vector2(14, 502)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-bottom"]
-position = Vector2(506, 96.25)
+position = Vector2(499, 2)
 shape = SubResource("RectangleShape2D_2lp3j")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Walls/wall-bottom"]
-position = Vector2(554, 98)
-texture = ExtResource("11_pn5pk")
 
 [node name="wall-left" type="StaticBody2D" parent="Walls"]
 position = Vector2(-26, 237)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-left"]
-position = Vector2(55, 60.875)
+position = Vector2(139.25, 60.875)
 shape = SubResource("RectangleShape2D_rifxr")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-left"]
-position = Vector2(53, -4)
-texture = ExtResource("12_r4m04")
 
 [node name="wall-right" type="StaticBody2D" parent="Walls"]
 position = Vector2(945, 236)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/wall-right"]
-position = Vector2(61, 73)
+position = Vector2(-61, 77)
 shape = SubResource("RectangleShape2D_rifxr")
 debug_color = Color(0.820751, 0.366518, 0.444341, 0.42)
-
-[node name="Sprite2D" type="Sprite2D" parent="Walls/wall-right"]
-position = Vector2(53, -4)
-texture = ExtResource("12_r4m04")
 
 [node name="BugRoomBoard" type="Node2D" parent="."]
 position = Vector2(-578, -151)
@@ -216,7 +203,7 @@ scale = Vector2(0.4, 0.4)
 script = ExtResource("15_p5kmm")
 
 [node name="Sprite2D" type="Sprite2D" parent="BugRoomBoard"]
-position = Vector2(2117.5, 515)
+position = Vector2(2077.5, 357.5)
 scale = Vector2(0.160015, 0.13614)
 texture = ExtResource("16_nsujb")
 
@@ -225,7 +212,7 @@ position = Vector2(1968, 638)
 scale = Vector2(2, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BugRoomBoard/BugRoomBoardArea"]
-position = Vector2(74.164, -61.9687)
+position = Vector2(56, -137.75)
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_p5kmm")
 
@@ -244,9 +231,7 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_hxnvt")
 animation = &"walk"
 
-[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
-emitting = false
-texture = ExtResource("7_pn5pk")
+ 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-191.235, 40)

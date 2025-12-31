@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://crtyokiiwbpg2" path="res://assets/images/backgrounds/CORP office/skyline/skyline_background.png" id="1_0h82s"]
 [ext_resource type="Script" uid="uid://s0cwhgvgcfxr" path="res://scripts/player/overworld_player.gd" id="2_kydfl"]
 [ext_resource type="Texture2D" uid="uid://bi2enseqm2e6c" path="res://assets/images/sprites/main character/Animated Walking Flame Character Sprite.png" id="3_buos0"]
-[ext_resource type="Texture2D" uid="uid://b50kagku4237a" path="res://assets/images/vfx/particle_spark.png" id="4_opend"]
+ 
 [ext_resource type="Script" uid="uid://c5wbatcwdd11q" path="res://scripts/skyline_watch.gd" id="5_1"]
 [ext_resource type="AudioStream" uid="uid://fmk5o0iilm3s" path="res://assets/audio/music/bgm_skyline.mp3" id="6_opend"]
 
@@ -156,9 +156,7 @@ scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_ajgad")
 animation = &"walk"
 
-[node name="FireTrail" type="GPUParticles2D" parent="Player/AnimatedSprite2D"]
-emitting = false
-texture = ExtResource("4_opend")
+ 
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-62, 42)
