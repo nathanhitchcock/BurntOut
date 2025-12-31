@@ -9,7 +9,7 @@ Welcome to the Burnt Out codebase! This documentation provides an overview of th
 - `assets/` — Game assets (audio, images, music, sfx, sprites, backgrounds, vfx, ui, etc.)
 - (No long-lived `archive/`) Remove unused assets and scenes. Only retain files referenced by active scenes or documented as part of current features.
 - `docs/` — Project documentation, FAQ, and style guides.
-- `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, defenses).
+- `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, corp office).
 - `scenes/autoload/` — Scenes used as autoloads (singletons) for global systems.
 - `scripts/` — All GDScript files, organized by feature (ui, puzzles, player, autoload).
 - `scripts/autoload/` — Scripts used as autoloads (singletons).
@@ -38,6 +38,12 @@ See `docs/autoloads.md` for a full API reference of all global singletons.
 ### Puzzles
 - Progressive toggle puzzle logic in `scripts/puzzles/progressive_toggle_manager.gd`.
  - Toggle buttons are instanced from `scenes/CORP/toggle_room/ToggleButton.tscn`.
+
+### End Overlay
+- Completing the Productivity Machine displays a top-centered victory overlay via `GlobalUI.show_end_screen()`.
+
+### Burnout Flow
+- At 0 health, the game auto-pauses and shows the Skyline Watch burnout screen. Continue restores health and returns to the corp office.
 
 ---
 

@@ -83,14 +83,8 @@ Additional background files present:
 | `assets/images/ui/hud/shields/shield4.png` | AI-generated (ChatGPT) | Internal placeholder |
 | `assets/images/ui/hud/shields/shield5.png` | AI-generated (ChatGPT) | Internal placeholder |
 
-## Images — Defenses
-
-| File | Source | License |
-| --- | --- | --- |
-| `assets/images/defenses/coffee_machine.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/desk_icon.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/hammer/hammer.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/defenses/machine_shield.png` | AI-generated (ChatGPT) | Internal placeholder |
+<!-- Removed: Images — Defenses (feature deprecated) -->
+<!-- All defense-related images were removed alongside the deprecation of defenses. -->
 
 ## Notes
 
