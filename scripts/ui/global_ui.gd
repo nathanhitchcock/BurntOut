@@ -51,13 +51,15 @@ func _ready():
 	end_screen = Control.new()
 	end_screen.name = "EndScreen"
 	end_screen.visible = false
-	end_screen.mouse_filter = Control.MOUSE_FILTER_STOP
+	# Allow clicks to pass through overlay so pause menu remains clickable
+	end_screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	end_screen.anchor_left = 0
 	end_screen.anchor_top = 0
 	end_screen.anchor_right = 1
 	end_screen.anchor_bottom = 1
 	var bg = ColorRect.new()
 	bg.color = Color(0, 0, 0, 0.85)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.anchor_left = 0
 	bg.anchor_top = 0
 	bg.anchor_right = 1
@@ -163,7 +165,8 @@ func _ready():
 		pause_bg.visible = false
 	# Ensure pause menu and its buttons process input when paused (recursively)
 	if pause_menu:
-		pause_menu.process_mode = 1
+		pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+		pause_menu.z_index = 1000
 		_set_buttons_pausable(pause_menu)
 	# Debug: print when pause menu is shown and connect button signals
 	if pause_menu:
@@ -314,7 +317,7 @@ func _ready():
 func _set_buttons_pausable(node):
 	for child in node.get_children():
 		if child is Button:
-			child.process_mode = 1
+			child.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 		if child.get_child_count() > 0:
 			_set_buttons_pausable(child)
 
