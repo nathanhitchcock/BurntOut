@@ -165,7 +165,8 @@ func _ready():
 		pause_bg.visible = false
 	# Ensure pause menu and its buttons process input when paused (recursively)
 	if pause_menu:
-		pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+		# Use normal processing during gameplay; we'll switch to WHEN_PAUSED only for end screen
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
 		pause_menu.z_index = 1000
 		_set_buttons_pausable(pause_menu)
 	# Debug: print when pause menu is shown and connect button signals
@@ -317,7 +318,8 @@ func _ready():
 func _set_buttons_pausable(node):
 	for child in node.get_children():
 		if child is Button:
-			child.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+			# Default to normal processing during gameplay
+			child.process_mode = Node.PROCESS_MODE_INHERIT
 		if child.get_child_count() > 0:
 			_set_buttons_pausable(child)
 
@@ -514,17 +516,22 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	# Show pause overlay and restrict actions
 	if pause_menu:
 		pause_menu.visible = true
+		# While end screen is active and the tree is paused, make menu/buttons process
+		pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if pause_bg:
 		pause_bg.visible = true
 	if resume_button:
 		resume_button.visible = false
 		resume_button.disabled = true
+		resume_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if restart_button:
 		restart_button.visible = true
 		restart_button.disabled = false
+		restart_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	if quit_button:
 		quit_button.visible = true
 		quit_button.disabled = false
+		quit_button.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	# Hard-pause the scene tree to freeze gameplay while keeping UI responsive
 	get_tree().paused = true
 	if end_screen:
@@ -545,8 +552,10 @@ func hide_end_screen():
 	if resume_button:
 		resume_button.visible = true
 		resume_button.disabled = false
+		resume_button.process_mode = Node.PROCESS_MODE_INHERIT
 	if pause_menu:
 		pause_menu.visible = false
+		pause_menu.process_mode = Node.PROCESS_MODE_INHERIT
 	if pause_bg:
 		pause_bg.visible = false
 	get_tree().paused = false
