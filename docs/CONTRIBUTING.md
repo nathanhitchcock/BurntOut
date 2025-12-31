@@ -7,7 +7,7 @@ Thank you for your interest in contributing! Please follow these guidelines to h
 - **Follow the style guide**: See `docs/STYLE_GUIDE.md` for naming and code conventions.
 - **Document your changes**: Update or add markdown docs for new features, systems, or refactors.
 - **Test before committing**: Run the game and verify your changes work in the editor and at runtime.
-- **Curated archive**: Keep `archive/` for future-intent or legacy assets that are referenced by active scenes or explicitly documented. Remove prototypes and assets that never made it into the game.
+- **Remove unused assets**: Prefer deleting unused/legacy assets and scenes rather than keeping a long-lived `archive/`. Only retain files that are referenced by active scenes or documented as part of a current feature.
 - **Keep commits atomic**: One logical change per commit, with a clear message.
 
 ## Pull Requests

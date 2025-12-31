@@ -7,7 +7,7 @@ Welcome to the Burnt Out codebase! This documentation provides an overview of th
 ## Project Structure
 
 - `assets/` — Game assets (audio, images, music, sfx, sprites, backgrounds, vfx, ui, etc.)
-- `archive/` — Curated future-intent or legacy assets. Only keep items referenced by active scenes or explicitly documented for future use.
+- (No long-lived `archive/`) Remove unused assets and scenes. Only retain files referenced by active scenes or documented as part of current features.
 - `docs/` — Project documentation, FAQ, and style guides.
 - `scenes/` — All Godot scenes, organized by area (e.g., overworld, ui, puzzles, defenses).
 - `scenes/autoload/` — Scenes used as autoloads (singletons) for global systems.
@@ -36,15 +36,15 @@ See `docs/autoloads.md` for a full API reference of all global singletons.
 - Stores persistent player state (health, position, sprint points).
 
 ### Puzzles
-- Toggle puzzle logic in `scripts/puzzles/toggle_puzzle_manager.gd`.
-- Toggle buttons are instanced from `scenes/CORP/toggle_room/ToggleButton.tscn`.
+- Progressive toggle puzzle logic in `scripts/puzzles/progressive_toggle_manager.gd`.
+ - Toggle buttons are instanced from `scenes/CORP/toggle_room/ToggleButton.tscn`.
 
 ---
 
 ## Best Practices
 
 - **Organize assets and scripts** by feature and type.
-- **Curate `archive/`**: Keep only assets referenced by active scenes or documented for future usage. Remove prototypes and files that never shipped.
+- **Remove unused assets**: Prefer deleting unused assets and scenes; only retain files referenced by active scenes or documented as part of current features.
 - **Use snake_case for scripts** and PascalCase for scenes.
 - **Document all autoloads** and update `docs/autoloads.md` when globals change.
 - **Keep `.DS_Store` and temp files out of git** (see `.gitignore`).

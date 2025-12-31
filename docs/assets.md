@@ -39,14 +39,10 @@ This page lists open assets used in Burnt Out with placeholders for source and l
 | File | Source | License |
 | --- | --- | --- |
 | `assets/images/backgrounds/CORP office/upgrade_shop.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/overworld/CORP_office1.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/tutorial/tutorial_tilemap.png` | AI-generated (ChatGPT) | Internal placeholder |
-| `assets/images/backgrounds/tutorial/welcome_sign.png` | AI-generated (ChatGPT) | Internal placeholder |
+<!-- Removed tutorial/overworld placeholders no longer present in repo -->
 
 Additional background files present:
-- `assets/images/backgrounds/CORP office/CORP_upgrade shop_inside_2.png`
-- `assets/images/backgrounds/tutorial/ChatGPT Image Jun 21, 2025, 08_34_49 PM.png`
-- `assets/images/backgrounds/tutorial/ChatGPT Image Jun 21, 2025, 08_48_39 PM.png`
+<!-- Removed additional tutorial/upgrade background placeholders no longer present in repo -->
 - `assets/images/backgrounds/ai-background-3wide.xcf`
 - `assets/images/backgrounds/ai-background-3wide_blackend.xcf`
 
