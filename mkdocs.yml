@@ -48,6 +48,9 @@ nav:
   - Assets: assets.md
   - Credits: credits.md
   - Game Design: game_design.md
+  - Code Overview: code-overview.md
+  - Mechanics: mechanics.md
+  - Features: features.md
 
 extra_css:
   - extra.css
