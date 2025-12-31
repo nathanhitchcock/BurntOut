@@ -30,6 +30,7 @@ var end_message_label: Label = null
 var end_shown: bool = false
 var last_scene: Node = null
 var end_sound: AudioStreamPlayer = null
+@export var end_overlay_alpha: float = 0.9
 
 func _ready():
 	set_process_input(true)
@@ -60,7 +61,7 @@ func _ready():
 	end_screen.anchor_right = 1
 	end_screen.anchor_bottom = 1
 	var bg = ColorRect.new()
-	bg.color = Color(0, 0, 0, 0.85)
+	bg.color = Color(0, 0, 0, end_overlay_alpha)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.anchor_left = 0
 	bg.anchor_top = 0
@@ -545,6 +546,8 @@ func show_end_screen(message: String = "Great work! Next sprint, we’re targeti
 	var machine = get_tree().current_scene.get_node_or_null("ProductivityMachine")
 	if machine:
 		screen_pos = machine.get_global_transform_with_canvas().origin
+		screen_pos.y -= 250 # Offset above machine
+		screen_pos.x -= 100 # Offset left of machine
 	else:
 		var player = get_tree().current_scene.get_node_or_null("Player")
 		if player:
