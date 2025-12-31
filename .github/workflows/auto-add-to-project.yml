@@ -9,10 +9,18 @@ on:
 jobs:
   add-to-project:
     runs-on: ubuntu-latest
-    if: ${{ secrets.PROJECTS_TOKEN != '' }}
+    # Only run for issue/PR events and when token is present
+    if: ${{ (github.event_name == 'issues' || github.event_name == 'pull_request') && secrets.PROJECTS_TOKEN != '' }}
+    permissions:
+      contents: read
+      projects: write
+    concurrency:
+      group: add-to-project
+      cancel-in-progress: true
     steps:
       - name: Add issue or PR to project
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/nathanhitchcock/projects/5
           github-token: ${{ secrets.PROJECTS_TOKEN }}
+        continue-on-error: true
