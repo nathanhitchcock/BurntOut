@@ -199,7 +199,8 @@ func _ready():
 		if pause_menu:
 			pause_menu.connect("gui_input", Callable(self, "_on_pause_menu_gui_input"))
 	if volume_slider:
-		volume_slider.value = 0.2
+		var saved_volume = _load_volume()
+		volume_slider.value = saved_volume
 		volume_slider.connect("value_changed", Callable(self, "_on_volume_slider_changed"))
 		_on_volume_slider_changed(volume_slider.value)
 		_update_volume_label()
@@ -676,6 +677,7 @@ func _on_volume_slider_changed(value):
 	var db = lerp(-40, 0, value)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)
 	_update_volume_label()
+	_save_volume(value)
 
 func _update_volume_label():
 	if volume_label and volume_slider:
@@ -685,3 +687,17 @@ func give_test_sprint_points():
 	if has_node("/root/player_data"):
 		get_node("/root/player_data").sprint_points = 3
 		update_sprint_points_display()
+
+func _load_volume() -> float:
+	var cfg = ConfigFile.new()
+	var err = cfg.load("user://settings.cfg")
+	if err == OK:
+		var v = cfg.get_value("audio", "volume", 0.2)
+		return clamp(float(v), 0.0, 1.0)
+	return 0.2
+
+func _save_volume(value: float):
+	var cfg = ConfigFile.new()
+	var err = cfg.load("user://settings.cfg")
+	cfg.set_value("audio", "volume", clamp(value, 0.0, 1.0))
+	cfg.save("user://settings.cfg")
