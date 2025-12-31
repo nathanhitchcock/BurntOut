@@ -28,6 +28,7 @@ var toggle_level_label: Label = null
 var end_screen: Control = null
 var end_message_label: Label = null
 var end_shown: bool = false
+var last_scene: Node = null
 
 func _ready():
 	set_process_input(true)
@@ -314,11 +315,10 @@ func _ready():
 	_update_burnout_flames()
 	# Force initial HUD visibility update for StartScreen/Skyline scenes
 	_process(0)
-	# Rebind UI nodes when the current scene changes (e.g., after Restart)
-	if not get_tree().is_connected("scene_changed", Callable(self, "_on_scene_changed")):
-		get_tree().scene_changed.connect(_on_scene_changed)
+	# Track current scene for UI rebind on changes
+	last_scene = get_tree().current_scene
 
-func _on_scene_changed(_root: Node) -> void:
+func _rebind_pause_ui_for_scene():
 	# Re-acquire UI nodes and reconnect button handlers for the new scene
 	resume_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/ResumeButton")
 	quit_button = get_node_or_null("CanvasLayer/Control/VBoxContainer/QuitButton")
@@ -389,6 +389,11 @@ func update_sprint_points_display():
 		sprint_points_label.text = "Sprint Points: %d" % points
 
 func _process(_delta):
+	# Detect scene changes to rebind pause UI
+	var cs = get_tree().current_scene
+	if cs and cs != last_scene:
+		last_scene = cs
+		_rebind_pause_ui_for_scene()
 	# Hide sprint points, health bar, and burnout label on StartScreen and SkylineWatch
 	var current_scene = get_tree().current_scene
 	var hide_hud = false
